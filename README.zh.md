@@ -24,28 +24,27 @@ skill-name/
 
 ## 安装
 
-### 方式 A：交互式安装（推荐）
+### 方式 A：skills.sh 自动安装
 
-使用内置的 `install-skills` skill，交互式选择要安装的 skill，创建软链接到 agent 的 skill 目录。
-
-### 方式 B：作为插件使用
-
-**Claude Code** 用户，在项目或用户设置中添加仓库为插件：
-
-```json
-{
-  "plugins": ["/path/to/ai-agent"]
-}
+运行：
+```bash
+npx skills@latest add p2tree/ai-agent
 ```
 
-**OpenAI Codex / Agents SDK** 用户，指向 `.agents/skills.json` 清单文件。
+选择你想要的 skills。
 
-### 方式 C：手动软链接
+### 方式 B：手动软链接
 
 ```bash
-# 将单个 skill 链接到 agent 的 skill 目录
-ln -s /path/to/ai-agent/skills/engineering/tdd ~/.claude/skills/tdd
+# 拉取仓库
+git clone https://github.com/p2tree/ai-agent.git
+cd ai-agent
+
+# 将 install-skill 安装到你的 agent skills 目录
+ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 ```
+
+然后，启动你的 agent 控制台，运行 `install-skills` skill 进行剩余的交互式安装。
 
 ## 内容一览
 
@@ -81,10 +80,9 @@ ln -s /path/to/ai-agent/skills/engineering/tdd ~/.claude/skills/tdd
 | Skill | 说明 |
 |-------|------|
 | [git-guardrails](./skills/workflow/git-guardrails/SKILL.md) | Hook 保护，阻止危险 git 操作 |
-| [bash-to-zsh-converter](./skills/workflow/bash-to-zsh-converter/SKILL.md) | 将 bash 脚本翻译为 zsh 兼容语法 |
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 将 spec 拆解为 bite-sized 实施计划 |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
-| [dispatching-agents](./skills/workflow/dispatching-agents/SKILL.md) | 子 agent 派发，两阶段审查（规格合规 + 代码质量） |
+| [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
 | [using-git-worktrees](./skills/workflow/using-git-worktrees/SKILL.md) | 隔离的 git worktree 做特性开发 |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 完成开发分支：验证 → 选择操作 → 清理 |
 | [verify-before-done](./skills/workflow/verify-before-done/SKILL.md) | 声称完成前必须运行验证命令并确认输出 |
@@ -100,7 +98,6 @@ ln -s /path/to/ai-agent/skills/engineering/tdd ~/.claude/skills/tdd
 |-------|------|
 | [install-skills](./skills/misc/install-skills/SKILL.md) | 交互式 skill 软链接安装器 |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | 检查上游 skill 漂移并更新 |
-| [setup-pre-commit](./skills/misc/setup-pre-commit/SKILL.md) | 设置 pre-commit hooks |
 
 ## 一次性设置 Skill
 

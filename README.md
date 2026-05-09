@@ -24,28 +24,27 @@ skill-name/
 
 ## Installation
 
-### Option A: Interactive Install (Recommended)
+### Option A: skills.sh auto install
 
-Use the built-in `install-skills` skill to selectively symlink skills into your agent's skill directory. The interactive prompts walk you through each skill — confirm or skip.
-
-### Option B: Use as a Plugin
-
-For **Claude Code**, add the repository as a plugin in your project or user settings:
-
-```json
-{
-  "plugins": ["/path/to/ai-agent"]
-}
+Run:
+```bash
+npx skills@latest add p2tree/ai-agent
 ```
 
-For **OpenAI Codex / Agents SDK**, point to the `.agents/skills.json` manifest.
+Select the skills you want.
 
-### Option C: Manual Symlink
+### Option B: Manual symlink
 
 ```bash
-# Link individual skills into your agent's skill directory
-ln -s /path/to/ai-agent/skills/engineering/tdd ~/.claude/skills/tdd
+# Clone the repository
+git clone https://github.com/p2tree/ai-agent.git
+cd ai-agent
+
+# Symlink install-skills into your agent skills directory
+ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 ```
+
+Then launch your agent console and run the `install-skills` skill for the remaining interactive setup.
 
 ## What's Inside
 
@@ -81,10 +80,8 @@ ln -s /path/to/ai-agent/skills/engineering/tdd ~/.claude/skills/tdd
 | Skill | Description |
 |-------|-------------|
 | [git-guardrails](./skills/workflow/git-guardrails/SKILL.md) | Hook-based protection against dangerous git operations |
-| [bash-to-zsh-converter](./skills/workflow/bash-to-zsh-converter/SKILL.md) | Translate bash scripts to zsh-compatible syntax |
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | Break specs into bite-sized implementation plans |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | Step-by-step plan execution with verification gates |
-| [dispatching-agents](./skills/workflow/dispatching-agents/SKILL.md) | Sub-agent dispatch with two-phase review (spec compliance + code quality) |
 | [using-git-worktrees](./skills/workflow/using-git-worktrees/SKILL.md) | Isolated git worktrees for feature development |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | Complete a dev branch: verify → choose action → clean up |
 | [verify-before-done](./skills/workflow/verify-before-done/SKILL.md) | Must-run-verification before claiming any task done |
@@ -100,7 +97,6 @@ ln -s /path/to/ai-agent/skills/engineering/tdd ~/.claude/skills/tdd
 |-------|-------------|
 | [install-skills](./skills/misc/install-skills/SKILL.md) | Interactive skill symlink installer |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | Check upstream sources for skill drift and update |
-| [setup-pre-commit](./skills/misc/setup-pre-commit/SKILL.md) | Set up pre-commit hooks |
 
 ## One-time Setup Skills
 

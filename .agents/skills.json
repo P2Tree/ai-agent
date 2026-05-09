@@ -25,7 +25,6 @@
     "./skills/workflow/init-agent-environment",
     "./skills/misc/create-skill",
     "./skills/misc/install-skills",
-    "./skills/misc/update-skills",
-    "./skills/misc/setup-pre-commit"
+    "./skills/misc/update-skills"
   ]
 }
