@@ -46,3 +46,4 @@ ai-agent 是一个开源的 AI 编码助手技能仓库。收集、融合、维�
 - 不要创建 README 或 markdown 文档，除非用户明确要求
 - 不要推送到远程或创建 commit，除非用户明确要求
 - Shell 不要写 bash 特有语法，兼容 bash 和 zsh
+- 不要将 `internal` 和 `personal` 目录下的 skills 添加到根目录 README 文件和 skill 索引文件中

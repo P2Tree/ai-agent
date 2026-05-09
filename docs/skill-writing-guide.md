@@ -99,4 +99,4 @@ SKILL.md 保持精简，agent 按需加载 `references/` 中的详细内容。�
 - [ ] 在目标平台上能正确触发
 - [ ] scripts/ 下的脚本可执行且幂等
 
-可用 `scripts/validate-skill.sh <skill-dir>` 自动检查结构完整性。
+可用 `scripts/validate-skill.{sh,zsh,fish} <skill-dir>` 自动检查结构完整性（根据当前 shell 选择）。

@@ -1,0 +1,31 @@
+{
+  "name": "ai-agent",
+  "skills": [
+    "./skills/engineering/tdd",
+    "./skills/engineering/diagnose",
+    "./skills/engineering/code-review",
+    "./skills/engineering/improve-architecture",
+    "./skills/engineering/frontend-design",
+    "./skills/engineering/code-guidelines",
+    "./skills/productivity/brainstorming",
+    "./skills/productivity/zoom-out",
+    "./skills/productivity/prototype",
+    "./skills/productivity/caveman",
+    "./skills/productivity/grill-me",
+    "./skills/composition/article-series-writer",
+    "./skills/workflow/git-guardrails",
+    "./skills/workflow/writing-plans",
+    "./skills/workflow/executing-plans",
+    "./skills/workflow/using-git-worktrees",
+    "./skills/workflow/finishing-branch",
+    "./skills/workflow/verify-before-done",
+    "./skills/workflow/to-prd",
+    "./skills/workflow/to-issues",
+    "./skills/workflow/triage",
+    "./skills/workflow/init-agent-environment",
+    "./skills/misc/create-skill",
+    "./skills/misc/install-skills",
+    "./skills/misc/update-skills",
+    "./skills/misc/setup-pre-commit"
+  ]
+}

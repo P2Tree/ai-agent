@@ -1,0 +1,23 @@
+{
+  "skill_name": "symbol-refactor",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Rename the enum `ToolKind` to `Tool` in my Rust project. It's used across many files including tests and the architecture doc.",
+      "expected_output": "All references renamed, `cargo test` passes, docs updated.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Delete the unused function `parse_config_v1` from `src/config.rs`. It was superseded by `parse_config_v2` and there are no callers left.",
+      "expected_output": "Function removed, `cargo check` clean, no stale references in tests or docs.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Extract the interrupt parsing logic from `src/exceptions.rs` into a separate function called `parse_interrupt_line`.",
+      "expected_output": "New function created and called from original location, tests moved or updated, `cargo test` passes.",
+      "files": []
+    }
+  ]
+}
