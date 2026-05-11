@@ -330,7 +330,7 @@ skill 内容不变，只是注册路径不同。
 | xlsx-handler | anthropic-agent-skills | ⏳ 待迁移 |
 | docx-handler | anthropic-agent-skills | ⏳ 待迁移 |
 | uml-generator | 公司 | ⏳ 待迁移 |
-| doc-coauthoring | anthropic-agent-skills | ✅ 已创建 |
+| coauthoring | anthropic-agent-skills:doc-coauthoring | ✅ 已创建 |
 
 ### workflow/（20 个）
 

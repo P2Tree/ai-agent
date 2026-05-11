@@ -1,4 +1,15 @@
-# Stage 2: Refinement & Structure                                                                                                                                                                                                                                                           **Goal:** Build the document section by section through brainstorming, curation, and iterative refinement.                                                                                                                                                                                  ## Instructions to User                                                                                                                                                                                                                                                                     Explain that the document will be built section by section. For each section:                                                                 1. Clarifying questions will be asked about what to include                                                                                   2. 5-20 options will be brainstormed                                                                                                          3. User will indicate what to keep/remove/combine                                                                                             4. The section will be drafted                                                                                                                5. It will be refined through surgical edits
+# Stage 2: Refinement & Structure
+
+**Goal:** Build the document section by section through brainstorming, curation, and iterative refinement.
+
+## Instructions to User
+
+Explain that the document will be built section by section. For each section:                                                                 
+1. Clarifying questions will be asked about what to include
+2. 5-20 options will be brainstormed
+3. User will indicate what to keep/remove/combine
+4. The section will be drafted
+5. It will be refined through surgical edits
 
 ## Section Ordering
 

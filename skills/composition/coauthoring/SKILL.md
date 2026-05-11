@@ -1,18 +1,27 @@
 ---
-name: doc-coauthoring
-description: Guide users through a structured workflow for co-authoring documentation. Use when user wants to write documentation, proposals, technical specs, decision docs, or similar structured content. This workflow helps users efficiently transfer context, refine content through iteration, and verify the doc works for readers. Trigger when user mentions writing docs, creating proposals, drafting specs, or similar documentation tasks.
+name: coauthoring
+description: Co-author prose-heavy content through iterative human-AI collaboration. Use when writing blog posts, articles, essays, tutorials, or any content where the user's voice and ideas drive the output. NOT for structured specs (PRD, RFC) — use to-prd for those. Trigger when user mentions writing a blog, article, post, essay, tutorial, or wants help drafting prose in their own voice.
 ---
 
-# Doc Co-Authoring Workflow
+# Co-Authoring Workflow
 
-Guide users through collaborative document creation in three stages: Context Gathering, Refinement & Structure, and Reader Testing.
+Co-author prose-heavy content through iterative human-AI collaboration — three stages: Context Gathering, Refinement & Structure, and Reader Testing.
+
+**This skill is for content where the user's voice, ideas, and judgment drive the output** — blog posts, articles, essays, tutorials, thought pieces. The user writes; Claude amplifies.
+
+**Not for structured specs.** If the user wants a PRD, RFC, or design doc with fixed sections, use `to-prd` instead — those are synthesized from context, not co-authored.
 
 ## When to Offer This Workflow
 
 **Trigger conditions:**
-- User mentions writing documentation: "write a doc", "draft a proposal", "create a spec", "write up"
-- User mentions specific doc types: "PRD", "design doc", "decision doc", "RFC"
-- User seems to be starting a substantial writing task
+- User mentions writing prose content: "write a blog post", "draft an article", "help me write an essay"
+- User wants to develop ideas in their own voice: "help me flesh out this draft", "I want to write about..."
+- User is in a flow state and wants a writing partner, not a document generator
+
+**Do NOT trigger for:**
+- PRD → use `to-prd`
+- RFC / design doc with fixed structure → use `to-prd` or freeform
+- Pure status/report → use `work-report`
 
 **Initial offer:**
 Offer the user a structured workflow with three stages:
