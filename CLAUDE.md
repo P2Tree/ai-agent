@@ -29,6 +29,7 @@ ai-agent 是一个开源的 AI 编码助手技能仓库。收集、融合、维�
 - description 必须含 `Use when` 触发条件
 - 使用 `scripts/validate-skill.sh` 检查结构完整性（根据当前 shell 选择）
 - 参考 `docs/skill-writing-guide.md` 了解写作规范
+- 若 skill 创造过程中参考了开源的第三方 skill，在桶 README 描述小节中，通过 `参考` 指出
 
 ## 代码风格
 
@@ -46,4 +47,9 @@ ai-agent 是一个开源的 AI 编码助手技能仓库。收集、融合、维�
 - 不要创建 README 或 markdown 文档，除非用户明确要求
 - 不要推送到远程或创建 commit，除非用户明确要求
 - Shell 不要写 bash 特有语法，兼容 bash 和 zsh
+- 不要将 `internal` 和 `personal` 目录下的 skills 添加到根目录 README 文件和 skill 索引文件中
+
+## 脱敏
+- 若内容包含公司名称、产品名称等敏感信息，必须脱敏处理并告知用户，否则，必须放在 `internal/` 下
+- 若内容包含个人姓名、邮箱、地址、API token、密钥、简历等个人身份信息，必须放在 `personal/` 下
 - 不要将 `internal` 和 `personal` 目录下的 skills 添加到根目录 README 文件和 skill 索引文件中
