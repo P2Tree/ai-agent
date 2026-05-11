@@ -75,6 +75,7 @@ Then launch your agent console and run the `install-skills` skill for the remain
 |-------|-------------|
 | [article-series-writer](./skills/composition/article-series-writer/SKILL.md) | Parallel multi-article writing with auto-review loop |
 | [doc-coauthoring](./skills/composition/doc-coauthoring/SKILL.md) | Structured workflow for co-authoring docs, proposals, and specs |
+| [work-report](./skills/composition/work-report/SKILL.md) | Structured work reports for Chinese corporate conventions (daily through promotion) |
 
 ### Workflow
 
