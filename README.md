@@ -57,7 +57,6 @@ Then launch your agent console and run the `install-skills` skill for the remain
 | [code-review](./skills/engineering/code-review/SKILL.md) | Code review discipline — calibrate confidence, review changes not authors |
 | [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | Scan for architectural friction, suggest deep-module refactoring |
 | [frontend-design](./skills/engineering/frontend-design/SKILL.md) | Create distinctive, production-grade frontends |
-| [code-guidelines](./skills/engineering/code-guidelines/SKILL.md) | Behavioral guidelines to reduce common LLM coding errors |
 
 ### Productivity
 
@@ -67,6 +66,7 @@ Then launch your agent console and run the `install-skills` skill for the remain
 | [zoom-out](./skills/productivity/zoom-out/SKILL.md) | Zoom out to see module relationships and call chains |
 | [prototype](./skills/productivity/prototype/SKILL.md) | Disposable prototypes to validate designs before committing |
 | [caveman](./skills/productivity/caveman/SKILL.md) | Ultra-compressed communication — ~75% token reduction |
+| [code-guidelines](./skills/productivity/code-guidelines/SKILL.md) | Behavioral guidelines to reduce common LLM coding errors |
 | [grill-me](./skills/productivity/grill-me/SKILL.md) | Relentless Q&A to pressure-test your plan or design |
 
 ### Composition
