@@ -3,7 +3,7 @@ name: coauthoring
 description: Co-author prose-heavy content through iterative human-AI collaboration. Use when writing blog posts, articles, essays, tutorials, or any content where the user's voice and ideas drive the output. NOT for structured specs (PRD, RFC) — use to-prd for those. Trigger when user mentions writing a blog, article, post, essay, tutorial, or wants help drafting prose in their own voice.
 ---
 
-# Doc Co-Authoring Workflow
+# Co-Authoring Workflow
 
 Co-author prose-heavy content through iterative human-AI collaboration — three stages: Context Gathering, Refinement & Structure, and Reader Testing.
 
