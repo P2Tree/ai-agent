@@ -17,3 +17,5 @@
 **什么时候用：** 要写文档、提案、技术规格、决策文档、RFC 时。
 
 **触发方式：** 当你提到要写文档、起草提案、创建规格，或输入 `/doc-coauthoring` 会激活。
+
+**参考：** anthropics-agent-skills:doc-coauthoring
