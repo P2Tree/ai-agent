@@ -1,4 +1,4 @@
-# Karpathy Guidelines — Detailed Examples
+# Code Guidelines — Detailed Examples
 
 Real-world code examples demonstrating the four principles. Each example shows what LLMs commonly do wrong and how to fix it.
 

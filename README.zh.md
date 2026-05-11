@@ -57,7 +57,6 @@ ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 | [code-review](./skills/engineering/code-review/SKILL.md) | 代码审查纪律 — 校准置信度，审查变更而非作者 |
 | [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | 扫描架构摩擦，提出深模块重构建议 |
 | [frontend-design](./skills/engineering/frontend-design/SKILL.md) | 创建独特的、生产级前端界面 |
-| [code-guidelines](./skills/engineering/code-guidelines/SKILL.md) | 编码行为准则，减少 LLM 常见编码错误 |
 
 ### Productivity（效率提升）
 
@@ -67,6 +66,7 @@ ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 | [zoom-out](./skills/productivity/zoom-out/SKILL.md) | 拉高视角，查看模块关系和调用链 |
 | [prototype](./skills/productivity/prototype/SKILL.md) | 抛弃式原型，验证设计后再决定 |
 | [caveman](./skills/productivity/caveman/SKILL.md) | 超压缩通信模式 — 约省 75% token |
+| [code-guidelines](./skills/productivity/code-guidelines/SKILL.md) | 编码行为准则，减少 LLM 常见编码错误 |
 | [grill-me](./skills/productivity/grill-me/SKILL.md) | 逐问压力测试你的计划或设计 |
 
 ### Composition（内容生成）
