@@ -1,0 +1,28 @@
+name: Skill Validation
+
+on:
+  pull_request:
+    paths:
+      - 'skills/**'
+  schedule:
+    - cron: '17 2 * * *'   # daily at ~02:17 UTC
+  workflow_dispatch:
+
+jobs:
+  validate-changed:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Validate changed skills
+        run: bash scripts/ci-validate-skills.sh changed
+
+  validate-all:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate all skills
+        run: bash scripts/ci-validate-skills.sh all
