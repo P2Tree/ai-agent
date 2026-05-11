@@ -304,7 +304,6 @@ skill 内容不变，只是注册路径不同。
 | code-review | ai-agent:code-review-discipline + superpowers:requesting-code-review + superpowers:receiving-code-review | ✅ 已创建 |
 | improve-architecture | ai-agent + mattpocock | ✅ 已创建 |
 | frontend-design | anthropic-agent-skills | ✅ 已创建 |
-| code-guidelines | andrej-karpathy-skills | ✅ 已创建 |
 | triage | mattpocock | ✅ 已创建 |
 | init-agent-environment | ai-agent + mattpocock/setup-matt-pocock-skills | ✅ 已创建（workflow 桶） |
 
@@ -316,6 +315,7 @@ skill 内容不变，只是注册路径不同。
 | zoom-out | mattpocock | ✅ 已创建 |
 | prototype | mattpocock | ✅ 已创建 |
 | caveman | ai-agent | ✅ 已创建 |
+| code-guidelines | andrej-karpathy-skills | ✅ 已创建 |
 | grill-me | ai-agent + mattpocock/grill-with-docs | ✅ 已创建 |
 | token-efficiency-master | 公司 | ⏳ 待迁移 |
 | agentic-harness-patterns | 公司 | ⏳ 待迁移 |
@@ -330,7 +330,7 @@ skill 内容不变，只是注册路径不同。
 | xlsx-handler | anthropic-agent-skills | ⏳ 待迁移 |
 | docx-handler | anthropic-agent-skills | ⏳ 待迁移 |
 | uml-generator | 公司 | ⏳ 待迁移 |
-| doc-coauthoring | anthropic-agent-skills | ⏳ 待迁移 |
+| doc-coauthoring | anthropic-agent-skills | ✅ 已创建 |
 
 ### workflow/（20 个）
 
