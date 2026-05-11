@@ -19,3 +19,13 @@
 **触发方式：** 当你提到要写文档、起草提案、创建规格，或输入 `/doc-coauthoring` 会激活。
 
 **参考：** anthropics-agent-skills:doc-coauthoring
+
+## work-report `[自动]`
+
+生成符合国内企业汇报规范的结构化报告，覆盖日报/周报/月报/季报/年度总结/转正述职/晋升述职。数据驱动、表格优先、闭环必查。
+
+**什么时候用：** 要写工作汇报、日报、周报、月报、季度报告、年度总结、转正述职、晋升述职时。
+
+**触发方式：** 当你提到要写报告、述职，或输入 `/work-report` 会激活。
+
+**参考：** anthropics-agent-skills:internal-comms
