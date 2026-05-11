@@ -74,6 +74,7 @@ ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 | Skill | 说明 |
 |-------|------|
 | [article-series-writer](./skills/composition/article-series-writer/SKILL.md) | 并行批量写作系列文章，自动 review 闭环 |
+| [doc-coauthoring](./skills/composition/doc-coauthoring/SKILL.md) | 结构化协作撰写文档、提案、技术规格 | 
 
 ### Workflow（工作流）
 
