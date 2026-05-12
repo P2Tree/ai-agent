@@ -99,6 +99,7 @@ Then launch your agent console and run the `install-skills` skill for the remain
 |-------|-------------|
 | [install-skills](./skills/misc/install-skills/SKILL.md) | Interactive skill symlink installer |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | Check upstream sources for skill drift and update |
+| [find-skills](./skills/misc/find-skills/SKILL.md) | Discover and install skills from the open ecosystem |
 
 ## One-time Setup Skills
 
