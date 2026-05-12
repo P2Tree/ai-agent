@@ -100,6 +100,7 @@ ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 |-------|------|
 | [install-skills](./skills/misc/install-skills/SKILL.md) | 交互式 skill 软链接安装器 |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | 检查上游 skill 漂移并更新 |
+| [find-skills](./skills/misc/find-skills/SKILL.md) | 从开源 skill 生态发现并安装 skill |
 
 ## 一次性设置 Skill
 
@@ -132,6 +133,9 @@ ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 **Shell 兼容性。** 所有 shell 脚本同时兼容 bash 和 zsh（不使用 bash 特有语法）。避免平台问题，但也排除了某些 bash 便利特性。
 
 **无自动同步。** 上游变更按月度手动评估和合并。保证质量和意图一致，但可能比上游延迟最多一个月。
+
+**选择性收录。** 社区热门 skill 欢迎贡献，但部分 skill 因核心价值依赖特定平台或服务，与平台无关原则冲突而未收录。如果你需要本仓库未覆
+盖的外部 skill，可使用 [find-skills](./skills/misc/find-skills/SKILL.md) skill 搜索开源生态。
 
 ## 仓库结构
 
@@ -173,6 +177,7 @@ ai-agent/
 - [superpowers skills](https://github.com/obra/superpowers)
 - [andrej karpathy skills](https://github.com/forrestchang/andrej-karpathy-skills)
 - [mattpocock skills](https://github.com/mattpocock/skills)
+- [vercel-labs skills](https://github.com/vercel-labs/skills)
 
 ## 许可证
 

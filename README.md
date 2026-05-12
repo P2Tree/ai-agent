@@ -99,6 +99,7 @@ Then launch your agent console and run the `install-skills` skill for the remain
 |-------|-------------|
 | [install-skills](./skills/misc/install-skills/SKILL.md) | Interactive skill symlink installer |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | Check upstream sources for skill drift and update |
+| [find-skills](./skills/misc/find-skills/SKILL.md) | Discover and install skills from the open ecosystem |
 
 ## One-time Setup Skills
 
@@ -131,6 +132,8 @@ Most skills trigger on demand, but a few are one-time setup:
 **Shell compatibility.** All shell scripts target both bash and zsh (no bash-only syntax). This avoids platform surprises but rules out some bash-specific conveniences.
 
 **No auto-sync.** Upstream changes are evaluated and merged manually on a monthly cadence. This ensures quality and intent alignment, but means we may lag behind upstream by up to a month.
+
+**Selective inclusion.** Popular community skills are welcome, but some are not included because their core value depends on a specific platform or service, which conflicts with our platform-agnostic principle. If you need an external skill not covered here, use the [find-skills](./skills/misc/find-skills/SKILL.md) skill to search the open ecosystem.
 
 ## Repository Structure
 
@@ -172,6 +175,7 @@ See [Skill Writing Guide](./docs/skill-writing-guide.md) for detailed authoring 
 - [superpowers skills](https://github.com/obra/superpowers)
 - [andrej karpathy skills](https://github.com/forrestchang/andrej-karpathy-skills)
 - [mattpocock skills](https://github.com/mattpocock/skills)
+- [vercel-labs skills](https://github.com/vercel-labs/skills)
 
 ## License
 
