@@ -133,6 +133,8 @@ Most skills trigger on demand, but a few are one-time setup:
 
 **No auto-sync.** Upstream changes are evaluated and merged manually on a monthly cadence. This ensures quality and intent alignment, but means we may lag behind upstream by up to a month.
 
+**Selective inclusion.** Popular community skills are welcome, but some are not included because their core value depends on a specific platform or service, which conflicts with our platform-agnostic principle. If you need an external skill not covered here, use the [find-skills](./skills/misc/find-skills/SKILL.md) skill to search the open ecosystem.
+
 ## Repository Structure
 
 ```
