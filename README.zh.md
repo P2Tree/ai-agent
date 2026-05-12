@@ -24,27 +24,14 @@ skill-name/
 
 ## 安装
 
-### 方式 A：skills.sh 自动安装
-
 运行：
 ```bash
 npx skills@latest add p2tree/ai-agent
 ```
 
-选择你想要的 skills。
+选择你想要的 skills。这就可以了。
 
-### 方式 B：手动软链接
-
-```bash
-# 拉取仓库
-git clone https://github.com/p2tree/ai-agent.git
-cd ai-agent
-
-# 将 install-skill 安装到你的 agent skills 目录
-ln -s skills/misc/install-skills ~/.claude/skills/install-skills
-```
-
-然后，启动你的 agent 控制台，运行 `install-skills` skill 进行剩余的交互式安装。
+当启动你的 agent 控制台后，可以运行 `manage-skills` skill 进行交互式的 skills 管理。
 
 ## 内容一览
 
@@ -98,7 +85,7 @@ ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 
 | Skill | 说明 |
 |-------|------|
-| [install-skills](./skills/misc/install-skills/SKILL.md) | 交互式 skill 软链接安装器 |
+| [manage-skills](./skills/misc/manage-skills/SKILL.md) | 浏览、安装、审计、管理任何来源的 skill |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | 检查上游 skill 漂移并更新 |
 | [find-skills](./skills/misc/find-skills/SKILL.md) | 从开源 skill 生态发现并安装 skill |
 
@@ -108,7 +95,7 @@ ln -s skills/misc/install-skills ~/.claude/skills/install-skills
 
 | Skill | 作用范围 | 持久化内容 |
 |-------|---------|-----------|
-| `install-skills` | 每台机器 | agent skill 目录中的软链接；换机器需要重装 |
+| `manage-skills` | 每台机器 | 管理 agent skill 目录中的 skill；换机器需要重装 |
 | `git-guardrails` | 每个仓库 | `.claude/settings.json` 中的 hook 配置；新仓库需要重新运行 |
 | `init-agent-environment` | 每个仓库 | CLAUDE.md/AGENTS.md 中的 agent 上下文块 + `docs/agents/` 目录结构；新仓库需要重新运行 |
 

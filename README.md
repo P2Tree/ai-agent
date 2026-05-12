@@ -24,27 +24,14 @@ skill-name/
 
 ## Installation
 
-### Option A: skills.sh auto install
-
 Run:
 ```bash
 npx skills@latest add p2tree/ai-agent
 ```
 
-Select the skills you want.
+Select the skills you want. That's all.
 
-### Option B: Manual symlink
-
-```bash
-# Clone the repository
-git clone https://github.com/p2tree/ai-agent.git
-cd ai-agent
-
-# Symlink install-skills into your agent skills directory
-ln -s skills/misc/install-skills ~/.claude/skills/install-skills
-```
-
-Then launch your agent console and run the `install-skills` skill for the remaining interactive setup.
+Then launch your agent console and run the `manage-skills` skill for the interactive skill management.
 
 ## What's Inside
 
@@ -97,7 +84,7 @@ Then launch your agent console and run the `install-skills` skill for the remain
 
 | Skill | Description |
 |-------|-------------|
-| [install-skills](./skills/misc/install-skills/SKILL.md) | Interactive skill symlink installer |
+| [manage-skills](./skills/misc/manage-skills/SKILL.md) | Browse, install, audit, and manage skills from any source |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | Check upstream sources for skill drift and update |
 | [find-skills](./skills/misc/find-skills/SKILL.md) | Discover and install skills from the open ecosystem |
 
@@ -107,7 +94,7 @@ Most skills trigger on demand, but a few are one-time setup:
 
 | Skill | Scope | What persists |
 |-------|-------|---------------|
-| `install-skills` | Per system | Symlinks in your agent's skill directory; re-run when you switch machines |
+| `manage-skills` | Per system | Manages skills in your agent's skill directory; re-run when you switch machines |
 | `git-guardrails` | Per repo | Hook config in `.claude/settings.json`; re-run for each new repo |
 | `init-agent-environment` | Per repo | Agent context block in CLAUDE.md/AGENTS.md + `docs/agents/` layout; re-run for each new repo |
 

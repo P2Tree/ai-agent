@@ -2,13 +2,13 @@
 
 不好归类的其他 skill。
 
-## install-skills `[手动]`
+## manage-skills `[手动]`
 
-交互式安装器，把仓库里的 skill 通过软链接装到你指定的 agent 平台目录。逐个展示名称和描述，你确认才装。遇到同名冲突会问你要替换还是保留。装完后提供清单，还可以分析 skill 设计合理性——检测重复、建议合并、做健康度检查。
+通用 skill 管理器，支持任何来源的 skill（不限于 ai-agent）。浏览已安装 skill 并按功能分类、安装新 skill（优先搜索 ai-agent，也支持通过 find-skills 搜索外部生态）、审计已安装 skill 的来源和状态、健康度检查、删除 skill。安装流程在 find-skills 可用时自动委托其搜索外部生态。
 
-**什么时候用：** 在新机器上配置 skill、更新已安装的 skill、或管理 skill 安装时。
+**什么时候用：** 查看已安装 skill、安装新 skill、审计 skill 健康状态、删除 skill 时。
 
-**触发方式：** 需要你明确输入 `/install-skills` 才会激活。
+**触发方式：** 需要你明确输入 `/manage-skills` 才会激活。
 
 ## update-skills `[手动]`
 
