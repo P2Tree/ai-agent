@@ -18,6 +18,16 @@
 
 **触发方式：** 需要你明确输入 `/update-skills` 才会激活。
 
+## find-skills `[自动]`
+
+当本地 skill 无法覆盖用户需求时，搜索开源 skill 生态寻找匹配。通过 `npx skills find` 查询社区注册表，验证质量后推荐给用户，由用户决定是否安装。始终优先推荐本地已有的 skill。
+
+**什么时候用：** 用户问"怎么做 X"、"有没有能做 X 的 skill"、或当前 skill 无法很好地解决问题时。
+
+**触发方式：** agent 发现用户需求超出本地 skill 覆盖范围时自动激活。
+
+**参考：** vercel-labs/skills:find-skills
+
 ## create-skill `[自动]`
 
 从零创建 skill、改进现有 skill、给 skill 打分评估，全生命周期都管。包含草稿生成、子 agent 测试、打分、与基准对比、描述优化等环节。
