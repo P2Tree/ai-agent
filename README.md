@@ -33,6 +33,8 @@ Select the skills you want. That's all.
 
 Then launch your agent console and run the `manage-skills` skill for the interactive skill management.
 
+Configs files need to transfer to your system or project path and maintain manually.
+
 ## What's Inside
 
 ### Configs
