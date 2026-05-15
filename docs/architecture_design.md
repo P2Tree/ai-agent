@@ -272,7 +272,7 @@ skill 内容不变，只是注册路径不同。
 
 - **特点**：编码行为准则，单一 skill，强调减少 LLM 常见编码错误
 - **吸纳部分**：编码行为约束和反模式清单
-- **已融合 skill**：karpathy-guidelines → code-guidelines
+- **已融合 skill**：karpathy-guidelines → code-guidelines → 已合并至 CLAUDE.md 编码原则节
 
 #### anthropic-agent-skills
 
@@ -315,7 +315,6 @@ skill 内容不变，只是注册路径不同。
 | zoom-out | mattpocock | ✅ 已创建 |
 | prototype | mattpocock | ✅ 已创建 |
 | caveman | ai-agent | ✅ 已创建 |
-| code-guidelines | andrej-karpathy-skills | ✅ 已创建 |
 | grill-me | ai-agent + mattpocock/grill-with-docs | ✅ 已创建 |
 | token-efficiency-master | 公司 | ⏳ 待迁移 |
 | agentic-harness-patterns | 公司 | ⏳ 待迁移 |
