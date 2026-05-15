@@ -33,7 +33,18 @@ npx skills@latest add p2tree/ai-agent
 
 当启动你的 agent 控制台后，可以运行 `manage-skills` skill 进行交互式的 skills 管理。
 
+仓库里的 Configs 文件需要手动移植到你的系统或工程目录下，进行修改和维护。
+
 ## 内容一览
+
+### Configs（配置模板）
+
+| 配置 | 说明 |
+|------|------|
+| [project/CLAUDE.md](./configs/project/CLAUDE.md) | 项目级 agent 配置模板 — 编码原则、工作流规则、反模式 |
+| [user/CLAUDE.md](./configs/user/CLAUDE.md) | 用户级 agent 配置模板 — 个人偏好、语言、角色上下文 |
+
+将模板复制到项目根目录（`CLAUDE.md`）或家目录（`~/.claude/CLAUDE.md`），按需定制即可。
 
 ### Engineering（软件开发）
 
