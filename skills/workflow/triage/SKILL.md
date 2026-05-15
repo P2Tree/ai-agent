@@ -7,6 +7,16 @@ description: Triage issues through a state machine driven by triage roles. Use w
 
 Move issues through a small state machine of triage roles.
 
+## Pre-flight: read agent environment
+
+Read the repo's agent environment (set up by `/init-agent-environment`) before triaging:
+
+- **`docs/agents/issue-tracker.md`** — tells you which tracker to use and how to query/create/update issues and labels. All tracker operations must follow the conventions in this file.
+- **`docs/agents/triage-labels.md`** — the actual label strings mapped to the canonical role names below. When applying or removing labels, always use the strings from this file — never hardcode the canonical names.
+- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Use the domain glossary when writing triage notes and agent briefs; respect ADRs when evaluating whether an issue is feasible or contradicts an established decision.
+
+If these files don't exist, stop and ask the user to run `/init-agent-environment` first — this skill cannot function without knowing the issue tracker and label vocabulary.
+
 Every comment or issue posted during triage **must** start with:
 
 ```
@@ -28,11 +38,11 @@ Every comment or issue posted during triage **must** start with:
 - `ready-for-human` — needs human implementation
 - `wontfix` — will not be actioned
 
-Every triaged issue carries exactly one category + one state role.
+Every triaged issue carries exactly one category + one state role. If state roles conflict, flag it and ask the maintainer before doing anything else.
+
+These are canonical role names — the actual label strings are defined in `docs/agents/triage-labels.md` (set up by `/init-agent-environment`).
 
 State transitions: unlabeled → `needs-triage` → `needs-info` / `ready-for-agent` / `ready-for-human` / `wontfix`. `needs-info` returns to `needs-triage` when reporter replies.
-
-These are canonical names — actual label strings may differ. Check project config.
 
 ## Process
 

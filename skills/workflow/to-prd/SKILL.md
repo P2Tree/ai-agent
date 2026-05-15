@@ -5,11 +5,19 @@ description: Turn the current conversation context into a PRD and publish it to 
 
 This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
 
-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+## Pre-flight: read agent environment
+
+Read the repo's agent environment (set up by `/init-agent-environment`) before writing the PRD:
+
+- **`docs/agents/issue-tracker.md`** — tells you which tracker to use and how to publish the PRD as an issue. Follow the conventions in this file when creating the issue.
+- **`docs/agents/triage-labels.md`** — the label strings for the canonical triage roles. Apply the `ready-for-agent` label after publishing — use the string from this file, don't hardcode the role name.
+- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Use the domain glossary throughout the PRD; respect ADRs in the area the PRD touches.
+
+If these files don't exist, stop and ask the user to run `/init-agent-environment` first — this skill cannot function without knowing the issue tracker.
 
 ## Process
 
-1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the PRD, and respect any ADRs in the area you're touching.
+1. Explore the repo to understand the current state of the codebase, if you haven't already.
 
 2. Sketch out the major modules you will need to build or modify to complete the implementation. Actively look for opportunities to extract deep modules that can be tested in isolation.
 

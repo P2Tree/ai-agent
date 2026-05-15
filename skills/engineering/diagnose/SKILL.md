@@ -7,7 +7,15 @@ description: Disciplined diagnosis loop for hard bugs and performance regression
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
 
-When exploring the codebase, use the project's domain glossary to get a clear mental model of the relevant modules, and check ADRs in the area you're touching.
+## Pre-flight: read agent environment
+
+Before diving into code, read the repo's agent environment (set up by `/init-agent-environment`) to ground your investigation:
+
+- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Read the domain glossary (`CONTEXT.md`) so you use the project's own terminology in hypotheses and output. Read ADRs in the bug's area — they constrain what the code is *supposed* to do, which helps you reject impossible hypotheses faster.
+- **`docs/agents/issue-tracker.md`** — tells you how to fetch the original bug report (e.g. `gh issue view`, local markdown file). Read the full ticket before forming hypotheses — it often contains reproduction hints, affected versions, or prior investigation notes.
+- **`docs/agents/triage-labels.md`** — if you resolve the bug and need to update the ticket's triage state, use the label strings from this file.
+
+If these files don't exist, proceed silently — don't block the diagnosis on missing config.
 
 ## Phase 1 — Build a feedback loop
 

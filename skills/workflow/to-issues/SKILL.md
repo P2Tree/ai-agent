@@ -7,7 +7,15 @@ description: Break a plan, spec, or PRD into independently-grabbable issues on t
 
 Break a plan into independently-grabbable issues using vertical slices (tracer bullets).
 
-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+## Pre-flight: read agent environment
+
+Read the repo's agent environment (set up by `/init-agent-environment`) before creating issues:
+
+- **`docs/agents/issue-tracker.md`** — tells you which tracker to use and how to create/read issues (GitHub `gh`, GitLab `glab`, local markdown, etc.). All issue operations must follow the conventions in this file.
+- **`docs/agents/triage-labels.md`** — the label strings for the five canonical triage roles. Apply the correct `ready-for-agent` or `ready-for-human` label when publishing — don't hardcode the role names.
+- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Use the domain glossary in issue titles and descriptions; respect ADRs in the area the issues touch.
+
+If these files don't exist, stop and ask the user to run `/init-agent-environment` first — this skill cannot function without knowing the issue tracker.
 
 ## Process
 
