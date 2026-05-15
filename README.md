@@ -53,7 +53,6 @@ Then launch your agent console and run the `manage-skills` skill for the interac
 | [zoom-out](./skills/productivity/zoom-out/SKILL.md) | Zoom out to see module relationships and call chains |
 | [prototype](./skills/productivity/prototype/SKILL.md) | Disposable prototypes to validate designs before committing |
 | [caveman](./skills/productivity/caveman/SKILL.md) | Ultra-compressed communication — ~75% token reduction |
-| [code-guidelines](./skills/productivity/code-guidelines/SKILL.md) | Behavioral guidelines to reduce common LLM coding errors |
 | [grill-me](./skills/productivity/grill-me/SKILL.md) | Relentless Q&A to pressure-test your plan or design |
 
 ### Composition
