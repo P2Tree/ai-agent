@@ -103,7 +103,10 @@ validate_skills() {
 
 case "$MODE" in
   changed)
-    mapfile -t dirs < <(get_changed_skill_dirs)
+    dirs=()
+    while read -r dir; do
+      [[ -n "$dir" ]] && dirs+=("$dir")
+    done < <(get_changed_skill_dirs)
     if [[ ${#dirs[@]} -eq 0 ]]; then
       echo "No skill changes detected in this MR/PR."
       exit 0
