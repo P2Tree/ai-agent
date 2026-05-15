@@ -7,6 +7,16 @@ description: Write comprehensive implementation plans with bite-sized tasks. Use
 
 Write implementation plans assuming the engineer has zero context and questionable taste. Document everything: which files to touch, code, testing, how to verify. Bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
 
+## Pre-flight: read agent environment
+
+Read the repo's agent environment (set up by `/init-agent-environment`) to write plans that are consistent with the project's domain and architecture:
+
+- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Read `CONTEXT.md` so you use the project's own domain terminology in task names, variable names, and commit messages. Read relevant ADRs so your plan doesn't propose something that contradicts an established architectural decision — if it must contradict, flag it explicitly in the plan (e.g. "_Contradicts ADR-0003 — justified because…_").
+- **`docs/agents/issue-tracker.md`** — tells you how the project tracks work. If the plan's tasks should be published as issues, use the conventions in this file.
+- **`docs/agents/triage-labels.md`** — if publishing tasks as issues, apply the correct triage label strings from this file.
+
+If these files don't exist, proceed silently — don't block plan writing on missing config.
+
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
 ## Scope Check
