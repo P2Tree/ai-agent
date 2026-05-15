@@ -98,6 +98,42 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [update-skills](./skills/misc/update-skills/SKILL.md) | Check upstream sources for skill drift and update |
 | [find-skills](./skills/misc/find-skills/SKILL.md) | Discover and install skills from the open ecosystem |
 
+## Auto-generated Paths
+
+Skills write documents into the target repo following a unified convention. The `init-agent-environment` skill bootstraps these paths when setting up a new repo.
+
+```
+<target-repo>/
+├── CONTEXT.md                              # Domain glossary
+├── docs/
+│   ├── specs/                              # Design specs
+│   │   └── YYYY-MM-DD-<design_name>.md
+│   ├── plans/                              # Implementation plans
+│   │   └── YYYY-MM-DD-<feature_name>.md
+│   ├── prd/                                # Product requirement docs
+│   │   └── <prd_topic_name>.md
+│   ├── issues/                             # Issue files
+│   │   └── <NN>-<issue_description>.md     # NN = zero-padded sequential ID
+│   ├── adr/                                # Architecture decision records
+│   │   └── <arch_design_topic_name>.md
+│   └── agents/                             # Agent runtime config
+│       ├── issue-tracker.md
+│       ├── triage-labels.md
+│       └── domain.md
+```
+
+| Path | Purpose |
+|------------------|---------|
+| `CONTEXT.md` | Domain vocabulary — keeps skill output consistent with project terminology |
+| `docs/specs/` | Validated design specs before implementation |
+| `docs/plans/` | Step-by-step implementation plans |
+| `docs/prd/` |  Product requirement documents |
+| `docs/issues/` | Individual issue files; wontfix rejections get a `-wontfix` suffix |
+| `docs/adr/` | Architecture decision records |
+| `docs/agents/` | Agent environment configuration consumed by all workflow skills |
+
+**Note:** `docs/agents/` is agent runtime config, not design documentation.
+
 ## One-time Setup Skills
 
 Most skills trigger on demand, but a few are one-time setup:
