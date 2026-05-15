@@ -7,6 +7,15 @@ description: Complete development work by verifying tests and presenting structu
 
 Verify tests → Present options → Execute choice → Clean up.
 
+## Pre-flight: read agent environment
+
+Read the repo's agent environment (set up by `/init-agent-environment`) to close the loop with the issue tracker:
+
+- **`docs/agents/issue-tracker.md`** — tells you how to interact with the project's issue tracker (GitHub, GitLab, local markdown, etc.). Use it to link the PR to the originating issue and close it.
+- **`docs/agents/triage-labels.md`** — if the originating issue carries a triage label (e.g. `ready-for-agent`), update it to reflect completion (e.g. remove it or apply a closed-state label) using the label strings from this file.
+
+If these files don't exist, proceed without issue-tracker integration — don't block the workflow on missing config.
+
 ## The Process
 
 ### Step 1: Verify Tests
