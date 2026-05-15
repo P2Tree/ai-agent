@@ -99,6 +99,42 @@ npx skills@latest add p2tree/ai-agent
 | [update-skills](./skills/misc/update-skills/SKILL.md) | 检查上游 skill 漂移并更新 |
 | [find-skills](./skills/misc/find-skills/SKILL.md) | 从开源 skill 生态发现并安装 skill |
 
+## 自动创建的路径
+
+各 skill 按统一约定将文档写入目标仓库。`init-agent-environment` skill 在初始化新仓库时会引导创建这些路径。
+
+```
+<目标仓库>/
+├── CONTEXT.md                              # 领域术语表
+├── docs/
+│   ├── specs/                              # 设计规格
+│   │   └── YYYY-MM-DD-<design_name>.md
+│   ├── plans/                              # 实施计划
+│   │   └── YYYY-MM-DD-<feature_name>.md
+│   ├── prd/                                # 产品需求文档
+│   │   └── <prd_topic_name>.md
+│   ├── issues/                             # Issue 文件
+│   │   └── <NN>-<issue_description>.md     # NN 为零填充的顺序编号
+│   ├── adr/                                # 架构决策记录
+│   │   └── <arch_design_topic_name>.md
+│   └── agents/                             # Agent 运行配置
+│       ├── issue-tracker.md
+│       ├── triage-labels.md
+│       └── domain.md
+```
+
+| 路径  | 用途 |
+|------------|------|
+| `CONTEXT.md` |  领域词汇表，保持 skill 输出与项目术语一致 |
+| `docs/specs/` | 经验证的设计规格，实现前的产物 |
+| `docs/plans/` | 逐步实施计划 |
+| `docs/prd/` |  产品需求文档 |
+| `docs/issues/` | 单个 issue 文件；wontfix 拒绝记录加 `-wontfix` 后缀 |
+| `docs/adr/` |  架构决策记录 |
+| `docs/agents/` | Agent 环境配置，所有工作流 skill 消费 |
+
+**注意：** `docs/agents/` 是 agent 运行配置，不是设计文档。
+
 ## 一次性设置 Skill
 
 大部分 skill 按需触发，但有几个是一次性设置：
