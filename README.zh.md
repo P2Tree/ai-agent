@@ -53,7 +53,6 @@ npx skills@latest add p2tree/ai-agent
 | [zoom-out](./skills/productivity/zoom-out/SKILL.md) | 拉高视角，查看模块关系和调用链 |
 | [prototype](./skills/productivity/prototype/SKILL.md) | 抛弃式原型，验证设计后再决定 |
 | [caveman](./skills/productivity/caveman/SKILL.md) | 超压缩通信模式 — 约省 75% token |
-| [code-guidelines](./skills/productivity/code-guidelines/SKILL.md) | 编码行为准则，减少 LLM 常见编码错误 |
 | [grill-me](./skills/productivity/grill-me/SKILL.md) | 逐问压力测试你的计划或设计 |
 
 ### Composition（内容生成）
