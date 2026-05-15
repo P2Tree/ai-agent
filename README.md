@@ -35,6 +35,15 @@ Then launch your agent console and run the `manage-skills` skill for the interac
 
 ## What's Inside
 
+### Configs
+
+| Config | Description |
+|--------|-------------|
+| [project/CLAUDE.md](./configs/project/CLAUDE.md) | Project-level agent config template — coding principles, workflow rules, anti-patterns |
+| [user/CLAUDE.md](./configs/user/CLAUDE.md) | User-level agent config template — personal preferences, language, role context |
+
+Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.claude/CLAUDE.md`) and customize as needed.
+
 ### Engineering
 
 | Skill | Description |
