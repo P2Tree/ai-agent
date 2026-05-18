@@ -63,7 +63,7 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [brainstorming](./skills/productivity/brainstorming/SKILL.md) | Collaborative design gating — align on requirements before coding |
 | [zoom-out](./skills/productivity/zoom-out/SKILL.md) | Zoom out to see module relationships and call chains |
 | [prototype](./skills/productivity/prototype/SKILL.md) | Disposable prototypes to validate designs before committing |
-| [caveman](./skills/productivity/caveman/SKILL.md) | Ultra-compressed communication — ~75% token reduction |
+| [caveman](./skills/productivity/caveman/SKILL.md) | Ultra-compressed communication — fewer tokens, faster on slow networks and weak local models |
 | [grill-me](./skills/productivity/grill-me/SKILL.md) | Relentless Q&A to pressure-test your plan or design |
 
 ### Composition
