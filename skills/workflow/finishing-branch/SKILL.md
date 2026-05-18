@@ -117,5 +117,5 @@ git worktree remove <worktree-path>
 
 ## Related Skills
 
-- **using-git-worktrees** — creates the worktree this skill cleans up
 - **executing-plans** — calls this skill after all tasks/batches complete
+- **init-agent-environment** — sets up `docs/agents/issue-tracker.md` and `docs/agents/triage-labels.md` used for issue-tracker integration
