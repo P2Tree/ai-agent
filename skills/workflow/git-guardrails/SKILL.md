@@ -15,6 +15,7 @@ Sets up a PreToolUse hook that intercepts and blocks dangerous git commands befo
 - `git clean -f` / `git clean -fd`
 - `git branch -D`
 - `git checkout .` / `git restore .`
+- `git worktree add` into a non-ignored directory
 
 When blocked, Claude sees a message telling it that it does not have authority to access these commands.
 
