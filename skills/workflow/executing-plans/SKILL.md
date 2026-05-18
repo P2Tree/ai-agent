@@ -31,7 +31,7 @@ For each task:
 
 After all tasks complete and verified:
 
-- Use finishing-branch skill to verify tests, present options, execute choice
+- Verify tests pass, then present integration options to the user
 
 ## Mode 2: Subagent-Driven Development
 
@@ -57,7 +57,7 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
    f. If quality issues → implementer fixes → re-review
    g. Mark task complete
 3. After all tasks: dispatch final reviewer for entire implementation
-4. Use finishing-branch skill
+4. Verify tests pass, then present integration options to the user
 
 ### Model Selection
 
@@ -141,4 +141,3 @@ Don't force through blockers — stop and ask.
 ## Related Skills
 
 - **writing-plans** — creates the plan this skill executes
-- **finishing-branch** — completes development after all tasks
