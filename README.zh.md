@@ -80,14 +80,11 @@ npx skills@latest add p2tree/ai-agent
 | [git-guardrails](./skills/workflow/git-guardrails/SKILL.md) | Hook 保护，阻止危险 git 操作 |
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 将 spec 拆解为 bite-sized 实施计划 |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
-| [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 完成开发分支：验证 → 选择操作 → 清理 |
-| [verify-before-done](./skills/workflow/verify-before-done/SKILL.md) | 声称完成前必须运行验证命令并确认输出 |
 | [to-prd](./skills/workflow/to-prd/SKILL.md) | 将对话上下文合成为 PRD |
 | [to-issues](./skills/workflow/to-issues/SKILL.md) | 将 PRD 拆分为垂直切片的独立 issue |
 | [triage](./skills/workflow/triage/SKILL.md) | 状态机驱动的 issue 分诊 |
 | [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | 初始化 agent 工作环境 — issue tracker、标签、领域文档 |
-| [create-skill](./skills/misc/create-skill/SKILL.md) | 创建、改进、评估 skill |
 
 ### Misc（杂项）
 
@@ -96,6 +93,7 @@ npx skills@latest add p2tree/ai-agent
 | [manage-skills](./skills/misc/manage-skills/SKILL.md) | 浏览、安装、审计、管理任何来源的 skill |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | 检查上游 skill 漂移并更新 |
 | [find-skills](./skills/misc/find-skills/SKILL.md) | 从开源 skill 生态发现并安装 skill |
+| [create-skill](./skills/misc/create-skill/SKILL.md) | 创建、改进、评估 skill |
 
 ## 自动创建的路径
 
