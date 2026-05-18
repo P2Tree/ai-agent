@@ -16,7 +16,6 @@
     "./skills/workflow/git-guardrails",
     "./skills/workflow/writing-plans",
     "./skills/workflow/executing-plans",
-    "./skills/workflow/using-git-worktrees",
     "./skills/workflow/finishing-branch",
     "./skills/workflow/verify-before-done",
     "./skills/workflow/to-prd",
