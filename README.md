@@ -80,7 +80,6 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [git-guardrails](./skills/workflow/git-guardrails/SKILL.md) | Hook-based protection against dangerous git operations |
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | Break specs into bite-sized implementation plans |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | Step-by-step plan execution with verification gates |
-| [using-git-worktrees](./skills/workflow/using-git-worktrees/SKILL.md) | Isolated git worktrees for feature development |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | Complete a dev branch: verify → choose action → clean up |
 | [verify-before-done](./skills/workflow/verify-before-done/SKILL.md) | Must-run-verification before claiming any task done |
 | [to-prd](./skills/workflow/to-prd/SKILL.md) | Synthesize conversation context into a PRD |

@@ -32,16 +32,6 @@
 
 **参考：** superpowers:executing-plans + superpowers:subagent-driven-development + superpowers:dispatching-parallel-agents
 
-## using-git-worktrees `[自动]`
-
-用 git worktree 创建隔离的工作区做特性开发。自动选目录位置、验证 gitignore、安装依赖、跑测试基线，开箱即用。
-
-**什么时候用：** 开始特性开发需要隔离工作区，或执行实施计划之前。
-
-**触发方式：** 你要求隔离工作区或用 worktree 开发时才会激活。
-
-**参考：** superpowers:using-git-worktrees
-
 ## finishing-branch `[自动]`
 
 开发完了怎么办：先验证测试，然后给你四个选择——本地合并、创建 PR、保留现状、或者丢弃。选完自动清理 worktree。
