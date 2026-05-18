@@ -113,6 +113,8 @@ After writing the complete plan, check:
 1. **Spec coverage:** Can you point to a task for each requirement?
 2. **Placeholder scan:** Any red flags from the "No Placeholders" section?
 3. **Type consistency:** Do types and method signatures match across tasks?
+4. **ADR consistency:** Does any task contradict an existing ADR? If so, is the contradiction flagged?
+5. **Domain vocabulary:** Do task names and commit messages use terms from the domain glossary (path from `docs/agents/domain.md`)?
 
 Fix issues inline. If a spec requirement has no task, add it.
 
