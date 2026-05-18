@@ -42,16 +42,6 @@
 
 **参考：** superpowers:finishing-a-development-branch
 
-## verify-before-done `[自动]`
-
-说"做完了"之前必须跑验证命令并确认输出。核心规则：没有刚跑过的验证证据，就不能声称任何状态。不管是测试、构建、修 bug 还是需求核对，都一样。
-
-**什么时候用：** 准备说"做完了""测试通过了""bug 修好了"，或者要提交/建 PR 时。
-
-**触发方式：** agent 声称工作完成前自动激活——这是强制行为约束，不是可选功能。
-
-**参考：** superpowers:verification-before-completion
-
 ## to-prd `[自动]`
 
 把当前对话里讨论的内容整理成正式的 PRD 文档——问题陈述、方案、用户故事、实现决策、测试决策，写好后发布到 issue tracker。
