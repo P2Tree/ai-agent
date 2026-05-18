@@ -81,12 +81,10 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | Break specs into bite-sized implementation plans |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | Step-by-step plan execution with verification gates |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | Complete a dev branch: verify → choose action → clean up |
-| [verify-before-done](./skills/workflow/verify-before-done/SKILL.md) | Must-run-verification before claiming any task done |
 | [to-prd](./skills/workflow/to-prd/SKILL.md) | Synthesize conversation context into a PRD |
 | [to-issues](./skills/workflow/to-issues/SKILL.md) | Split PRDs into vertically-sliced, independently grabbable issues |
 | [triage](./skills/workflow/triage/SKILL.md) | State-machine issue triage with label and status workflows |
 | [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | Bootstrap agent workspace — issue tracker, labels, domain docs |
-| [create-skill](./skills/misc/create-skill/SKILL.md) | Create, improve, and evaluate skills |
 
 ### Misc
 
@@ -95,6 +93,7 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [manage-skills](./skills/misc/manage-skills/SKILL.md) | Browse, install, audit, and manage skills from any source |
 | [update-skills](./skills/misc/update-skills/SKILL.md) | Check upstream sources for skill drift and update |
 | [find-skills](./skills/misc/find-skills/SKILL.md) | Discover and install skills from the open ecosystem |
+| [create-skill](./skills/misc/create-skill/SKILL.md) | Create, improve, and evaluate skills |
 
 ## Auto-generated Paths
 
