@@ -63,7 +63,7 @@ npx skills@latest add p2tree/ai-agent
 | [brainstorming](./skills/productivity/brainstorming/SKILL.md) | 协作式设计门控 — 写代码前先对齐需求 |
 | [zoom-out](./skills/productivity/zoom-out/SKILL.md) | 拉高视角，查看模块关系和调用链 |
 | [prototype](./skills/productivity/prototype/SKILL.md) | 抛弃式原型，验证设计后再决定 |
-| [caveman](./skills/productivity/caveman/SKILL.md) | 超压缩通信模式 — 约省 75% token |
+| [caveman](./skills/productivity/caveman/SKILL.md) | 超压缩通信模式 — 省 token、弱网络传输快、本地弱模型生成快 |
 | [grill-me](./skills/productivity/grill-me/SKILL.md) | 逐问压力测试你的计划或设计 |
 
 ### Composition（内容生成）

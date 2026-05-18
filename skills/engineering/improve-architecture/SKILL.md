@@ -1,6 +1,6 @@
 ---
 name: improve-architecture
-description: Find deepening opportunities in a codebase, informed by the domain language in CONTEXT.md and the decisions in docs/adr/. Use when the user wants to improve architecture, find refactoring opportunities, consolidate tightly-coupled modules, or make a codebase more testable and AI-navigable.
+description: Find deepening opportunities in a codebase, informed by the domain language and architectural decisions. Use when the user wants to improve architecture, find refactoring opportunities, consolidate tightly-coupled modules, or make a codebase more testable and AI-navigable.
 ---
 
 # Improve Codebase Architecture
@@ -28,6 +28,16 @@ Key principles (see [LANGUAGE.md](LANGUAGE.md) for the full list):
 
 This skill is _informed_ by the project's domain model. The domain language gives names to good seams; ADRs record decisions the skill should not re-litigate.
 
+## Pre-flight: read agent environment
+
+Read the repo's agent environment (set up by `/init-agent-environment`) to ground your exploration in the project's own domain language and architecture decisions:
+
+- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Read the domain glossary (`CONTEXT.md`) so you name things the way the project does. Read ADRs in the area you're about to explore — they constrain what the code is *supposed* to do, so you don't re-litigate settled decisions.
+- **`docs/agents/issue-tracker.md`** — tells you how the project tracks work. If a candidate should be recorded as an issue, follow the conventions in this file.
+- **`docs/agents/triage-labels.md`** — if recording a candidate as an issue, apply the correct triage label strings from this file.
+
+If these files don't exist, proceed silently — don't block exploration on missing config.
+
 ## Process
 
 ### 1. Explore
@@ -53,7 +63,7 @@ Present a numbered list of deepening opportunities. For each candidate:
 - **Solution** — plain English description of what would change
 - **Benefits** — explained in terms of locality and leverage, and also in how tests would improve
 
-**Use CONTEXT.md vocabulary for the domain, and [LANGUAGE.md](LANGUAGE.md) vocabulary for the architecture.** If `CONTEXT.md` defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
+**Use the domain glossary's vocabulary (path from `docs/agents/domain.md`) for the domain, and [LANGUAGE.md](LANGUAGE.md) vocabulary for the architecture.** If the glossary defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
 
 **ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly (e.g. _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
 
@@ -65,8 +75,7 @@ Once the user picks a candidate, drop into a grilling conversation. Walk the des
 
 Side effects happen inline as decisions crystallize:
 
-- **Naming a deepened module after a concept not in `CONTEXT.md`?** Add the term to `CONTEXT.md` — use a one-line definition in a `## Glossary` section (term: definition). Create the file lazily if it doesn't exist.
-- **Sharpening a fuzzy term during the conversation?** Update `CONTEXT.md` right there.
-- **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones. Write the ADR to `docs/adr/<arch_design_topic_name>.md` with: Title, Status (Rejected), Context, Decision, Consequences.
-- **Want to explore alternative interfaces for the deepened module?** See [INTERFACE-DESIGN.md](INTERFACE-DESIGN.md).
+- **Naming a deepened module after a concept not in the domain glossary?** Add the term to the glossary file (path from `docs/agents/domain.md`) — use a one-line definition in a `## Glossary` section (term: definition). Create the file lazily if it doesn't exist.
+- **Sharpening a fuzzy term during the conversation?** Update the glossary file right there.
+- **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones. Write the ADR to the ADR directory (path from `docs/agents/domain.md`) as `<arch_design_topic_name>.md` with: Title, Status (Rejected), Context, Decision, Consequences.
 - **Want to explore alternative interfaces for the deepened module?** See [INTERFACE-DESIGN.md](INTERFACE-DESIGN.md).
