@@ -81,7 +81,6 @@ npx skills@latest add p2tree/ai-agent
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 将 spec 拆解为 bite-sized 实施计划 |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
-| [using-git-worktrees](./skills/workflow/using-git-worktrees/SKILL.md) | 隔离的 git worktree 做特性开发 |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 完成开发分支：验证 → 选择操作 → 清理 |
 | [verify-before-done](./skills/workflow/verify-before-done/SKILL.md) | 声称完成前必须运行验证命令并确认输出 |
 | [to-prd](./skills/workflow/to-prd/SKILL.md) | 将对话上下文合成为 PRD |
