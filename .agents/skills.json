@@ -14,7 +14,6 @@
     "./skills/composition/coauthoring",
     "./skills/composition/work-report",
     "./skills/composition/arch-doc",
-    "./skills/workflow/git-guardrails",
     "./skills/workflow/writing-plans",
     "./skills/workflow/executing-plans",
     "./skills/workflow/finishing-branch",
