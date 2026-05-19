@@ -1,6 +1,6 @@
 ---
 name: manage-skills
-description: Browse, audit, and manage installed agent skills — any source, not just ai-agent. Use when checking what's installed, auditing skill health, removing skills, or wanting to install new skills.
+description: Browse, audit, and manage installed agent skills — any source, not just ai-agent. Use when checking what's installed, auditing skill health, removing skills, syncing with upstream, or wanting to install new skills.
 disable-model-invocation: true
 ---
 
@@ -25,16 +25,17 @@ Classify skills by reading their `description` from SKILL.md frontmatter:
 
 ### 1. Ask User Intent
 
-Present menu:
+Use AskUserQuestion to present options and get the user's choice:
 
-```
-What would you like to do?
-  1. Browse installed skills
-  2. Install a skill
-  3. Audit installed skills
-  4. Health analysis
-  5. Remove skills
-```
+- **question**: "What would you like to do?"
+- **options**:
+  1. "Browse installed skills"
+  2. "Install & sync skills"
+  3. "Audit & health check"
+  4. "Remove skills"
+- **multiSelect**: false
+
+Then proceed to the corresponding section based on the user's choice.
 
 ### 2. Browse Installed Skills
 
@@ -42,7 +43,9 @@ Scan skill directories (`~/.claude/skills/`, project-level `.claude/skills/`). F
 
 Display organized by bucket, mark source (ai-agent / third-party / unknown), show descriptions. Report total count per source.
 
-### 3. Install Skills
+### 3. Install & Sync Skills
+
+#### 3a. Install a Skill
 
 User specifies what they want (name, domain, or problem description).
 
@@ -74,7 +77,21 @@ If only one source matches, show it directly with source info.
 
 **Conflict handling:** If target directory already has an entry, offer: Replace / Keep existing / View both.
 
-### 4. Audit Installed Skills
+#### 3b. Sync Check (Missing & Outdated)
+
+Check which ai-agent skills are uninstalled or outdated. Works for all installation types (npx, symlink, copy).
+
+1. **Fetch remote skill list** from `p2tree/ai-agent` via `gh api` → `curl` → degraded mode (timestamp only)
+2. **Identify ai-agent source** for each installed skill: skill-lock.json `source` field → symlink path → name match against remote list
+3. **Uninstalled check**: remote skill list − local installed names → show missing skills with descriptions
+4. **Outdated check**: compare local vs remote SKILL.md content (hash diff); fall back to mtime heuristics if remote unreachable
+5. **Offer actions**: install missing (`npx skills add`), update outdated (`npx skills update` or re-add), or skip
+
+See [sync check details](references/sync-check.md).
+
+### 4. Audit & Health Check
+
+#### 4a. Audit Installed Skills
 
 Scan all skill directories. Detect source per skill:
 - **skill-lock.json**: Entry with `source` → definitive source
@@ -88,7 +105,7 @@ Check for issues:
 - Duplicate scope (same skill in global + project)
 - Orphaned skills (no lock entry, no symlink, no known source)
 
-### 5. Health Analysis
+#### 4b. Health Analysis
 
 Run checks per references/health-analysis.md:
 - Structural validation (frontmatter, line count, sensitive data, triggers)
@@ -98,7 +115,7 @@ Run checks per references/health-analysis.md:
 
 Ask "Run health analysis? (y/n)" before proceeding.
 
-### 6. Remove Skills
+### 5. Remove Skills
 
 Detect installation type per skill:
 - **npx-installed**: `npx skills remove <name>`
