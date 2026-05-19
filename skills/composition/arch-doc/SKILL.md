@@ -4,7 +4,7 @@ description: >
   使用此 skill 为代码仓库编写、更新或补充架构设计说明书。当用户提到"编写架构说明文档"、"架构设计说明书"、
   "补充架构文档"、"对齐架构文档"、"更新架构说明"、"写一份架构设计"、"生成架构文档"时调用此 skill，
   即使用户没有明确说"架构文档"但意图是对代码仓库进行系统性的架构级文档编写也应触发。
-  Use this skill whenever the user asks to document, create, update, or align
+  Use when the user asks to document, create, update, or align
   architecture design documentation for any software project, regardless of
   language, framework, or domain.
 ---
