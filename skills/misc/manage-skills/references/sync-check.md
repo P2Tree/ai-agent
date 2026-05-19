@@ -6,9 +6,11 @@ Check which ai-agent skills are missing or outdated in the local installation. W
 
 Fetch remote skill info with fallback chain:
 
-1. **gh api** — `gh api repos/p2tree/ai-agent/contents/.agents/skills.json` → parse JSON → get skill list
-2. **curl raw URL** — `curl -s https://raw.githubusercontent.com/p2tree/ai-agent/main/.agents/skills.json` → parse JSON
+1. **curl raw URL** — `curl -s https://raw.githubusercontent.com/p2tree/ai-agent/main/.agents/skills.json` → parse JSON
+2. **gh api** — `gh api repos/p2tree/ai-agent/contents/.agents/skills.json` → parse JSON → get skill list
 3. **Degraded mode** — if neither works (no gh, no network), fall back to timestamp-based staleness only and warn: "Cannot reach remote. Only local timestamp check available. Install gh or check network for full sync."
+
+Prefer `curl` first — it has no auth requirements and works across environments. `gh api` is a fallback for when GitHub raw is rate-limited.
 
 ## Source Identification (3 tiers)
 
@@ -34,29 +36,19 @@ Tier 3 matches are labeled "inferred source" in output — user should confirm.
 
 For each installed skill identified as ai-agent source (any tier):
 
-### A. npx-installed (has skill-lock.json)
+**Authoritative method — direct remote comparison:**
 
-1. Read `skillFolderHash` from skill-lock.json
-2. Compute SHA256 hash of current local skill files (`find . -type f | sort | xargs cat | sha256sum`)
-3. If hash differs from `skillFolderHash` → "locally modified or source changed"
-4. Read `updatedAt`; if over 30 days old → "may be outdated"
-5. Optionally: fetch remote SKILL.md, compute hash, compare with local SKILL.md hash for definitive answer
+1. Get the bucket for the skill from the remote skills.json (already fetched)
+2. Fetch remote SKILL.md: `curl -s https://raw.githubusercontent.com/p2tree/ai-agent/main/skills/{bucket}/{name}/SKILL.md`
+3. Compute SHA256 of both local and remote SKILL.md content
+4. If hashes differ → "outdated"
+5. If hashes match → "up to date"
 
-### B. Symlink or copied (no skill-lock.json)
+**Do NOT use `skill-lock.json` hashes for outdated detection.** Lock file `skillFolderHash` records install-time state for integrity checks, not freshness vs remote. In practice, it produces false MODIFIED reports on every skill because the hashing method differs from a direct SHA256 of file content. The only reliable comparison is local SKILL.md vs remote raw.githubusercontent.com.
 
-1. Fetch remote SKILL.md for this skill via gh api or curl raw URL
-   - raw URL: `https://raw.githubusercontent.com/p2tree/ai-agent/main/skills/{bucket}/{name}/SKILL.md`
-2. Compare remote content with local SKILL.md:
-   - SHA256 hash comparison (preferred)
-   - Line count diff as fallback (significant line count change likely means update)
-3. If different → "remote version differs"
-4. If remote fetch fails → check local SKILL.md mtime; if over 30 days → "may be outdated (unverified)"
+**Batch efficiency:** Use a single Python/Node script to fetch and compare all skills in one pass. This avoids N separate curl invocations (rate limits: 60 req/hr unauthenticated) and is significantly faster. Construct URLs as `https://raw.githubusercontent.com/p2tree/ai-agent/main/skills/{bucket}/{name}/SKILL.md`.
 
-### C. Remote unreachable (degraded mode)
-
-- Check local SKILL.md mtime
-- Over 30 days → "may be outdated (unverified)"
-- Under 30 days → "recent, likely up to date (unverified)"
+**Degraded mode (remote unreachable):** Check local SKILL.md mtime. Over 30 days → "may be outdated (unverified)". Under 30 days → "recent, likely up to date (unverified)".
 
 ## Output Format
 
@@ -89,17 +81,26 @@ Actions:
 After displaying results, offer actions:
 
 - **Install missing** — for each uninstalled skill user selects, run: `npx skills add p2tree/ai-agent --skill <name>`
-- **Update outdated** — for each outdated skill user selects:
-  - npx-installed: `npx skills update <name>`
-  - Symlink: update the symlink target or re-link
-  - Copied: re-download via `npx skills add p2tree/ai-agent --skill <name>` (will conflict → offer Replace)
+- **Update outdated** — for each outdated skill user selects, run: `npx skills update <name>`
 - **Skip** — no action
 
 Always confirm before making changes. Show what will be installed/updated.
 
+## Data Parsing Pitfalls
+
+Real-world lessons from sync runs:
+
+1. **`ls` with symlink arrows** — `ls -1` in a directory with symlinks emits entries like `skill-name ⇒ target`. Piping this to `comm` or `diff` silently breaks because every line contains `⇒`. Use `for d in */; do echo "${d%/}"; done` to get clean directory names.
+
+2. **Lock file hash ≠ outdated check** — `skill-lock.json` records `skillFolderHash` at install time for integrity verification. Comparing it against a direct SHA256 of file content always shows MODIFIED (hashing methods differ). For outdated detection, only direct remote SKILL.md comparison is authoritative.
+
+3. **Understand the symlink chain first** — Before diagnosing hash mismatches or broken installs, trace where skills actually live (`readlink -f`). Common pattern: `~/.claude/skills/<name>` → `~/.agents/skills/<name>` (npx-managed copies). Don't assume a git clone is involved.
+
+4. **Batch remote fetches** — A single script that fetches all remote SKILL.md files in one pass is faster and avoids rate limits. Don't loop `curl` per skill in shell.
+
 ## Notes
 
-- Works in both local-clone and npx-only environments
+- All operations use `npx` — no local ai-agent clone assumed
 - No agent-specific tool names — uses `gh`, `curl`, `sha256sum`, `readlink` (standard CLI tools)
 - Compatible with bash and zsh
 - Remote repo path `p2tree/ai-agent` is the default; allow override if user has a fork

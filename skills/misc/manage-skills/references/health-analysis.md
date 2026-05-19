@@ -55,10 +55,10 @@ Present overlapping pairs with both descriptions so the user can judge.
 
 For npx-installed skills tracked in skill-lock.json:
 
-1. Read `skillFolderHash` from skill-lock.json
-2. Compare with current hash of installed files
-3. If different, flag as "locally modified or source changed"
-4. Check `updatedAt` timestamp — if over 30 days old, suggest running `npx skills update`
+1. Check `updatedAt` timestamp — if over 30 days old, suggest running `npx skills update`
+2. For definitive staleness, compare local SKILL.md SHA256 against remote `raw.githubusercontent.com/p2tree/ai-agent/main/skills/{bucket}/{name}/SKILL.md`
+
+Do NOT use `skill-lock.json` `skillFolderHash` for staleness detection — it records install-time integrity state, not freshness vs remote, and produces false positives.
 
 ## Output Format
 

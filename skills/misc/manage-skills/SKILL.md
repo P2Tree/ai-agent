@@ -73,19 +73,24 @@ If only one source matches, show it directly with source info.
 **E. Install chosen skill**
 - ai-agent skill: `npx skills add p2tree/ai-agent --skill <name>`
 - External skill: `npx skills add <owner/repo> --skill <name>` (via find-skills)
-- Local-clone mode: also offer symlink for ai-agent skills
+
+All installs use `npx` — do not assume a local ai-agent clone exists.
 
 **Conflict handling:** If target directory already has an entry, offer: Replace / Keep existing / View both.
 
 #### 3b. Sync Check (Missing & Outdated)
 
-Check which ai-agent skills are uninstalled or outdated. Works for all installation types (npx, symlink, copy).
+Check which ai-agent skills are uninstalled or outdated. All operations use `npx` via cloud — no local ai-agent clone assumed.
 
-1. **Fetch remote skill list** from `p2tree/ai-agent` via `gh api` → `curl` → degraded mode (timestamp only)
-2. **Identify ai-agent source** for each installed skill: skill-lock.json `source` field → symlink path → name match against remote list
+1. **Fetch remote skill list** from `p2tree/ai-agent` via `curl -s https://raw.githubusercontent.com/p2tree/ai-agent/main/.agents/skills.json`; fall back to `gh api`; degraded mode (timestamp only) if unreachable
+2. **Identify ai-agent source** for each installed skill: skill-lock.json `source` field → symlink target path → name match against remote list
 3. **Uninstalled check**: remote skill list − local installed names → show missing skills with descriptions
-4. **Outdated check**: compare local vs remote SKILL.md content (hash diff); fall back to mtime heuristics if remote unreachable
-5. **Offer actions**: install missing (`npx skills add`), update outdated (`npx skills update` or re-add), or skip
+4. **Outdated check**: directly compare local SKILL.md SHA256 vs remote raw.githubusercontent.com SKILL.md — this is the only authoritative method. Do NOT use skill-lock.json hashes for this comparison (lock hashes record install-time state for integrity, not freshness vs remote)
+5. **Offer actions**: install missing (`npx skills add`), update outdated (`npx skills update`), or skip
+
+**Data parsing pitfalls** (from real-world sync runs):
+- `ls` in a symlink-heavy directory emits `⇒` arrows — never pipe it to `comm` or `diff`. Use `for d in */; do echo "${d%/}"; done` to get clean directory names
+- Lock file `skillFolderHash` differs from direct SHA256, leading to false MODIFIED reports on every skill. Skip it for outdated detection. The only reliable comparison is local SKILL.md vs remote raw.githubusercontent.com
 
 See [sync check details](references/sync-check.md).
 
@@ -126,7 +131,7 @@ Always confirm before removal. Show what will be removed and detected source.
 
 ## Notes
 
-- Works in both local-clone and npx-only environments
+- All install and update operations use `npx` — no local ai-agent clone needed
 - No agent-specific tool names in this document
 - find-skills is optional — install flow degrades gracefully without it
 - Compatible with bash and zsh
