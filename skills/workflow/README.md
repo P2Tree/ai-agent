@@ -42,23 +42,23 @@
 
 **参考：** superpowers:finishing-a-development-branch
 
-## to-prd `[自动]`
+## writing-prd `[自动]`
 
 把当前对话里讨论的内容整理成正式的 PRD 文档——问题陈述、方案、用户故事、实现决策、测试决策，写好后发布到 issue tracker。
 
 **什么时候用：** 需求对齐了，需要输出正式 PRD 时。
 
-**触发方式：** 当你明确说要创建 PRD、或输入 `/to-prd` 时会激活。
+**触发方式：** 当你明确说要创建 PRD、或输入 `/writing-prd` 时会激活。
 
 **参考：** mattpocock:to-prd
 
-## to-issues `[自动]`
+## decomposing-issues `[自动]`
 
 把计划或 PRD 拆成一个个可独立认领、独立执行的 issue，每个是一条完整的垂直切片。
 
 **什么时候用：** PRD 写好了，要拆成可执行的任务时。
 
-**触发方式：** 当你明确说要把计划拆成 issue、或输入 `/to-issues` 时会激活。
+**触发方式：** 当你明确说要把计划拆成 issue、或输入 `/decomposing-issues` 时会激活。
 
 **来源：** mattpocock:to-issues
 
