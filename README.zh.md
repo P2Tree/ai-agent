@@ -72,6 +72,7 @@ npx skills@latest add p2tree/ai-agent
 |-------|------|
 | [coauthoring](./skills/composition/coauthoring/SKILL.md) | 人机协作撰写文章、博客、随笔等 prose 类内容 |
 | [work-report](./skills/composition/work-report/SKILL.md) | 适应中国本土企业的工作汇报（日报、年终总结到晋升述职全场景覆盖） |
+| [arch-doc](./skills/composition/arch-doc/SKILL.md) | 架构设计说明书 — 从代码生成、更新或对齐架构文档 |
 
 ### Workflow（工作流）
 
