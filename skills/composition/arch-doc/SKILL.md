@@ -54,7 +54,7 @@ Task Progress:
 
 ### Step 3: Load template
 
-读取 [references/template.md](references/template.md) 作为文档结构规范。模板定义了 15 个必选章节和可选章节的骨架结构及占位符格式。
+→ 详见 [references/step3-template.md](references/step3-template.md)
 
 ### Step 4: Generate the architecture design document
 
