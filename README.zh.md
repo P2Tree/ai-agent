@@ -139,7 +139,6 @@ npx skills@latest add p2tree/ai-agent
 | Skill | 作用范围 | 持久化内容 |
 |-------|---------|-----------|
 | `manage-skills` | 每台机器 | 管理 agent skill 目录中的 skill；换机器需要重装 |
-| `git-guardrails` | 每个仓库 | `.claude/settings.json` 中的 hook 配置；新仓库需要重新运行 |
 | `init-agent-environment` | 每个仓库 | CLAUDE.md/AGENTS.md 中的 agent 上下文块 + `docs/agents/` 目录结构；新仓库需要重新运行 |
 
 ## 设计哲学
