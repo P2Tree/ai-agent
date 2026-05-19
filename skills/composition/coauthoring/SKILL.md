@@ -1,6 +1,6 @@
 ---
 name: coauthoring
-description: Co-author prose-heavy content through iterative human-AI collaboration. Use when writing blog posts, articles, essays, tutorials, or any content where the user's voice and ideas drive the output. NOT for structured specs (PRD, RFC) — use to-prd for those. Trigger when user mentions writing a blog, article, post, essay, tutorial, or wants help drafting prose in their own voice.
+description: Co-author prose-heavy content through iterative human-AI collaboration. Use when writing blog posts, articles, essays, tutorials, or any content where the user's voice and ideas drive the output. NOT for structured specs (PRD, RFC) — use writing-prd for those. Trigger when user mentions writing a blog, article, post, essay, tutorial, or wants help drafting prose in their own voice.
 ---
 
 # Co-Authoring Workflow
@@ -9,7 +9,7 @@ Co-author prose-heavy content through iterative human-AI collaboration — three
 
 **This skill is for content where the user's voice, ideas, and judgment drive the output** — blog posts, articles, essays, tutorials, thought pieces. The user writes; Claude amplifies.
 
-**Not for structured specs.** If the user wants a PRD, RFC, or design doc with fixed sections, use `to-prd` instead — those are synthesized from context, not co-authored.
+**Not for structured specs.** If the user wants a PRD, RFC, or design doc with fixed sections, use `writing-prd` instead — those are synthesized from context, not co-authored.
 
 ## When to Offer This Workflow
 
@@ -19,8 +19,8 @@ Co-author prose-heavy content through iterative human-AI collaboration — three
 - User is in a flow state and wants a writing partner, not a document generator
 
 **Do NOT trigger for:**
-- PRD → use `to-prd`
-- RFC / design doc with fixed structure → use `to-prd` or freeform
+- PRD → use `writing-prd`
+- RFC / design doc with fixed structure → use `writing-prd` or freeform
 - Pure status/report → use `work-report`
 
 **Initial offer:**
