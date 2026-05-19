@@ -79,7 +79,6 @@ npx skills@latest add p2tree/ai-agent
 
 | Skill | 说明 |
 |-------|------|
-| [git-guardrails](./skills/workflow/git-guardrails/SKILL.md) | Hook 保护，阻止危险 git 操作 |
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 将 spec 拆解为 bite-sized 实施计划 |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 完成开发分支：验证 → 选择操作 → 清理 |
