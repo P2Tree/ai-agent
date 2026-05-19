@@ -139,7 +139,6 @@ Most skills trigger on demand, but a few are one-time setup:
 | Skill | Scope | What persists |
 |-------|-------|---------------|
 | `manage-skills` | Per system | Manages skills in your agent's skill directory; re-run when you switch machines |
-| `git-guardrails` | Per repo | Hook config in `.claude/settings.json`; re-run for each new repo |
 | `init-agent-environment` | Per repo | Agent context block in CLAUDE.md/AGENTS.md + `docs/agents/` layout; re-run for each new repo |
 
 ## Design Philosophy
