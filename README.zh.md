@@ -25,6 +25,7 @@ skill-name/
 ## 安装
 
 运行：
+
 ```bash
 npx skills@latest add p2tree/ai-agent
 ```
@@ -72,6 +73,7 @@ npx skills@latest add p2tree/ai-agent
 |-------|------|
 | [coauthoring](./skills/composition/coauthoring/SKILL.md) | 人机协作撰写文章、博客、随笔等 prose 类内容 |
 | [work-report](./skills/composition/work-report/SKILL.md) | 适应中国本土企业的工作汇报（日报、年终总结到晋升述职全场景覆盖） |
+| [arch-doc](./skills/composition/arch-doc/SKILL.md) | 架构设计说明书 — 从代码生成、更新或对齐架构文档 |
 
 ### Workflow（工作流）
 
@@ -81,8 +83,8 @@ npx skills@latest add p2tree/ai-agent
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 将 spec 拆解为 bite-sized 实施计划 |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 完成开发分支：验证 → 选择操作 → 清理 |
-| [to-prd](./skills/workflow/to-prd/SKILL.md) | 将对话上下文合成为 PRD |
-| [to-issues](./skills/workflow/to-issues/SKILL.md) | 将 PRD 拆分为垂直切片的独立 issue |
+| [writing-prd](./skills/workflow/writing-prd/SKILL.md) | 将对话上下文合成为 PRD |
+| [decomposing-issues](./skills/workflow/decomposing-issues/SKILL.md) | 将 PRD 拆分为垂直切片的独立 issue |
 | [triage](./skills/workflow/triage/SKILL.md) | 状态机驱动的 issue 分诊 |
 | [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | 初始化 agent 工作环境 — issue tracker、标签、领域文档 |
 
