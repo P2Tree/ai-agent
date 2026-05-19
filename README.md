@@ -25,6 +25,7 @@ skill-name/
 ## Installation
 
 Run:
+
 ```bash
 npx skills@latest add p2tree/ai-agent
 ```
@@ -72,6 +73,7 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 |-------|-------------|
 | [coauthoring](./skills/composition/coauthoring/SKILL.md) | Iterative human-AI co-authoring for prose content (blogs, articles, essays) |
 | [work-report](./skills/composition/work-report/SKILL.md) | Structured work reports for Chinese corporate conventions (daily through promotion) |
+| [arch-doc](./skills/composition/arch-doc/SKILL.md) | Systematic architecture design documentation — create, update, or align arch docs from code |
 
 ### Workflow
 
@@ -81,8 +83,8 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | Break specs into bite-sized implementation plans |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | Step-by-step plan execution with verification gates |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | Complete a dev branch: verify → choose action → clean up |
-| [to-prd](./skills/workflow/to-prd/SKILL.md) | Synthesize conversation context into a PRD |
-| [to-issues](./skills/workflow/to-issues/SKILL.md) | Split PRDs into vertically-sliced, independently grabbable issues |
+| [writing-prd](./skills/workflow/writing-prd/SKILL.md) | Synthesize conversation context into a PRD |
+| [decomposing-issues](./skills/workflow/decomposing-issues/SKILL.md) | Split PRDs into vertically-sliced, independently grabbable issues |
 | [triage](./skills/workflow/triage/SKILL.md) | State-machine issue triage with label and status workflows |
 | [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | Bootstrap agent workspace — issue tracker, labels, domain docs |
 
