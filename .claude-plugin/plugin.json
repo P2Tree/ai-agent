@@ -18,7 +18,6 @@
     "./skills/composition/docx",
     "./skills/composition/pptx",
     "./skills/composition/xlsx",
-    "./skills/workflow/git-guardrails",
     "./skills/workflow/writing-plans",
     "./skills/workflow/executing-plans",
     "./skills/workflow/finishing-branch",

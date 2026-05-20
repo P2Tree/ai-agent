@@ -83,7 +83,6 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 
 | Skill | Description |
 |-------|-------------|
-| [git-guardrails](./skills/workflow/git-guardrails/SKILL.md) | Hook-based protection against dangerous git operations |
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | Break specs into bite-sized implementation plans |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | Step-by-step plan execution with verification gates |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | Complete a dev branch: verify → choose action → clean up |
@@ -144,7 +143,6 @@ Most skills trigger on demand, but a few are one-time setup:
 | Skill | Scope | What persists |
 |-------|-------|---------------|
 | `manage-skills` | Per system | Manages skills in your agent's skill directory; re-run when you switch machines |
-| `git-guardrails` | Per repo | Hook config in `.claude/settings.json`; re-run for each new repo |
 | `init-agent-environment` | Per repo | Agent context block in CLAUDE.md/AGENTS.md + `docs/agents/` layout; re-run for each new repo |
 
 ## Design Philosophy
