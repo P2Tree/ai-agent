@@ -78,7 +78,7 @@ reportlab 两种模式：
 
 水印：读取水印 PDF 页，对每页 `merge_page()` 后写出。
 
-加密：`writer.encrypt("user_password", "owner_password")`。
+加密：`writer.encrypt(user_pwd, owner_pwd)`。
 
 OCR：`pdf2image` 转图片 → `pytesseract.image_to_string()`。
 
