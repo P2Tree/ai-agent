@@ -2,16 +2,6 @@
 
 工作流操作相关的 skill。
 
-## git-guardrails `[手动]`
-
-通过 agent hooks 拦截危险 git 操作（push、reset --hard、clean、branch -D 等），防止 agent 误操作搞坏仓库。
-
-**什么时候用：** 希望 agent 工作时保护好 git 仓库安全时。
-
-**触发方式：** 需要你明确输入 `/git-guardrails` 才会激活。属于一次性设置——激活后 hooks 持续生效，不需要再次触发。
-
-**参考：** mattpocock:git-guardrails-claude-code
-
 ## writing-plans `[自动]`
 
 把需求拆成一步步可执行的计划，每步都带完整代码和验证命令。遵循 DRY、YAGNI、TDD 原则，勤提交。不要留 TBD、TODO 之类的占位符。

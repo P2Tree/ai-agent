@@ -79,7 +79,6 @@ npx skills@latest add p2tree/ai-agent
 
 | Skill | 说明 |
 |-------|------|
-| [git-guardrails](./skills/workflow/git-guardrails/SKILL.md) | Hook 保护，阻止危险 git 操作 |
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 将 spec 拆解为 bite-sized 实施计划 |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
 | [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 完成开发分支：验证 → 选择操作 → 清理 |
@@ -140,7 +139,6 @@ npx skills@latest add p2tree/ai-agent
 | Skill | 作用范围 | 持久化内容 |
 |-------|---------|-----------|
 | `manage-skills` | 每台机器 | 管理 agent skill 目录中的 skill；换机器需要重装 |
-| `git-guardrails` | 每个仓库 | `.claude/settings.json` 中的 hook 配置；新仓库需要重新运行 |
 | `init-agent-environment` | 每个仓库 | CLAUDE.md/AGENTS.md 中的 agent 上下文块 + `docs/agents/` 目录结构；新仓库需要重新运行 |
 
 ## 设计哲学
