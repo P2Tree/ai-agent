@@ -74,6 +74,10 @@ npx skills@latest add p2tree/ai-agent
 | [coauthoring](./skills/composition/coauthoring/SKILL.md) | 人机协作撰写文章、博客、随笔等 prose 类内容 |
 | [work-report](./skills/composition/work-report/SKILL.md) | 适应中国本土企业的工作汇报（日报、年终总结到晋升述职全场景覆盖） |
 | [arch-doc](./skills/composition/arch-doc/SKILL.md) | 架构设计说明书 — 从代码生成、更新或对齐架构文档 |
+| [pdf](./skills/composition/pdf/SKILL.md) | PDF 文件处理 — 读取、提取、合并、拆分、旋转、水印、加密、OCR、表单填写 |
+| [docx](./skills/composition/docx/SKILL.md) | Word 文档处理 — 创建、读取、编辑、格式化 .docx 文件 |
+| [pptx](./skills/composition/pptx/SKILL.md) | PPT 演示文稿处理 — 创建、读取、编辑、拆分、合并 .pptx 文件 |
+| [xlsx](./skills/composition/xlsx/SKILL.md) | 电子表格处理 — 读取、创建、编辑、分析 .xlsx/.xlsm/.csv/.tsv 文件 |
 
 ### Workflow（工作流）
 

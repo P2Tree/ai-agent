@@ -74,6 +74,10 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [coauthoring](./skills/composition/coauthoring/SKILL.md) | Iterative human-AI co-authoring for prose content (blogs, articles, essays) |
 | [work-report](./skills/composition/work-report/SKILL.md) | Structured work reports for Chinese corporate conventions (daily through promotion) |
 | [arch-doc](./skills/composition/arch-doc/SKILL.md) | Systematic architecture design documentation — create, update, or align arch docs from code |
+| [pdf](./skills/composition/pdf/SKILL.md) | PDF file processing — read, extract, merge, split, rotate, watermark, encrypt, OCR, form filling |
+| [docx](./skills/composition/docx/SKILL.md) | Word document processing — create, read, edit, format .docx files |
+| [pptx](./skills/composition/pptx/SKILL.md) | PowerPoint presentation processing — create, read, edit, split, merge .pptx files |
+| [xlsx](./skills/composition/xlsx/SKILL.md) | Spreadsheet processing — read, create, edit, analyze .xlsx/.xlsm/.csv/.tsv files |
 
 ### Workflow
 
