@@ -72,10 +72,10 @@ If only one source matches, show it directly with source info.
 
 **E. Install chosen skill**
 
-`npx skills add` installs to `.agents/skills/` relative to CWD. Always resolve the project root (directory containing `.agents/` or `.claude/`) as an absolute path first, then `cd` into it before running the install command. Detect by walking up from CWD or asking the user.
+`npx skills add` installs to `~/.agents/skills/` (global) or `.agents/skills/` relative to CWD (project-level). Ensure `~/.agents/skills/` exists before installing (`mkdir -p ~/.agents/skills`). For project-level installs, run from the project directory.
 
-- ai-agent skill: `cd "$PROJECT_ROOT" && npx skills add p2tree/ai-agent --skill <name>`
-- External skill: `cd "$PROJECT_ROOT" && npx skills add <owner/repo> --skill <name>` (via find-skills)
+- ai-agent skill: `npx skills add p2tree/ai-agent --skill <name>`
+- External skill: `npx skills add <owner/repo> --skill <name>` (via find-skills)
 
 All installs use `npx` — do not assume a local ai-agent clone exists.
 
@@ -126,7 +126,7 @@ Ask "Run health analysis? (y/n)" before proceeding.
 ### 5. Remove Skills
 
 Detect installation type per skill:
-- **npx-installed**: `cd "$PROJECT_ROOT" && npx skills remove <name>`
+- **npx-installed**: `npx skills remove <name>`
 - **Symlink**: Remove the symlink
 - **Copied/unknown**: Remove directory
 
@@ -135,7 +135,6 @@ Always confirm before removal. Show what will be removed and detected source.
 ## Notes
 
 - All install and update operations use `npx` — no local ai-agent clone needed
-- Always run `npx skills` from the project root (absolute path), because it installs to `.agents/skills/` relative to CWD
 - No agent-specific tool names in this document
 - find-skills is optional — install flow degrades gracefully without it
 - Compatible with bash and zsh
