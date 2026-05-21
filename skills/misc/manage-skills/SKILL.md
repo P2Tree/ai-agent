@@ -71,6 +71,9 @@ Install which?
 If only one source matches, show it directly with source info.
 
 **E. Install chosen skill**
+
+`npx skills add` installs to `~/.agents/skills/`. Ensure this directory exists before installing (`mkdir -p ~/.agents/skills`).
+
 - ai-agent skill: `npx skills add p2tree/ai-agent --skill <name>`
 - External skill: `npx skills add <owner/repo> --skill <name>` (via find-skills)
 
