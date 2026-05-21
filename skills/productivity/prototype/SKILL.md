@@ -30,3 +30,9 @@ If ambiguous and user isn't reachable, default to whichever matches the surround
 The *answer* is the only thing worth keeping. Capture it somewhere durable (commit message, ADR, issue) along with the question it was answering. Then delete the prototype or fold the decision into real code.
 
 See [logic prototype guide](references/logic-prototype.md) and [UI prototype guide](references/ui-prototype.md) for branch-specific details.
+
+## Next Steps
+
+- **writing-prd** — if the prototype confirms feasibility and the result needs a formal PRD
+- **writing-plans** — if the design is validated and ready for an implementation plan
+- **frontend-design** — if the prototype was a UI direction exploration and a visual direction was chosen
