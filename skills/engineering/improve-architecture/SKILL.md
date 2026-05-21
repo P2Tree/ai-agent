@@ -79,3 +79,9 @@ Side effects happen inline as decisions crystallize:
 - **Sharpening a fuzzy term during the conversation?** Update the glossary file right there.
 - **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones. Write the ADR to the ADR directory (path from `docs/agents/domain.md`) as `<arch_design_topic_name>.md` with: Title, Status (Rejected), Context, Decision, Consequences.
 - **Want to explore alternative interfaces for the deepened module?** See [INTERFACE-DESIGN.md](INTERFACE-DESIGN.md).
+
+## Next Steps
+
+- **writing-plans** — turn the approved deepening candidates into a step-by-step implementation plan
+- **tdd** — before refactoring, write tests to protect existing behavior; then use red-green-refactor for each change
+- **arch-doc** — if the architectural changes are significant, update or create architecture documentation to reflect the new structure
