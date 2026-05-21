@@ -36,6 +36,14 @@ Then launch your agent console and run the `manage-skills` skill for the interac
 
 Configs files need to transfer to your system or project path and maintain manually.
 
+## From Skills to Squad
+
+Individual skills are powerful, but the real value comes from combining them into a workflow. A fuzzy idea becomes a shipped feature when *brainstorming* hands off to *writing-prd*, which feeds *decomposing-issues*, then *writing-plans*, *executing-plans*, *code-review*, and *finishing-branch*. A bug gets fixed when *triage* routes it to *diagnose*, which leads to *tdd* and *code-review*.
+
+Each skill plays a role in your virtual dev team — product manager, architect, debug specialist, reviewer. The [**Skill Playbook**](./docs/skill-playbook.md) maps out 11 common work scenarios (idea → ship, bug fixing, onboarding, refactoring, pre-research, frontend dev, documentation, …), showing exactly which skills to call, in what order, and how they hand off to each other.
+
+**Read the [Skill Playbook](./docs/skill-playbook.md) →**
+
 ## What's Inside
 
 ### Configs
@@ -200,6 +208,7 @@ See [Skill Writing Guide](./docs/skill-writing-guide.md) for detailed authoring 
 
 ## Documentation
 
+- [Skill 编队手册](./docs/skill-playbook.md) — 不同工作场景下如何将 skill 编组成队、协同作战
 - [Architecture Design](./docs/architecture_design.md)
 - [Skill Writing Guide](./docs/skill-writing-guide.md)
 
