@@ -123,3 +123,9 @@ Required before declaring done:
 - [ ] The hypothesis that turned out correct is stated in the commit / PR message — so the next debugger learns
 
 **Then ask: what would have prevented this bug?** If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the `/improve-architecture` skill with the specifics. Make the recommendation **after** the fix is in, not before — you have more information now than when you started.
+
+## Next Steps
+
+- **tdd** — if the fix needs a proper red-green-refactor cycle (the Phase 5 regression test was a single test; complex fixes benefit from the full TDD loop)
+- **code-review** — after the fix is in, review the changes for correctness and side effects
+- **improve-architecture** — if the post-mortem reveals an architectural gap (no correct test seam, hidden coupling, tangled callers)

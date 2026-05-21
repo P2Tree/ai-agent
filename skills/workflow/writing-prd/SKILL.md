@@ -82,3 +82,8 @@ A description of the things that are out of scope for this PRD.
 Any further notes about the feature.
 
 </prd-template>
+
+## Next Steps
+
+- **decomposing-issues** — split the PRD into tracer-bullet vertical slices and publish as issues
+- **writing-plans** — create a detailed implementation plan directly from the PRD (skip decomposing-issues for small PRDs)
