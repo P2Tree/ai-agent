@@ -36,6 +36,14 @@ npx skills@latest add p2tree/ai-agent
 
 仓库里的 Configs 文件需要手动移植到你的系统或工程目录下，进行修改和维护。
 
+## 从 Skill 到编队
+
+单个 skill 已经很有用，但真正的价值在于组合成工作流。一个模糊想法变成上线功能，靠的是 brainstorming 交给 writing-prd，再流转到 decomposing-issues、writing-plans、executing-plans、code-review、finishing-branch。一个 bug 被修复，靠的是 triage 分流到 diagnose，再交给 tdd 和 code-review。
+
+每个 skill 都在你的虚拟开发团队中扮演一个角色——产品经理、架构师、调试专家、审查者。[**Skill 编队手册**](./docs/skill-playbook.md) 为 11 个常见工作场景（想法落地、Bug 排查、项目接手、重构、预研、前端开发、文档编写……）绘制了完整的 skill 编队方案：调哪些 skill、什么顺序、之间怎么衔接。
+
+**阅读 [Skill 编队手册](./docs/skill-playbook.md) →**
+
 ## 内容一览
 
 ### Configs（配置模板）
@@ -201,6 +209,7 @@ ai-agent/
 
 ## 文档
 
+- [Skill 编队手册](./docs/skill-playbook.md) — 不同工作场景下如何将 skill 编组成队、协同作战
 - [架构设计](./docs/architecture_design.md)
 - [Skill 写作指南](./docs/skill-writing-guide.md)
 
