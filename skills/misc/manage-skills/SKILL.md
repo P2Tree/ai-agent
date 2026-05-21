@@ -72,7 +72,7 @@ If only one source matches, show it directly with source info.
 
 **E. Install chosen skill**
 
-`npx skills add` installs to `~/.agents/skills/` (global) or `.agents/skills/` relative to CWD (project-level). Ensure `~/.agents/skills/` exists before installing (`mkdir -p ~/.agents/skills`). For project-level installs, run from the project directory.
+`npx skills add` installs to `~/.agents/skills/`. Ensure this directory exists before installing (`mkdir -p ~/.agents/skills`).
 
 - ai-agent skill: `npx skills add p2tree/ai-agent --skill <name>`
 - External skill: `npx skills add <owner/repo> --skill <name>` (via find-skills)
