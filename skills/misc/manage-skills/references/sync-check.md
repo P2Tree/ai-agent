@@ -80,8 +80,8 @@ Actions:
 
 After displaying results, offer actions:
 
-- **Install missing** — for each uninstalled skill user selects, run: `npx skills add p2tree/ai-agent --skill <name>`
-- **Update outdated** — for each outdated skill user selects, run: `npx skills update <name>`
+- **Install missing** — for each uninstalled skill user selects, run: `cd "$PROJECT_ROOT" && npx skills add p2tree/ai-agent --skill <name>`
+- **Update outdated** — for each outdated skill user selects, run: `cd "$PROJECT_ROOT" && npx skills update <name>`
 - **Skip** — no action
 
 Always confirm before making changes. Show what will be installed/updated.
@@ -94,13 +94,14 @@ Real-world lessons from sync runs:
 
 2. **Lock file hash ≠ outdated check** — `skill-lock.json` records `skillFolderHash` at install time for integrity verification. Comparing it against a direct SHA256 of file content always shows MODIFIED (hashing methods differ). For outdated detection, only direct remote SKILL.md comparison is authoritative.
 
-3. **Understand the symlink chain first** — Before diagnosing hash mismatches or broken installs, trace where skills actually live (`readlink -f`). Common pattern: `~/.claude/skills/<name>` → `~/.agents/skills/<name>` (npx-managed copies). Don't assume a git clone is involved.
+3. **Understand the symlink chain first** — Before diagnosing hash mismatches or broken installs, trace where skills actually live (`readlink -f`). Common pattern: `~/.claude/skills/<name>` → `$PROJECT_ROOT/.agents/skills/<name>` (npx-managed copies). Don't assume a git clone is involved. Note: `npx skills add` installs to `.agents/skills/` relative to CWD, so always run it from the project root (absolute path) to avoid creating `.agents/` in the wrong directory.
 
 4. **Batch remote fetches** — A single script that fetches all remote SKILL.md files in one pass is faster and avoids rate limits. Don't loop `curl` per skill in shell.
 
 ## Notes
 
 - All operations use `npx` — no local ai-agent clone assumed
+- Always run `npx skills` commands from the project root (absolute path), because `npx skills add` installs to `.agents/skills/` relative to CWD
 - No agent-specific tool names — uses `gh`, `curl`, `sha256sum`, `readlink` (standard CLI tools)
 - Compatible with bash and zsh
 - Remote repo path `p2tree/ai-agent` is the default; allow override if user has a fork
