@@ -89,3 +89,8 @@ Or "None - can start immediately" if no blockers.
 </issue-template>
 
 Do NOT close or modify any parent issue.
+
+## Next Steps
+
+- **writing-plans** — for each issue, create a detailed bite-sized implementation plan before coding
+- **executing-plans** — once plans are written, execute them task by task with verification gates
