@@ -24,13 +24,13 @@
 
 ## code-review `[自动]`
 
-做 code review 时的行为准则：不确定的地方多问少断，审查的是代码变更而不是作者，置信度和严重度要匹配——别用"肯定有问题"的语气说"可能"的事。
+做 code review 时的行为准则：不确定的地方多问少断，审查的是代码变更而不是作者，置信度和严重度要匹配——别用"肯定有问题"的语气说"可能"的事。包含四阶段审查流程、严重度标签体系和困难反馈模式。
 
 **什么时候用：** 审查 PR 或代码变更时。
 
 **触发方式：** 你要求审查代码、review PR、或看 diff 时，agent 自动激活。
 
-**参考：** superpowers:requesting-code-review + superpowers:receiving-code-review
+**参考：** superpowers:requesting-code-review + superpowers:receiving-code-review + wshobson:code-review-excellence
 
 ## improve-architecture `[自动]`
 
