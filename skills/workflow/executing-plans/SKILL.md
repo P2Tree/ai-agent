@@ -7,6 +7,16 @@ description: Execute a written implementation plan step-by-step with review chec
 
 Three modes: **inline** (step-by-step), **subagent-driven** (sequential tasks with review), and **parallel** (independent tasks simultaneously).
 
+## Choose Execution Mode
+
+Before starting, present the three modes with your recommendation, and let the user decide:
+
+1. **Inline** — step-by-step in this session. Good for small plans or full control.
+2. **Subagent-Driven** — fresh subagent per task + two-stage review. Good for independent tasks needing review checkpoints.
+3. **Parallel** — one agent per independent domain concurrently. Good for independent failures with no shared state.
+
+Recommend the best fit, but the final choice is the user's.
+
 ## Mode 1: Inline Execution
 
 Load plan, review critically, execute all tasks, report when complete.
@@ -35,15 +45,7 @@ After all tasks complete and verified:
 
 ## Mode 2: Subagent-Driven Development
 
-Execute plan by dispatching fresh subagent per task, with two-stage review after each: spec compliance first, then code quality.
-
-**Core principle:** Fresh subagent per task + two-stage review = high quality, fast iteration.
-
-### When to Use
-
-- Have an implementation plan with mostly independent tasks
-- Staying in the current session
-- Want review checkpoints between tasks
+Fresh subagent per task + two-stage review = high quality, fast iteration.
 
 ### The Process
 
@@ -61,9 +63,9 @@ Execute plan by dispatching fresh subagent per task, with two-stage review after
 
 ### Model Selection
 
-- **Mechanical tasks** (1-2 files, clear spec): cheap/fast model
-- **Integration tasks** (multi-file, debugging): standard model
-- **Architecture/review tasks**: most capable model
+- **Mechanical** (1-2 files, clear spec): cheap/fast model
+- **Integration** (multi-file, debugging): standard model
+- **Architecture/review**: most capable model
 
 ### Handling Implementer Status
 
@@ -78,13 +80,11 @@ See [implementer prompt](references/implementer-prompt.md), [spec reviewer promp
 
 ## Mode 3: Parallel Agent Dispatch
 
-When facing 2+ independent problems, dispatch one agent per problem domain concurrently.
+Dispatch one agent per independent problem domain concurrently.
 
 ### When to Use
 
-- Multiple independent failures (different test files, different subsystems)
-- Each problem can be understood without context from others
-- No shared state between investigations
+- Multiple independent failures (different subsystems, no shared state)
 
 **Don't use when:** failures are related, need full system context, or agents would interfere.
 
@@ -97,11 +97,7 @@ When facing 2+ independent problems, dispatch one agent per problem domain concu
 
 ### Agent Prompt Structure
 
-Good prompts are:
-
-1. **Focused** — one clear problem domain
-2. **Self-contained** — all context needed
-3. **Specific about output** — what should the agent return
+Good prompts are: focused (one domain), self-contained (all context), specific about output.
 
 ## When to Stop and Ask
 
@@ -125,20 +121,8 @@ Don't force through blockers — stop and ask.
 
 ## Red Flags
 
-**Never:**
+**Never:** skip reviews, proceed with unfixed issues, dispatch multiple implementation subagents in parallel (conflicts), make subagent read plan file (provide full text instead), ignore subagent questions, accept "close enough" on spec compliance, start code quality review before spec compliance passes, move to next task while review has open issues, skip verifications, start implementation on main/master without explicit user consent.
 
-- Skip reviews (spec compliance OR code quality)
-- Proceed with unfixed issues
-- Dispatch multiple implementation subagents in parallel (conflicts)
-- Make subagent read plan file (provide full text instead)
-- Ignore subagent questions
-- Accept "close enough" on spec compliance
-- Start code quality review before spec compliance passes
-- Move to next task while review has open issues
-- Skip verifications
-- Start implementation on main/master without explicit user consent
+## Next Steps
 
-## Related Skills
-
-- **writing-plans** — creates the plan this skill executes
-- **finishing-branch** — completes development after all tasks
+- **finishing-branch** — verify tests, present options for merge, PR, or cleanup
