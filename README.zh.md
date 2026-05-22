@@ -104,7 +104,6 @@ npx skills@latest add p2tree/ai-agent
 | Skill | 说明 |
 |-------|------|
 | [manage-skills](./skills/misc/manage-skills/SKILL.md) | 浏览、安装、审计、管理任何来源的 skill |
-| [update-skills](./skills/misc/update-skills/SKILL.md) | 检查上游 skill 漂移并更新 |
 | [find-skills](./skills/misc/find-skills/SKILL.md) | 从开源 skill 生态发现并安装 skill |
 | [create-skill](./skills/misc/create-skill/SKILL.md) | 创建、改进、评估 skill |
 
