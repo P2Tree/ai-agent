@@ -110,6 +110,7 @@ digraph brainstorming {
 
 - Write the validated design (spec) to `docs/specs/YYYY-MM-DD-<design_name>.md`
   - (User preferences for spec location override this default)
+- **Language:** if the conversation is entirely in English, write the spec in English; otherwise, follow the language used in the conversation.
 - Use elements-of-style:writing-clearly-and-concisely skill if available
 - Commit the design document to git
 
