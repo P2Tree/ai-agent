@@ -120,11 +120,6 @@ After writing the complete plan, check:
 
 Fix issues inline. If a spec requirement has no task, add it.
 
-## Execution Handoff
+## Next Steps
 
-After saving the plan, offer execution choice:
-
-1. **Dispatching Agents** — fresh subagent per task, two-stage review, fast iteration
-2. **Inline Execution** — execute tasks in this session with checkpoints
-
-See [detailed workflow](references/workflow-detail.md) for more.
+- **executing-plans** — execute the plan task by task with verification gates (supports parallel and sequential execution modes)
