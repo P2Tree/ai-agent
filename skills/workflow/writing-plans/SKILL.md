@@ -19,6 +19,8 @@ If these files don't exist, proceed silently — don't block plan writing on mis
 
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
+**Language:** if the source spec/PRD is entirely in English, write the plan in English; otherwise, follow the language used in the source materials.
+
 ## Scope Check
 
 If the spec covers multiple independent subsystems, suggest breaking into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
