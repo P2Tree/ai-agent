@@ -24,9 +24,17 @@ Run the project's test suite. If tests fail, stop and fix before proceeding. Do 
 
 ### Step 2: Determine Base Branch
 
-Identify the branch this work diverged from (typically main or master).
+Check the current branch's remote tracking branch first (`git rev-parse --abbrev-ref --symbolic-full-name @{u}`). If tracked, use the remote branch as the base. If not tracked, ask the user which remote branch to merge into.
 
-### Step 3: Present Options
+### Step 3: Determine Commit & PR Style
+
+**Commit message style:** analyze recent commit history (`git log --oneline -20`) to learn the project's commit conventions (Conventional Commits, plain text, etc.). If multiple styles are detected, present the options with your recommendation and let the user choose.
+
+**PR template:** check for PR/MR templates in the repo (`.github/PULL_REQUEST_TEMPLATE.md`, `.gitlab/merge_request_templates/`, etc.). If multiple templates exist, ask the user which to use. If none found, use the default template below.
+
+**PR language:** if the source issue and related specs are entirely in English, write the PR in English; otherwise, follow the language used in those source materials.
+
+### Step 4: Present Options
 
 Present exactly these 4 options:
 
@@ -37,7 +45,7 @@ Present exactly these 4 options:
 
 Keep options concise — don't add explanation.
 
-### Step 4: Execute Choice
+### Step 5: Execute Choice
 
 **Option 1: Merge Locally**
 
@@ -55,15 +63,17 @@ Then cleanup worktree.
 
 ```bash
 git push -u origin <feature-branch>
-gh pr create --title "<title>" --body "$(cat <<'EOF'
+```
+
+Create PR using the detected template (or default below) with commit style from Step 3:
+
+<default-pr-template>
 ## Summary
 <2-3 bullets>
 
 ## Test Plan
 - [ ] <verification steps>
-EOF
-)"
-```
+</default-pr-template>
 
 Keep worktree (may need follow-up on PR).
 
@@ -82,7 +92,7 @@ git branch -D <feature-branch>
 
 Cleanup worktree.
 
-### Step 5: Cleanup Worktree
+### Step 6: Cleanup Worktree
 
 For Options 1 and 4 only, remove the worktree:
 
@@ -115,7 +125,6 @@ git worktree remove <worktree-path>
 - Get typed confirmation for discard
 - Clean up worktree for Options 1 & 4 only
 
-## Related Skills
+## Next Steps
 
-- **executing-plans** — calls this skill after all tasks/batches complete
-- **init-agent-environment** — sets up `docs/agents/issue-tracker.md` and `docs/agents/triage-labels.md` used for issue-tracker integration
+- **triage** — update the originating issue's triage label to reflect completion
