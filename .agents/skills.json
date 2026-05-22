@@ -27,7 +27,6 @@
     "./skills/workflow/init-agent-environment",
     "./skills/misc/create-skill",
     "./skills/misc/manage-skills",
-    "./skills/misc/update-skills",
     "./skills/misc/find-skills"
   ]
 }

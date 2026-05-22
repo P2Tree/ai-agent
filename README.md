@@ -104,7 +104,6 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | Skill | Description |
 |-------|-------------|
 | [manage-skills](./skills/misc/manage-skills/SKILL.md) | Browse, install, audit, and manage skills from any source |
-| [update-skills](./skills/misc/update-skills/SKILL.md) | Check upstream sources for skill drift and update |
 | [find-skills](./skills/misc/find-skills/SKILL.md) | Discover and install skills from the open ecosystem |
 | [create-skill](./skills/misc/create-skill/SKILL.md) | Create, improve, and evaluate skills |
 
