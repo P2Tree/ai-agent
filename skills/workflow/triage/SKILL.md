@@ -56,7 +56,7 @@ Query issue tracker, present three buckets (oldest first):
 
 ### Triage a Specific Issue
 
-1. **Gather context.** Read full issue. Check prior triage notes. Explore codebase using domain glossary. Read `docs/issues/*-wontfix.md` for prior rejections.
+1. **Gather context.** Read full issue. Check prior triage notes. Explore codebase using domain glossary. Check closed wontfix issues on the tracker for prior rejections.
 2. **Recommend.** State category + state recommendation with reasoning. Wait for direction.
 3. **Reproduce (bugs only).** Attempt reproduction before grilling. A confirmed repro makes a stronger brief.
 4. **Grill (if needed).** If the issue needs fleshing out, run a grilling session.
@@ -64,8 +64,8 @@ Query issue tracker, present three buckets (oldest first):
    - `ready-for-agent` → post agent brief
    - `ready-for-human` → same structure, note why it can't be delegated
    - `needs-info` → post triage notes
-   - `wontfix` (bug) → explain, close
-   - `wontfix` (enhancement) → write to `docs/issues/<NN>-<topic>-wontfix.md`, link, close
+   - `wontfix` (bug) → explain in comment, close
+   - `wontfix` (enhancement) → explain in comment, close
 
 ### Quick Override
 
