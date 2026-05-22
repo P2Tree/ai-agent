@@ -7,6 +7,16 @@ description: Execute a written implementation plan step-by-step with review chec
 
 Three modes: **inline** (step-by-step), **subagent-driven** (sequential tasks with review), and **parallel** (independent tasks simultaneously).
 
+## Choose Execution Mode
+
+Before starting, present the three modes with your recommendation, and ask the user which to use:
+
+1. **Inline Execution** — step-by-step in this session, no subagents. Good for small plans or when you want full control.
+2. **Subagent-Driven** — fresh subagent per task, two-stage review after each (spec compliance + code quality). Good for plans with mostly independent tasks where you want review checkpoints.
+3. **Parallel** — dispatch one agent per independent problem domain concurrently. Good for multiple independent failures with no shared state.
+
+Recommend the mode that best fits the plan characteristics, but the final choice is always the user's.
+
 ## Mode 1: Inline Execution
 
 Load plan, review critically, execute all tasks, report when complete.
