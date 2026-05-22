@@ -148,7 +148,6 @@ Don't force through blockers — stop and ask.
 - Skip verifications
 - Start implementation on main/master without explicit user consent
 
-## Related Skills
+## Next Steps
 
-- **writing-plans** — creates the plan this skill executes
-- **finishing-branch** — completes development after all tasks
+- **finishing-branch** — verify tests, present options for merge, PR, or cleanup
