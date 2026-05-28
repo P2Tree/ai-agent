@@ -86,6 +86,7 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [docx](./skills/composition/docx/SKILL.md) | Word document processing — create, read, edit, format .docx files |
 | [pptx](./skills/composition/pptx/SKILL.md) | PowerPoint presentation processing — create, read, edit, split, merge .pptx files |
 | [xlsx](./skills/composition/xlsx/SKILL.md) | Spreadsheet processing — read, create, edit, analyze .xlsx/.xlsm/.csv/.tsv files |
+| [project-highlight](./skills/composition/project-highlight/SKILL.md) | Extract key contributions from git repos and format as project highlights — resume, interview, performance review, general intro |
 
 ### Workflow
 
