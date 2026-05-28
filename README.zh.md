@@ -86,6 +86,7 @@ npx skills@latest add p2tree/ai-agent
 | [docx](./skills/composition/docx/SKILL.md) | Word 文档处理 — 创建、读取、编辑、格式化 .docx 文件 |
 | [pptx](./skills/composition/pptx/SKILL.md) | PPT 演示文稿处理 — 创建、读取、编辑、拆分、合并 .pptx 文件 |
 | [xlsx](./skills/composition/xlsx/SKILL.md) | 电子表格处理 — 读取、创建、编辑、分析 .xlsx/.xlsm/.csv/.tsv 文件 |
+| [project-highlight](./skills/composition/project-highlight/SKILL.md) | 从项目 git 日志中提取关键贡献并整理成可以用于简历、面试、述职等场景的内容 |
 
 ### Workflow（工作流）
 
