@@ -1,0 +1,44 @@
+{
+  "skill_name": "project-highlight",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我写一下这个项目的简历项目经验，我准备找工作了",
+      "expected_output": "生成3-5条动词开头的简历项目要点，包含量化数据，基于当前仓库的git历史分析",
+      "files": [],
+      "expectations": [
+        "The output analyzes git log for the user's commits",
+        "The output includes quantified data (commit counts, line changes, time range, or module counts)",
+        "The output follows resume format with action-verb-first bullet points",
+        "The output is in Chinese",
+        "No fabricated metrics — all claims traceable to git data or explicitly marked as 待确认"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我下周有个面试，帮我准备一下这个项目的口头描述 /path/to/my-project",
+      "expected_output": "生成STAR结构的面试口头描述，2-3分钟口语化表达，含具体技术细节和决策过程",
+      "files": [],
+      "expectations": [
+        "The output follows STAR structure (Situation, Task, Action, Result)",
+        "The output is conversational and suitable for spoken delivery",
+        "The output includes specific technical details and decision-making rationale",
+        "The output is in Chinese",
+        "The output is 400-600 Chinese characters in length"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "帮我生成一份述职材料，总结我在这个项目上的贡献",
+      "expected_output": "生成包含核心贡献表格、技术深度、跨团队协作和未来规划的述职文档",
+      "files": [],
+      "expectations": [
+        "The output includes a table of core contributions with quantified data",
+        "The output has a section for future planning",
+        "The output shows impact scope (team/department/company level)",
+        "The output is in Chinese",
+        "The output is structured with clear sections matching the 述职 template"
+      ]
+    }
+  ]
+}
