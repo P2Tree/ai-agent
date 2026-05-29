@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "skills": {
+    "arch-doc": {
+      "source": "p2tree/ai-agent",
+      "sourceType": "github",
+      "skillPath": "skills/composition/arch-doc/SKILL.md",
+      "computedHash": "7597e06b01177c263fb436b38bae4bebb2d60c017b122daab3b43a3bdd4bbefb"
+    },
+    "decomposing-issues": {
+      "source": "p2tree/ai-agent",
+      "sourceType": "github",
+      "skillPath": "skills/workflow/decomposing-issues/SKILL.md",
+      "computedHash": "71121589110f38df2ed8a1884a46afcab773d4b0ac0a6bdfeb398152df8123a1"
+    },
+    "project-highlight": {
+      "source": "p2tree/ai-agent",
+      "sourceType": "github",
+      "skillPath": "skills/composition/project-highlight/SKILL.md",
+      "computedHash": "e0ac2527e87f5ded0ae809b51cc0b574e34f37c9d664174f3b00c3b564a639fc"
+    },
+    "find-skills": {
+      "source": "p2tree/ai-agent",
+      "sourceType": "github",
+      "skillPath": "skills/misc/find-skills/SKILL.md",
+      "computedHash": "4ddb7a1de9f542190026ae85466474d6b98a659201ce7f468d7134fc962c1c93"
+    },
+    "writing-prd": {
+      "source": "p2tree/ai-agent",
+      "sourceType": "github",
+      "skillPath": "skills/workflow/writing-prd/SKILL.md",
+      "computedHash": "229af837b76616c50d671faa37f434a59080aa73c37fc9db591a8d29e4a9da9e"
+    }
+  }
+}

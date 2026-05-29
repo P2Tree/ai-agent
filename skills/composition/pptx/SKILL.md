@@ -1,6 +1,6 @@
 ---
 name: pptx
-description: PPT 演示文稿处理 — 创建、读取、编辑、拆分、合并 .pptx 文件。Use when 用户提到演示文稿、slides、deck、.pptx，或需要对 PPT 做任何操作
+description: PowerPoint presentation processing — create, read, edit, split, merge .pptx files. Use when user mentions presentations, slides, deck, .pptx, or needs any PPT operations
 disable-model-invocation: true
 ---
 

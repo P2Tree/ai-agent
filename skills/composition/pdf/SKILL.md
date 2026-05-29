@@ -1,6 +1,6 @@
 ---
 name: pdf
-description: PDF 文件处理 — 读取、提取、合并、拆分、旋转、水印、加密、OCR、表单填写。Use when 用户提到 .pdf 文件或需要对 PDF 执行任何操作
+description: PDF file processing — read, extract, merge, split, rotate, watermark, encrypt, OCR, form filling. Use when user mentions .pdf files or needs any PDF operations
 disable-model-invocation: true
 ---
 

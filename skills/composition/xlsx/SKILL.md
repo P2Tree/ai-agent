@@ -1,6 +1,6 @@
 ---
 name: xlsx
-description: XLSX 电子表格处理 — 读取、创建、编辑、分析 .xlsx/.xlsm/.csv/.tsv 文件。Use when 用户提到电子表格、spreadsheet、.xlsx、.csv，或需要对表格数据做任何操作
+description: Spreadsheet processing — read, create, edit, analyze .xlsx/.xlsm/.csv/.tsv files. Use when user mentions spreadsheets, .xlsx, .csv, or needs any tabular data operations
 disable-model-invocation: true
 ---
 

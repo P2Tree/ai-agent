@@ -1,6 +1,6 @@
 ---
 name: docx
-description: Word 文档处理 — 创建、读取、编辑、格式化 .docx 文件。Use when 用户提到 Word 文档、.docx、报告、备忘录、信函模板，或需要对 .docx 做任何操作
+description: Word document processing — create, read, edit, format .docx files. Use when user mentions Word docs, .docx, reports, memos, letter templates, or needs any .docx operations
 disable-model-invocation: true
 ---
 
