@@ -17,6 +17,7 @@ Read the repo's agent environment (set up by `/init-agent-environment`) to write
 
 If these files don't exist, proceed silently — don't block plan writing on missing config.
 
+**Source spec:** `docs/specs/YYYY-MM-DD-<spec_name>.md` (if produced by brainstorming)
 **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
 **Language:** if the source spec/PRD is entirely in English, write the plan in English; otherwise, follow the language used in the source materials.
@@ -55,6 +56,7 @@ Every plan MUST start with this header:
 
 > Use executing-plans to implement this plan task-by-task.
 
+**Spec:** `docs/specs/YYYY-MM-DD-<spec_name>.md`
 **Goal:** [One sentence]
 **Architecture:** [2-3 sentences]
 **Tech Stack:** [Key technologies]
