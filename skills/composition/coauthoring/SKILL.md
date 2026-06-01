@@ -79,6 +79,7 @@ For each section, cycle through:
 1. Recommend user does a final read-through — they own the document
 2. Suggest double-checking facts, links, technical details
 3. Verify it achieves the desired impact
+4. Ask if user wants to run `/humanizer` as a final pass to catch any remaining AI writing patterns
 
 Completion tips:
 - Consider linking this conversation in an appendix
