@@ -87,6 +87,7 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [pptx](./skills/composition/pptx/SKILL.md) | PowerPoint presentation processing — create, read, edit, split, merge .pptx files |
 | [xlsx](./skills/composition/xlsx/SKILL.md) | Spreadsheet processing — read, create, edit, analyze .xlsx/.xlsm/.csv/.tsv files |
 | [project-highlight](./skills/composition/project-highlight/SKILL.md) | Extract key contributions from git repos and format as project highlights — resume, interview, performance review, general intro |
+| [humanizer](./skills/composition/humanizer/SKILL.md) | Remove AI writing patterns from text — detect and fix 24 machine-like phrasing patterns for more natural, human-sounding content |
 
 ### Workflow
 
