@@ -86,3 +86,8 @@ If maintainer says "move #42 to ready-for-agent", apply directly. Skip grilling.
 ```
 
 See [agent brief guide](references/agent-brief.md) for details.
+
+
+## Language Consistency
+
+When appending content to an issue (agent brief, triage notes, or any additional information), match the language of the issue's original body. If the issue is written in English, append in English; if Chinese, append in Chinese.
