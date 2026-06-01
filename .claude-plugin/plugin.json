@@ -18,6 +18,7 @@
     "./skills/composition/docx",
     "./skills/composition/pptx",
     "./skills/composition/xlsx",
+    "./skills/composition/project-highlight",
     "./skills/composition/humanizer",
     "./skills/workflow/writing-plans",
     "./skills/workflow/executing-plans",
