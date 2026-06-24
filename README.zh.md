@@ -86,7 +86,13 @@ npx skills@latest add p2tree/ai-agent
 | [docx](./skills/composition/docx/SKILL.md) | Word 文档处理 — 创建、读取、编辑、格式化 .docx 文件 |
 | [pptx](./skills/composition/pptx/SKILL.md) | PPT 演示文稿处理 — 创建、读取、编辑、拆分、合并 .pptx 文件 |
 | [xlsx](./skills/composition/xlsx/SKILL.md) | 电子表格处理 — 读取、创建、编辑、分析 .xlsx/.xlsm/.csv/.tsv 文件 |
-| [project-highlight](./skills/composition/project-highlight/SKILL.md) | 从项目 git 日志中提取关键贡献并整理成可以用于简历、面试、述职等场景的内容 |
+
+### Career （职业发展）
+
+| Skill | 说明 |
+|-------|------|
+| [pre-view](./skills/career/pre-view/SKILL.md) | 模拟真实多轮面试 - 技术面、主管面、领导面，每轮不同人设面试官，最终输出客观评价报告 |
+| [project-highlight](./skills/career/project-highlight/SKILL.md) | 从项目 git 日志中提取关键贡献并整理成可以用于简历、面试、述职等场景的内容 |
 
 ### Workflow（工作流）
 
@@ -186,6 +192,7 @@ ai-agent/
 │   ├── engineering/       # 软件开发
 │   ├── productivity/      # 效率提升（非编码）
 │   ├── composition/       # 内容生成
+│   ├── career/            # 职业发展
 │   ├── workflow/          # Git、Jira、部署、迁移
 │   ├── misc/              # 其他
 │   ├── draft/             # 开发中（不发布）

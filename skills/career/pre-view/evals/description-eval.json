@@ -1,0 +1,23 @@
+[
+  {"id": 1, "query": "我想模拟面试", "should_trigger": true},
+  {"id": 2, "query": "帮我准备下周一的技术面试", "should_trigger": true},
+  {"id": 3, "query": "mock interview for a senior engineer role", "should_trigger": true},
+  {"id": 4, "query": "我想练练面试，尤其是项目深挖的部分", "should_trigger": true},
+  {"id": 5, "query": "我要去面试一个编译器开发的岗位，帮我模拟一下", "should_trigger": true},
+  {"id": 6, "query": "面试练习，我是做后端开发的", "should_trigger": true},
+  {"id": 7, "query": "我有个面试要准备，你能扮演面试官吗", "should_trigger": true},
+  {"id": 8, "query": "帮我做个面试模拟，考察一下我的技术深度", "should_trigger": true},
+  {"id": 9, "query": "模拟一次完整的三轮面试流程", "should_trigger": true},
+  {"id": 10, "query": "我准备跳槽，想先练练面试", "should_trigger": true},
+  {"id": 21, "query": "pre-view", "should_trigger": true},
+  {"id": 11, "query": "帮我写一份简历", "should_trigger": false},
+  {"id": 12, "query": "review 一下我的代码", "should_trigger": false},
+  {"id": 13, "query": "这个 bug 怎么修", "should_trigger": false},
+  {"id": 14, "query": "帮我准备一下明天的演讲", "should_trigger": false},
+  {"id": 15, "query": "mock interview 候选人", "should_trigger": false},
+  {"id": 16, "query": "我想了解一下这家公司的面试流程", "should_trigger": false},
+  {"id": 17, "query": "帮我写面试题", "should_trigger": false},
+  {"id": 18, "query": "帮我评估这个候选人", "should_trigger": false},
+  {"id": 19, "query": "练习算法题", "should_trigger": false},
+  {"id": 20, "query": "准备一下薪资谈判", "should_trigger": false}
+]

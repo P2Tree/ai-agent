@@ -1,0 +1,55 @@
+{
+  "skill_name": "pre-view",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "我想练习面试，这是我的简历：张三，5年C++开发经验，目前在国内一家GPU公司做编译器工具链开发，主要负责调试器和Sanitizer工具的开发维护。硕士学历。请帮我模拟面试。",
+      "expected_output": "Skill should start the pre-interview pipeline: acknowledge resume, ask for additional materials, generate a virtual company profile, negotiate JD, then begin interview rounds.",
+      "expectations": [
+        "The agent acknowledges the resume and extracts key info (C++, compiler toolchain, GPU, 5 years, master's degree)",
+        "The agent asks whether additional materials (code, blog, docs) are available",
+        "The agent generates a virtual company profile with all required dimensions (name, industry, employee count, revenue, stage, business lines, culture, founder)",
+        "The agent presents the company profile to the user",
+        "The agent asks what position the candidate wants to interview for",
+        "The agent generates a JD and discusses it with the user until satisfied",
+        "The agent confirms company background and final JD before starting the interview",
+        "The agent selects an interviewer persona for Round 1 without revealing it",
+        "The interview is conducted in Chinese (matching the resume language)"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I want to practice interviewing. Here is my resume: John Smith, 8 years of experience in distributed systems and cloud infrastructure, currently a senior engineer at a tech company. Bachelor's degree in CS. Please run a mock interview for me.",
+      "expected_output": "Skill should run the pre-interview pipeline in English, generate a company profile matching a senior cloud/distributed systems engineer, negotiate a JD, and begin the technical interview round.",
+      "expectations": [
+        "The agent acknowledges the resume and extracts key info (distributed systems, cloud infrastructure, 8 years, senior engineer, bachelor's degree)",
+        "The agent generates a virtual company profile with all required dimensions",
+        "The company profile matches the candidate's level (senior, 8 years → mid-to-large company)",
+        "The JD negotiation is conducted in English (matching the resume language)",
+        "When the technical interview begins, questions are relevant to distributed systems and cloud infrastructure",
+        "The agent does not reveal the interviewer persona during the interview",
+        "Technical Q&A follows the probing rhythm: conceptual → implementation → edge cases/tradeoffs",
+        "The agent respects the probing limit of 3-4 follow-up rounds per question",
+        "If blind coding is reached, the problem type matches an infrastructure/cloud role (not a pure algorithm puzzle)"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "模拟面试，简历：李四，3年Java开发，某互联网公司后端开发。请帮我模拟面试。在面试过程中，如果进入第三轮，请观察面试官是否遵守不涉及个人隐私的约束。",
+      "expected_output": "Skill should run through the full interview pipeline. In the leadership round, the stress test must not involve personal privacy (family, health, financial details).",
+      "expectations": [
+        "The agent acknowledges the resume and starts the pre-interview pipeline",
+        "The agent generates a virtual company profile with all required dimensions",
+        "The agent conducts JD negotiation before starting interviews",
+        "Each round is executed by a subagent (or the agent simulates subagent behavior with persona adoption)",
+        "After each round, the agent asks whether to continue or end",
+        "If Round 3 is reached, stress test questions challenge viewpoints and logic without involving personal privacy",
+        "The agent does not ask about family situation, health conditions, or specific financial details",
+        "Stage documents are output after each round with the correct naming format (interview-round{N}-YYYY-MM-DD.md)",
+        "A final report is generated with the correct naming format (interview-report-YYYY-MM-DD.md)",
+        "The final report includes interviewer personas revealed after the interview",
+        "The final report evaluates from a third-party objective perspective, not from the company's standpoint"
+      ]
+    }
+  ]
+}

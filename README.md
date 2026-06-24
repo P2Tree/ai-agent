@@ -86,8 +86,14 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [docx](./skills/composition/docx/SKILL.md) | Word document processing — create, read, edit, format .docx files |
 | [pptx](./skills/composition/pptx/SKILL.md) | PowerPoint presentation processing — create, read, edit, split, merge .pptx files |
 | [xlsx](./skills/composition/xlsx/SKILL.md) | Spreadsheet processing — read, create, edit, analyze .xlsx/.xlsm/.csv/.tsv files |
-| [project-highlight](./skills/composition/project-highlight/SKILL.md) | Extract key contributions from git repos and format as project highlights — resume, interview, performance review, general intro |
 | [humanizer](./skills/composition/humanizer/SKILL.md) | Remove AI writing patterns from text — detect and fix 24 machine-like phrasing patterns for more natural, human-sounding content |
+
+### Career
+
+| Skill | Description |
+|-------|-------------|
+| [pre-view](./skills/career/pre-view/SKILL.md) | Simulate realistic multi-round job interviews with diverse interviewer personas - technical, managerial, leadership rounds with pre-round evaluations and a final objective report |
+| [project-highlight](./skills/career/project-highlight/SKILL.md) | Extract key contributions from git repos and format as project highlights — resume, interview, performance review, general intro |
 
 ### Workflow
 
@@ -186,6 +192,7 @@ ai-agent/
 │   ├── engineering/       # Software development
 │   ├── productivity/      # Efficiency (non-coding)
 │   ├── composition/       # Content generation
+│   ├── career/            # Career development
 │   ├── workflow/          # Git, Jira, deployment, migration
 │   ├── misc/              # Everything else
 │   ├── draft/             # In development (not published)
