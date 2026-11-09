@@ -1,94 +1,93 @@
 ---
 name: docx
-description: Word document processing — create, read, edit, format .docx files. Use when user mentions Word docs, .docx, reports, memos, letter templates, or needs any .docx operations
+description: "Use this skill whenever the user wants to create, read, edit, or manipulate Word documents (.docx files) or Word templates (.dotx files). Triggers include: any mention of 'Word doc', 'word document', '.docx', '.dotx', or requests to produce professional documents with formatting like tables of contents, headings, page numbers, or letterheads. Also use when extracting or reorganizing content from .docx or .dotx files, inserting or replacing images in documents, performing find-and-replace in Word files, working with tracked changes or comments, or converting content into a polished Word document. If the user asks for a 'report', 'memo', 'letter', 'template', or similar deliverable as a Word or .docx file, use this skill. Do NOT use for PDFs, spreadsheets, Google Docs, or general coding tasks unrelated to document generation."
 disable-model-invocation: true
 ---
 
-# DOCX 创建、编辑与分析
+# DOCX creation, editing, and analysis
 
-.docx 是 ZIP 包内含 XML 文件。创建用 docx-js (Node.js)，编辑现有文件用解包→改 XML→重新打包。
+A `.docx` is a ZIP archive of XML files. Choose your approach by task:
 
-## 快速参考
+| Task | Approach |
+|---|---|
+| **Create** a new document | Write a `docx` (npm) script — see gotchas below |
+| **Edit** an existing document | `unzip` → edit `word/document.xml` → `zip` (docx-js cannot open existing files) |
+| **Read** content | `pandoc -t markdown file.docx` |
 
-| 任务 | 方式 |
-|------|------|
-| 读取/分析 | `pandoc` 或解包查看 XML |
-| 创建新文档 | docx-js（见 [creating.md](references/creating.md)） |
-| 编辑现有文档 | 解包→改 XML→打包（见 [editing.md](references/editing.md)） |
+> Script paths below are relative to this skill's directory.
 
-## 工作流
+## Creating with docx-js — gotchas
 
-### 1. 确认任务类型
+`docx` is preinstalled — do not run `npm install` first; write the script and `require('docx')` directly. Only if that require fails: `npm install docx`. The model knows the API; these are the footguns:
 
-用 AskUserQuestion 确认用户要做什么：
-- 读取/提取内容
-- 创建新文档
-- 编辑现有文档
-- 格式转换
+- **Page size defaults to A4.** For US Letter set `page: { size: { width: 12240, height: 15840 } }` (DXA; 1440 = 1″).
+- **Landscape:** pass portrait dimensions and `orientation: PageOrientation.LANDSCAPE` — docx-js swaps width/height internally.
+- **Tables need dual widths:** set `columnWidths` on the table AND `width` on every cell, both in `WidthType.DXA` (PERCENTAGE breaks in Google Docs). Column widths must sum to the table width.
+- **Table shading:** use `ShadingType.CLEAR`, never `SOLID` (renders black).
+- **Lists:** never insert `•` literally; use a `numbering` config with `LevelFormat.BULLET`.
+- **`ImageRun` requires `type:`** (`"png"`, `"jpg"`, …).
+- **`PageBreak` must be inside a `Paragraph`.**
+- **Never use `\n`** — use separate `Paragraph` elements.
+- **TOC:** headings must use built-in `HeadingLevel.*`; custom heading styles need `outlineLevel` set or they won't appear.
+- **Don't use a table as a horizontal rule** — use a paragraph bottom border instead.
+- **Dot-leader / right-aligned-on-same-line:** use `PositionalTab` (`alignment: PositionalTabAlignment.RIGHT`, `leader: PositionalTabLeader.DOT`) inside a `TextRun`, not literal `.` or space padding.
 
-### 2. 读取内容
+## Verify the output
 
-```bash
-pandoc --track-changes=all document.docx -o output.md
-python scripts/office/unpack.py document.docx unpacked/
-```
-
-### 3. 创建新文档
-
-用 docx-js (`npm install -g docx`)，详见 [creating.md](references/creating.md)。
-
-关键规则：
-- **必须显式设置页面尺寸** — docx-js 默认 A4
-- **不用 `\n`** — 用独立 Paragraph 元素
-- **不用 Unicode 列表符号** — 用 `LevelFormat.BULLET`
-- **PageBreak 必须在 Paragraph 内**
-- **ImageRun 必须指定 `type`**
-- **表格必须同时设 `columnWidths` 和单元格 `width`**
-- **用 `ShadingType.CLEAR`**，不用 SOLID
-- **不用表格做分隔线** — 用 Paragraph 的 border
-
-### 4. 编辑现有文档
-
-三步流程：解包 → 编辑 XML → 打包。详见 [editing.md](references/editing.md)。
+After writing a `.docx`, render it and look at it:
 
 ```bash
-# Step 1: 解包
-python scripts/office/unpack.py document.docx unpacked/
-
-# Step 2: 编辑 XML（用 Edit 工具直接替换，不要写 Python 脚本）
-
-# Step 3: 打包
-python scripts/office/pack.py unpacked/ output.docx --original document.docx
+python scripts/office/soffice.py --headless --convert-to pdf output.docx
+pdftoppm -jpeg -r 100 output.pdf page
+ls page-*.jpg   # then Read the images
 ```
 
-### 5. 验证
+`pdftoppm` zero-pads page numbers to the width of the page count (`page-01.jpg`…`page-12.jpg`).
 
-创建/编辑后验证：
+## Editing existing documents
+
+Legacy `.doc` files must be converted first: `python scripts/office/soffice.py --headless --convert-to docx file.doc`.
+
 ```bash
-python scripts/office/validate.py output.docx
+unzip -q doc.docx -d unpacked/
+find unpacked -type l -delete   # strip symlink entries — docx from external parties is untrusted
+python scripts/merge_runs.py unpacked/   # coalesce fragmented runs so text is findable
+# edit unpacked/word/document.xml in place — do NOT reformat or pretty-print
+(cd unpacked && rm -f ../out.docx && zip -Xr ../out.docx .)
+python scripts/office/validate.py out.docx --original doc.docx   # XSD checks; --auto-repair fixes common issues
+# redlining? add --author "<the name you redlined under>" to check every edit is tracked
 ```
 
-## 关键约束
+Word splits text across many `<w:r>` runs (revision ids, spell-check markers), so a phrase you can see in the document often doesn't exist as a contiguous string in the XML. `merge_runs.py` merges adjacent identically-formatted runs in `word/document.xml` without changing content or rendering; it also accepts a `.docx` directly (`python scripts/merge_runs.py doc.docx -o merged.docx`).
 
-| 约束 | 说明 |
-|------|------|
-| 页面尺寸 | 显式设置 US Letter (12240×15840 DXA) 或 A4 |
-| 表格宽度 | 只用 `WidthType.DXA`，不用 PERCENTAGE（Google Docs 不兼容） |
-| 列表 | 用 `LevelFormat.BULLET` / `DECIMAL`，不用 Unicode 字符 |
-| 上下标 | 用 `<sub>`/`<super>` 标签，不用 Unicode 上下标 |
-| 智能引号 | XML 中用实体 `&#x2018;` `&#x2019;` `&#x201C;` `&#x201D;` |
-| 修订追踪 | 用 "Claude" 作为 author |
-| TOC | 只用 `HeadingLevel`，不用自定义样式 |
+**Tracked changes:** when redlining, validate with `--author "<the name you redlined under>"` (needs `--original`) — it reports any text you changed without a `<w:ins>`/`<w:del>` around it, which is easy to do by accident and invisible in the accepted view. Wrap runs in `<w:ins>`/`<w:del>` with `w:id`, `w:author`, `w:date` attributes. Inside `<w:del>`, the text element is `<w:delText>`, not `<w:t>`. A deleted paragraph mark (`<w:pPr><w:rPr><w:del w:id=".." w:author=".." w:date=".."/></w:rPr></w:pPr>`) means "merge this paragraph into the next" — so deleting a paragraph outright is that plus a `<w:del>` around every run. The `<w:del/>` must come before the rPr's other children; their order is schema-enforced.
 
-## 依赖
+To produce a clean copy with all tracked changes accepted: `python scripts/accept_changes.py in.docx out.docx`.
 
-| 工具 | 用途 |
-|------|------|
-| docx (npm) | 创建新文档 |
-| pandoc | 文本提取 |
-| LibreOffice | PDF 转换 |
+Accepting a deleted paragraph mark should join that paragraph to the one below it, so a paragraph whose runs are *all* deleted vanishes. Word does this; `accept_changes.py` and `pandoc --track-changes=accept` don't always. Both fail the same way — they strip the deleted text but leave the emptied paragraph behind, which reads as a stray empty bullet when it was auto-numbered:
 
-## 参考
+- `pandoc --track-changes=accept` never joins the paragraphs.
+- `accept_changes.py` (LibreOffice) joins them correctly, except when the deleted paragraph is followed by an empty spacer paragraph.
 
-- [创建文档详解](references/creating.md) — docx-js 完整代码模式
-- [编辑文档详解](references/editing.md) — XML 编辑、修订追踪、注释
+An empty bullet in either view is an artifact of that view, not a defect in the document. Check paragraph deletions in the XML.
+
+## Comments
+
+Comments require six cross-linked files. Use the helper — directory mode when you'll also be editing `document.xml` (saves an unzip/rezip cycle), `.docx`-direct mode otherwise:
+
+```bash
+# Against an already-unpacked directory (preferred when also placing markers)
+python scripts/comment.py unpacked/ "Fees & expenses cap is too low"
+python scripts/comment.py unpacked/ "Agreed" --parent 0
+
+# Against a .docx directly
+python scripts/comment.py contract.docx "This cap is too low" -o annotated.docx
+```
+
+The script writes `comments.xml`, `commentsExtended.xml`, `commentsIds.xml`, `commentsExtensible.xml`, the relationships, and the content-type overrides. Comment IDs are auto-assigned. It then prints the `<w:commentRangeStart>`/`<w:commentRangeEnd>`/`<w:commentReference>` snippet to add to `word/document.xml` so the comment anchors to specific text — until you place those markers, the comment exists but is not visible.
+
+## Dependencies
+
+`docx` (npm, preinstalled — install only if `require('docx')` fails) · `pandoc` · LibreOffice (`soffice`) · `pdftoppm` (Poppler)
+
+The helper scripts under `scripts/` need Python packages: `defusedxml` and `lxml` (`pip install defusedxml lxml`). `scripts/office/validate.py` additionally requires `lxml` for XSD validation.
