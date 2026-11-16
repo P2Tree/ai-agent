@@ -84,6 +84,7 @@ npx skills@latest add p2tree/ai-agent
 | [docx](./skills/composition/docx/SKILL.md) | Word 处理 — 创建、读取、编辑、修订追踪、注释、视觉验证 |
 | [pptx](./skills/composition/pptx/SKILL.md) | PPT 处理 — structured deck、模板编辑、三级 QA |
 | [xlsx](./skills/composition/xlsx/SKILL.md) | 电子表格 — 公式、重算、openpyxl gotchas、财务模型 |
+| [humanizer](./skills/composition/humanizer/SKILL.md) | 去除 AI 写作痕迹 — 31 种模式、保真约束与改写边界 |
 
 ### Career （职业发展）
 
