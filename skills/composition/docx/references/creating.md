@@ -2,6 +2,8 @@
 
 docx-js (Node.js) 创建 .docx 文件的完整代码模式。
 
+`docx` 已预装，不要先 `npm install`；直接 `require('docx')`。只有 require 失败时才安装。
+
 ## 基本结构
 
 ```javascript
@@ -39,7 +41,18 @@ sections: [{
 
 ## 样式
 
-用 Arial 作为默认字体，覆盖内置标题样式：
+用 Arial 作为默认字体，覆盖内置标题样式。每个用到的标题层级都必须在 `styles.default` 配独立字体、`before`/`after`（即使为 0）和 `keepNext`——内置样式这三样全为空：
+
+```javascript
+styles: {
+  default: {
+    heading1: { run: { font: "Arial", size: 32, bold: true }, paragraph: { spacing: { before: 240, after: 120 }, keepNext: true } },
+    heading2: { run: { font: "Arial", size: 28, bold: true }, paragraph: { spacing: { before: 180, after: 120 }, keepNext: true } }
+  }
+}
+```
+
+TOC 需要标题使用内置 `HeadingLevel.*`，或用 `outlineLevel` 标记自定义样式。也是完整的样式配置示例：
 
 ```javascript
 const doc = new Document({
@@ -170,13 +183,26 @@ sections: [{
 }]
 ```
 
-## Tab 停位
+## Tab 停位与点线引导
+
+普通右对齐可用 tab stop：
 
 ```javascript
 // 右对齐（标题左、日期右）
 new Paragraph({
   children: [new TextRun("Company"), new TextRun("\tJanuary 2025")],
   tabStops: [{ type: TabStopType.RIGHT, position: TabStopPosition.MAX }],
+})
+```
+
+点线引导（目录样式 `Chapter 1 ........ 3`）用 `TextRun` 内的 `PositionalTab`，不要用字面点或空格填充：
+
+```javascript
+new TextRun({
+  children: [
+    new TextRun("Chapter 1"),
+    new PositionalTab({ alignment: PositionalTabAlignment.RIGHT, leader: PositionalTabLeader.DOT }),
+  ],
 })
 ```
 
@@ -191,3 +217,14 @@ new Paragraph({
 | WidthType.PERCENTAGE | 用 DXA |
 | ShadingType.SOLID | 用 CLEAR |
 | 用表格做分隔线 | 用 Paragraph border |
+
+## 验证输出
+
+写完后渲染检查：
+
+```bash
+zip -d output.docx '*/' >/dev/null || true
+python scripts/office/soffice.py --headless --convert-to pdf output.docx
+pdftoppm -jpeg -r 100 output.pdf page
+ls page-*.jpg   # 然后 Read 图片
+```

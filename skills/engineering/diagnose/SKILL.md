@@ -7,11 +7,17 @@ description: Disciplined diagnosis loop for hard bugs and performance regression
 
 A discipline for hard bugs. Skip phases only when explicitly justified.
 
+**Iron law:** no fix before root-cause investigation. If three fix attempts fail, stop and question the architecture instead of trying a fourth patch.
+
+## Redact
+
+You will show commands, outputs, and captured artifacts. **Redact every credential first**: write `<REDACTED>` in its place. Build loops against environment variables so credentials stay in the environment rather than in what you show. Captured artifacts carry auth headers: quote only the lines that carry the signal. If redacted output is not enough to diagnose the bug, say so and ask the user.
+
 ## Pre-flight: read agent environment
 
 Before diving into code, read the repo's agent environment (set up by `/init-agent-environment`) to ground your investigation:
 
-- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Read the domain glossary (`CONTEXT.md`) so you use the project's own terminology in hypotheses and output. Read ADRs in the bug's area — they constrain what the code is *supposed* to do, which helps you reject impossible hypotheses faster.
+- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Read the domain glossary (`GLOSSARY.md`) so you use the project's own terminology in hypotheses and output. Read ADRs in the bug's area — they constrain what the code is *supposed* to do, which helps you reject impossible hypotheses faster.
 - **`docs/agents/issue-tracker.md`** — tells you how to fetch the original bug report (e.g. `gh issue view`, local markdown file). Read the full ticket before forming hypotheses — it often contains reproduction hints, affected versions, or prior investigation notes.
 - **`docs/agents/triage-labels.md`** — if you resolve the bug and need to update the ticket's triage state, use the label strings from this file.
 
@@ -56,9 +62,18 @@ The goal is not a clean repro but a **higher reproduction rate**. Loop the trigg
 
 Stop and say so explicitly. List what you tried. Ask the user for: (a) access to whatever environment reproduces it, (b) a captured artifact (HAR file, log dump, core dump, screen recording with timestamps), or (c) permission to add temporary production instrumentation. Do **not** proceed to hypothesise without a loop.
 
-Do not proceed to Phase 2 until you have a loop you believe in.
+### Completion criterion: a tight loop that goes red
 
-## Phase 2 — Reproduce
+Phase 1 is done when you can name **one command** you have **already run at least once** (show the redacted invocation and output), and it is:
+
+- [ ] **Red-capable** — drives the actual bug path and asserts the user's exact symptom, so it can go red on this bug and green once fixed
+- [ ] **Deterministic** — same verdict every run (flaky bugs: a pinned, high reproduction rate)
+- [ ] **Fast** — seconds, not minutes
+- [ ] **Agent-runnable** — runs unattended; a human only via the HITL script
+
+If you catch yourself reading code to build a theory before this command exists, **stop**. No red-capable command, no Phase 2.
+
+## Phase 2 — Reproduce + minimise
 
 Run the loop. Watch the bug appear.
 
@@ -68,7 +83,13 @@ Confirm:
 - [ ] The failure is reproducible across multiple runs (or, for non-deterministic bugs, reproducible at a high enough rate to debug against).
 - [ ] You have captured the exact symptom (error message, wrong output, slow timing) so later phases can verify the fix actually addresses it.
 
-Do not proceed until you reproduce the bug.
+### Minimise
+
+Once it's red, shrink the repro to the **smallest scenario that still goes red**. Cut inputs, callers, config, data, and steps **one at a time**, re-running the loop after each cut, and keep only what is load-bearing for the failure.
+
+A minimal repro shrinks the hypothesis space in Phase 3 and becomes the clean regression test in Phase 5. Done when **every remaining element is load-bearing**: removing any one makes the loop go green.
+
+Do not proceed until you have reproduced **and** minimised.
 
 ## Phase 3 — Hypothesise
 
@@ -107,7 +128,7 @@ A correct seam is one where the test exercises the **real bug pattern** as it oc
 If a correct seam exists:
 
 1. Turn the minimised repro into a failing test at that seam.
-2. Watch it fail.
+2. Watch it fail. If you forced the red by mutating code or a fixture, `diff` against a pristine copy to prove the mutation landed before trusting it.
 3. Apply the fix.
 4. Watch it pass.
 5. Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.
@@ -124,8 +145,4 @@ Required before declaring done:
 
 **Then ask: what would have prevented this bug?** If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the `/improve-architecture` skill with the specifics. Make the recommendation **after** the fix is in, not before — you have more information now than when you started.
 
-## Next Steps
-
-- **tdd** — if the fix needs a proper red-green-refactor cycle (the Phase 5 regression test was a single test; complex fixes benefit from the full TDD loop)
-- **code-review** — after the fix is in, review the changes for correctness and side effects
-- **improve-architecture** — if the post-mortem reveals an architectural gap (no correct test seam, hidden coupling, tangled callers)
+**Next:** use **tdd** if the fix needs a full red-green-refactor cycle, **code-review** after the fix, and **improve-architecture** if the post-mortem reveals an architectural gap (no correct seam, hidden coupling, tangled callers).

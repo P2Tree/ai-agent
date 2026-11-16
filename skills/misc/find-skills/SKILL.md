@@ -14,29 +14,48 @@ When the user's need falls outside what the local repo covers, search the open s
 - Current skills don't address the user's problem well
 - User wants to extend agent capabilities in a specific domain
 
+## Skills CLI
+
+`npx skills` is the package manager for the open skills ecosystem.
+
+- `npx skills find [query] [--owner <owner>]` — search by keyword, optionally scoped to a GitHub owner
+- `npx skills add <package>` — install a skill
+- `npx skills update` — update all installed skills
+
+Browse the leaderboard at <https://skills.sh/>.
+
 ## Process
 
 ### 1. Clarify the Need
 
 Identify the domain (e.g., React, testing, deployment) and the specific task (e.g., writing E2E tests, creating animations). If the need is already covered by a local skill, recommend that first.
 
-### 2. Search the Ecosystem
+### 2. Check the Leaderboard First
 
-Use the Skills CLI to search:
+Before running a CLI search, check the [skills.sh leaderboard](https://skills.sh/) for a well-known skill in the domain. It ranks by total installs and surfaces battle-tested options.
+
+Top sources include:
+
+- `vercel-labs/agent-skills` — React, Next.js, web design (100K+ installs each)
+- `anthropics/skills` — frontend design, document processing (100K+ installs)
+
+### 3. Search the Ecosystem
+
+If the leaderboard doesn't cover the need:
 
 ```bash
-npx skills find [query]
+npx skills find [query] [--owner <owner>]
 ```
 
-Pick keywords that match the domain and task. Examples:
+Examples:
 
 - "how do I make my React app faster?" -> `npx skills find react performance`
 - "can you help me with PR reviews?" -> `npx skills find pr review`
 - "I need to create a changelog" -> `npx skills find changelog`
 
-You can also browse the leaderboard at <https://skills.sh/> for popular options.
+Use specific keywords; if a term fails, try alternatives ("deploy" -> "deployment" / "ci-cd").
 
-### 3. Verify Before Recommending
+### 4. Verify Before Recommending
 
 **Do not recommend a skill based solely on search results.** Always check:
 
@@ -44,13 +63,14 @@ You can also browse the leaderboard at <https://skills.sh/> for popular options.
 - **Source reputation** — official sources (e.g., `anthropics`, `vercel-labs`, `microsoft`) are more trustworthy than unknown authors
 - **GitHub stars** — a skill from a repo with <100 stars should be treated with skepticism
 
-### 4. Present Options
+### 5. Present Options
 
 Show the user:
 
 1. Skill name and what it does
 2. Install count and source
-3. Link to learn more
+3. The install command they can run
+4. Link to learn more
 
 Example:
 
@@ -59,26 +79,35 @@ I found a skill that might help! The "react-best-practices" skill provides
 React and Next.js performance optimization guidelines from Vercel Engineering.
 (185K installs)
 
+To install it:
+npx skills add vercel-labs/agent-skills@react-best-practices
+
 Learn more: https://skills.sh/vercel-labs/agent-skills/react-best-practices
 ```
 
-### 5. Install If Requested
-
-If the user wants to proceed, run:
+### 6. Install If Requested
 
 ```bash
-npx skills add <owner/repo@skill>
+npx skills add <owner/repo@skill> -g -y
 ```
 
-The skill will be installed to the agent's skill directory.
+`-g` installs globally (user-level) and `-y` skips confirmation prompts.
 
-### 6. When Nothing Is Found
+### 7. When Nothing Is Found
 
 If no relevant skills exist:
 
 1. Acknowledge that no match was found
 2. Offer to help directly with general capabilities
-3. Suggest creating a custom skill if this is a recurring need
+3. Suggest creating a custom skill with `npx skills init <my-skill>`
+
+```
+I searched for skills related to "xyz" but didn't find any matches.
+I can still help you with this task directly! Would you like me to proceed?
+
+If this is something you do often, you could create your own skill:
+npx skills init my-xyz-skill
+```
 
 ## Common Search Categories
 

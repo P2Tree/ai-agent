@@ -1,6 +1,18 @@
 # 创建详解
 
-openpyxl 从零创建 XLSX 电子表格。
+openpyxl 从零创建 XLSX 电子表格。`openpyxl` 已预装，不要先 `pip install`。
+
+## 关键 gotchas
+
+- **读模型要两次加载**：`data_only=True` 有值无公式，默认有公式无值；`data_only=True` 后保存会把公式永久替换成字面量。
+- **刚写出的文件用 `data_only=True` 全是 `None`**，先跑 `recalc.py`。
+- **合并单元格只写左上锚点**；其余是只读 `MergedCell`。
+- **`.xlsm` 加 `keep_vba=True`**，否则丢宏。
+- **含空格的 sheet 名跨表引用要加引号**：`='Assumptions Inputs'!$B$5`。
+- **每个新公式单独设 `number_format`**，否则日期显示成 `45337`、30% 显示成 `0.3`。
+- **部分加粗/斜体需要 `load_workbook(rich_text=True)`**，此时 `.value` 是 `CellRichText`。
+- **新图表**：`roundedCorners=False`；legend/title 的 `.overlay=False`；有坐标轴时 `x_axis.delete=False`、`y_axis.delete=False`；`DateAxis` 设 `y_axis.crossAx=500`。
+- **公式兼容性**：优先 2007 时代函数；`TEXTJOIN`/`CONCAT`/`IFS`/`SWITCH`/`MAXIFS`/`MINIFS` 必须加 `_xlfn.` 前缀；禁用 `XLOOKUP`/`XMATCH`/`SORT`/`FILTER`/`UNIQUE`/`SEQUENCE`。
 
 ## 基本结构
 

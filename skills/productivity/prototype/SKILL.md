@@ -11,23 +11,23 @@ A prototype is **throwaway code that answers a question**. The question decides 
 
 Identify which question is being answered:
 
-- **"Does this logic / state model feel right?"** → Build a tiny interactive terminal app that pushes the state machine through hard-to-reason-about cases.
+- **"Does this logic / state model feel right?"** → Build a single shareable HTML file (free-play buttons plus tabbed guided walkthroughs) that pushes the state machine through hard-to-reason-about cases and that a non-developer can drive.
 - **"What should this look like?"** → Generate several radically different UI variations on a single route, switchable via URL search param and a floating bottom bar.
 
 If ambiguous and user isn't reachable, default to whichever matches the surrounding code (backend → logic; page/component → UI) and state the assumption.
 
 ## Rules
 
-1. **Throwaway from day one.** Locate prototype code close to where it will be used, but name it so readers know it's a prototype.
-2. **One command to run.** The user must be able to start it without thinking.
-3. **No persistence by default.** State lives in memory. If the question explicitly involves a database, use a scratch DB with a clear "PROTOTYPE — wipe me" name.
+1. **Throwaway from day one, clearly marked.** Locate prototype code close to where it will be used, but name it so a casual reader sees it's a prototype. For throwaway UI routes, obey the project's existing routing convention; don't invent a new top-level structure.
+2. **Trivial to run.** A UI prototype starts from one command in the project's task runner; a logic demo is a single HTML file the user double-clicks.
+3. **No persistence by default.** State lives in memory. If the question explicitly involves a database, use a scratch DB or local file with a clear "PROTOTYPE — wipe me" name.
 4. **Skip the polish.** No tests, no error handling beyond what makes it runnable, no abstractions.
-5. **Surface the state.** After every action, print or render the full relevant state.
-6. **Delete or absorb when done.** Don't leave prototypes rotting in the repo.
+5. **Surface the state.** After every action (logic) or every variant switch (UI), render the full relevant state so the user sees what changed.
+6. **Capture it when done.** Fold the validated decision into real code, then keep the prototype itself as a **primary source**: commit it to a throwaway branch (not main) and leave a context pointer to that branch on the implementation issue.
 
 ## When Done
 
-The *answer* is the only thing worth keeping. Capture it somewhere durable (commit message, ADR, issue) along with the question it was answering. Then delete the prototype or fold the decision into real code.
+The **answer** is the only thing worth keeping on main. Capture the verdict and the question it settled in the issue or commit, along with a pointer to the throwaway branch holding the prototype.
 
 See [logic prototype guide](references/logic-prototype.md) and [UI prototype guide](references/ui-prototype.md) for branch-specific details.
 

@@ -1,77 +1,68 @@
 # Implementer Subagent Prompt Template
 
-Use this template when dispatching an implementer subagent.
+Use when dispatching an implementer subagent.
 
 ```
-Task tool (general-purpose):
+Dispatch a subagent:
   description: "Implement Task N: [task name]"
+  model: [REQUIRED — choose per SKILL.md Model Selection]
   prompt: |
     You are implementing Task N: [task name]
 
     ## Task Description
 
-    [FULL TEXT of task from plan — paste it here, don't make subagent read file]
+    Read your task brief first: [BRIEF_FILE]
+    It contains the full task text and the exact values to use verbatim.
 
     ## Context
 
-    [Where this fits, dependencies, architectural context]
+    [Where this fits, dependencies, interfaces from earlier tasks, and rulings
+    the brief cannot know]
 
     ## Before You Begin
 
-    If you have questions about requirements, approach, dependencies, or anything
-    unclear — ask them now. Raise concerns before starting work.
+    If anything about requirements, approach, dependencies, or assumptions is
+    unclear — ask now. Raise concerns before starting work.
 
     ## Your Job
 
-    Once clear on requirements:
-    1. Implement exactly what the task specifies
-    2. Write tests (following TDD if task says to)
-    3. Verify implementation works
-    4. Commit your work
-    5. Self-review (see below)
-    6. Report back
+    1. Implement exactly what the task specifies.
+    2. Write tests first (TDD), watching each fail before making it pass.
+    3. Verify the implementation; run focused tests while iterating and the
+       full suite once before committing.
+    4. Commit your work.
+    5. Self-review your diff.
+    6. Write the full report to [REPORT_FILE] and return only: status,
+       commits, a one-line test summary, and concerns.
 
-    **While you work:** If you encounter something unexpected, ask questions.
-    It's always OK to pause and clarify. Don't guess.
+    Work from: [directory]
 
-    ## Code Organization
+    ## You Do Not Dispatch Subagents
 
-    - Follow the file structure defined in the plan
-    - Each file should have one clear responsibility
-    - If a file you're creating grows beyond the plan's intent, report as
-      DONE_WITH_CONCERNS — don't split files without plan guidance
-    - In existing codebases, follow established patterns
+    Do all of this task's work yourself. Never spawn a helper, and never spawn
+    a reviewer to check your work. Self-review means reading your own diff.
+    Review is the controller's job and is already scheduled.
 
     ## When You're Stuck
 
-    It is always OK to stop and say "this is too hard." Bad work is worse than
-    no work.
-
-    **STOP and escalate when:**
-    - Task requires architectural decisions with multiple valid approaches
-    - You need context beyond what was provided
-    - You feel uncertain about your approach
-    - You've been reading file after file without progress
-
-    **How to escalate:** Report BLOCKED or NEEDS_CONTEXT. Describe specifically
-    what you're stuck on, what you've tried, and what help you need.
+    It is always OK to stop and say "this is too hard." Report BLOCKED or
+    NEEDS_CONTEXT with what you tried and what help you need. Bad work is
+    worse than no work.
 
     ## Before Reporting Back: Self-Review
 
-    Review your work with fresh eyes:
-
-    - **Completeness:** Did I implement everything? Any missed requirements?
-    - **Quality:** Is this my best work? Are names clear?
-    - **Discipline:** Did I avoid overbuilding? Only built what was requested?
-    - **Testing:** Do tests verify behavior (not just mock behavior)?
+    - Completeness: did I implement everything, with no missed requirements?
+    - Quality: are names clear and the code clean?
+    - Discipline: did I avoid overbuilding?
+    - Testing: do tests verify behavior rather than mocks?
 
     Fix issues before reporting.
 
     ## Report Format
 
-    - **Status:** DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT
-    - What you implemented (or attempted, if blocked)
-    - Test results
+    - Status: DONE | DONE_WITH_CONCERNS | BLOCKED | NEEDS_CONTEXT
+    - What you implemented (or attempted)
+    - Test results, with the commands and their output
     - Files changed
     - Self-review findings
     - Issues or concerns

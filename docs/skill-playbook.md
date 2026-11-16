@@ -39,7 +39,6 @@
 | work-report | 行政助理 | 按模板生成结构化工作报告 |
 | grill-me | 评审委员会 | 逐个问题逼问方案，走完决策树每个分支 |
 | triage | 缺陷分流员 | 对新 issue 分类、标记、分配 |
-| zoom-out | 导航员 | 上升一层给出模块地图和调用关系 |
 | init-agent-environment | 项目接入负责人 | 配置项目环境，建立领域词汇和 ADR 索引 |
 
 ---
@@ -108,22 +107,20 @@ diagnose → tdd（修复时）→ code-review → finishing-branch
 刚接触一个项目，快速建立心智模型。
 
 ```
-zoom-out + improve-architecture
+improve-architecture
 ```
 
 | 阶段 | Skill | 角色 | 做什么 | 产出 |
 |------|-------|------|--------|------|
-| 全景 | **zoom-out** | 导航员 | 上升一层抽象，给出模块地图和调用关系 | 模块全景图 |
-| 深入 | **improve-architecture** | 架构师 | 识别架构摩擦点（浅模块、耦合、缺少局部性） | 架构改进候选列表 |
+| 全景 | **improve-architecture** | 架构师 | 探索模块边界与依赖，识别架构摩擦点（浅模块、耦合、缺少局部性） | 模块地图与架构改进候选列表 |
 
 **配合要点：**
-- zoom-out 和 improve-architecture 可并行使用：zoom-out 给出"是什么"，improve-architecture 给出"哪里有问题"
-- zoom-out 使用项目领域词汇，这些词汇来自第 0 节初始化建立的 `CONTEXT.md`
+- improve-architecture 使用项目领域词汇，这些词汇来自第 0 节初始化建立的 `GLOSSARY.md`
 
 **变体：**
-- 只需要快速了解某个模块：单独用 zoom-out
-- 需要了解项目某部分的实现细节：zoom-out 定位后，直接读代码
-- 接手项目的同时要修 bug：zoom-out → diagnose
+- 只需要快速了解某个模块：直接读代码，并用领域词汇记录理解
+- 需要了解项目某部分的实现细节：先定位模块，再读代码
+- 接手项目的同时要修 bug：improve-architecture → diagnose
 
 ---
 
@@ -336,7 +333,7 @@ triage → decomposing-issues
 | 仓库初始化（前置） | init-agent-environment(项目接入负责人) |
 | 模糊想法落地 | brainstorming(需求分析师) → writing-prd(产品经理) → decomposing-issues(项目经理) → writing-plans(技术负责人) → executing-plans(工程师) → code-review(资深审查者) → finishing-branch(发布工程师) |
 | Bug 排查 | diagnose(调试专家) → tdd(工程师) → code-review(资深审查者) → finishing-branch(发布工程师) |
-| 新项目熟悉 | zoom-out(导航员) + improve-architecture(架构师) |
+| 新项目熟悉 | improve-architecture(架构师) |
 | 补测试/搭环境 | prototype(预研工程师) + tdd(工程师) → code-review(资深审查者) |
 | 项目重构 | improve-architecture(架构师) → writing-plans(技术负责人) → tdd(工程师) → executing-plans(工程师) → code-review(资深审查者) → finishing-branch(发布工程师) |
 | 新项目预研 | brainstorming(需求分析师) → prototype(预研工程师) → writing-prd(产品经理) → arch-doc(架构文档工程师) |
@@ -355,8 +352,6 @@ triage → decomposing-issues
 | Skill | 角色 | 何时用 |
 |-------|------|--------|
 | **frontend-design** | UI 设计师 | 任何需要构建前端界面的场景，确保产出不是千篇一律的 AI 风格 |
-| **caveman** | 精简模式 | token 预算紧张时，压缩沟通节省 ~75% token |
 | **grill-me** | 评审委员会 | 任何需要深入讨论或质询的决策点 |
 | **prototype** | 预研工程师 | 任何需要快速验证技术假设的点 |
 | **code-review** | 资深审查者 | 任何产出代码的流程的最终检查点 |
-| **zoom-out** | 导航员 | 任何需要跳出现有视角看全局的时刻 |

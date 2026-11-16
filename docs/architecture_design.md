@@ -264,9 +264,9 @@ skill 内容不变，只是注册路径不同。
 
 #### mattpocock/skills
 
-- **特点**：工程实践 + 领域语言驱动。grill 对齐、TDD 垂直切片、深模块架构、CONTEXT.md 共享术语、ADR 决策记录
-- **吸纳部分**：grill 对话模式、TDD 垂直切片方法论、深模块设计理念、领域语言与 CONTEXT.md 实践、ADR 判断原则
-- **已融合 skill**：grill-me、grill-with-docs、tdd、diagnose、improve-architecture、to-prd、to-issues、triage、zoom-out、prototype、setup-matt-pocock-skills、write-a-skill
+- **特点**：工程实践 + 领域语言驱动。grill 对齐、TDD 垂直切片、深模块架构、GLOSSARY.md 共享术语、ADR 决策记录
+- **吸纳部分**：grill 对话模式、TDD 垂直切片方法论、深模块设计理念、领域语言与 GLOSSARY.md 实践、ADR 判断原则
+- **已融合 skill**：grill-me、grill-with-docs、tdd、diagnose、improve-architecture、to-prd、to-issues、triage、prototype、setup-matt-pocock-skills、write-a-skill
 
 #### andrej-karpathy-skills
 
@@ -307,14 +307,12 @@ skill 内容不变，只是注册路径不同。
 | triage | mattpocock | ✅ 已创建 |
 | init-agent-environment | ai-agent + mattpocock/setup-matt-pocock-skills | ✅ 已创建（workflow 桶） |
 
-### productivity/（5 个）
+### productivity/（3 个）
 
 | Skill | 来源与合并说明 | 状态 |
 |-------|--------------|------|
 | brainstorming | ai-agent + superpowers:brainstorming | ✅ 已创建 |
-| zoom-out | mattpocock | ✅ 已创建 |
 | prototype | mattpocock | ✅ 已创建 |
-| caveman | ai-agent | ✅ 已创建 |
 | grill-me | ai-agent + mattpocock/grill-with-docs | ✅ 已创建 |
 | token-efficiency-master | 公司 | ⏳ 待迁移 |
 | agentic-harness-patterns | 公司 | ⏳ 待迁移 |

@@ -15,6 +15,16 @@ description: Test-driven development with red-green-refactor loop. Use when user
 
 See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
 
+## Seams: Where Tests Go
+
+A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
+
+**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything, so agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+
+Ask: "What's the public interface, and which seams should we test?" Give each proposed seam a one-line note on what it catches and what it misses.
+
+When the interface shape itself is in question, consult [interface-design.md](interface-design.md) and [deep-modules.md](deep-modules.md) for the module/interface/depth/seam vocabulary. These are references, not a process to run.
+
 ## Anti-Pattern: Horizontal Slices
 
 **DO NOT write all tests first, then all implementation.** This is "horizontal slicing" - treating RED as "write all tests" and GREEN as "write all code."
@@ -40,6 +50,10 @@ RIGHT (vertical):
   ...
 ```
 
+## Anti-Pattern: Tautological Tests
+
+If the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), the test passes by construction and can never disagree with the code. Expected values must come from an independent source of truth: a known-good literal, a worked example, or the spec.
+
 ## Workflow
 
 ### 1. Planning
@@ -49,15 +63,12 @@ When exploring the codebase, use the project's domain glossary so that test name
 Before writing any code:
 
 - [ ] Confirm with user what interface changes are needed
-- [ ] Confirm with user which behaviors to test (prioritize)
-- [ ] Identify opportunities for [deep modules](deep-modules.md) (small interface, deep implementation)
-- [ ] Design interfaces for [testability](interface-design.md)
-- [ ] List the behaviors to test (not implementation steps)
+- [ ] Confirm the seams at which tests will be written
+- [ ] List the behaviors to test at each seam (not implementation steps)
+- [ ] Identify opportunities for deep modules (small interface, deep implementation)
 - [ ] Get user approval on the plan
 
-Ask: "What should the public interface look like? Which behaviors are most important to test?"
-
-**You can't test everything.** Confirm with the user exactly which behaviors matter most. Focus testing effort on critical paths and complex logic, not every possible edge case.
+Ask: "What's the public interface, and which seams should we test?"
 
 ### 2. Tracer Bullet
 
@@ -85,18 +96,14 @@ Rules:
 - Only enough code to pass current test
 - Don't anticipate future tests
 - Keep tests focused on observable behavior
+- **Watch RED fail and GREEN pass.** Read the actual output; a test you never saw fail proves nothing.
+- After the change, run the full project test suite, even if the task names one file. Report any pre-existing failures by name.
 
 ### 4. Refactor
 
-After all tests pass, look for [refactor candidates](refactoring.md):
+**Refactoring is not part of the red → green loop.** It belongs to the review stage — see the `code-review` skill — and should happen after the slice is green, not as a TDD step.
 
-- [ ] Extract duplication
-- [ ] Deepen modules (move complexity behind simple interfaces)
-- [ ] Apply SOLID principles where natural
-- [ ] Consider what new code reveals about existing code
-- [ ] Run tests after each refactor step
-
-**Never refactor while RED.** Get to GREEN first.
+When refactoring is warranted later, [refactoring.md](refactoring.md) lists candidates. **Never refactor while RED.**
 
 ## Checklist Per Cycle
 
@@ -104,6 +111,8 @@ After all tests pass, look for [refactor candidates](refactoring.md):
 [ ] Test describes behavior, not implementation
 [ ] Test uses public interface only
 [ ] Test would survive internal refactor
+[ ] Expected value comes from an independent source, not recomputed like the code
+[ ] I watched this test fail before making it pass
 [ ] Code is minimal for this test
 [ ] No speculative features added
 ```

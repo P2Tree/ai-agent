@@ -68,7 +68,7 @@ Up to date (4):
   diagnose, code-review, tdd, improve-architecture
 
 Untracked (1):
-  caveman        — name match, inferred source (no lock/symlink)
+  prototype      — name match, inferred source (no lock/symlink)
 
 Total: 2 uninstalled / 1 outdated / 4 up to date / 1 untracked
 

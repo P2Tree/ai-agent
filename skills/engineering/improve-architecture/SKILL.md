@@ -32,7 +32,7 @@ This skill is _informed_ by the project's domain model. The domain language give
 
 Read the repo's agent environment (set up by `/init-agent-environment`) to ground your exploration in the project's own domain language and architecture decisions:
 
-- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Read the domain glossary (`CONTEXT.md`) so you name things the way the project does. Read ADRs in the area you're about to explore — they constrain what the code is *supposed* to do, so you don't re-litigate settled decisions.
+- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Read the domain glossary (`GLOSSARY.md`) so you name things the way the project does. Read ADRs in the area you're about to explore — they constrain what the code is *supposed* to do, so you don't re-litigate settled decisions.
 - **`docs/agents/issue-tracker.md`** — tells you how the project tracks work. If a candidate should be recorded as an issue, follow the conventions in this file.
 - **`docs/agents/triage-labels.md`** — if recording a candidate as an issue, apply the correct triage label strings from this file.
 
@@ -42,9 +42,14 @@ If these files don't exist, proceed silently — don't block exploration on miss
 
 ### 1. Explore
 
+**Scope before you scan: YAGNI.** Deepening a module pays off by making future changes easier, so weight the parts of the codebase that have recently changed. Decide *where* to look first:
+
+- If the user named a direction (a module, subsystem, or pain point), take it.
+- Otherwise, walk back a good stretch of `git log --oneline` to find hot spots — files and areas that keep coming up — and let those pull your attention first. If changes are scattered, widen the net.
+
 Read the project's domain glossary and any ADRs in the area you're touching first.
 
-Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:
+Then spawn a sub-agent with a **fresh context window** to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:
 
 - Where does understanding one concept require bouncing between many small modules?
 - Where are modules **shallow** — interface nearly as complex as the implementation?
@@ -62,6 +67,9 @@ Present a numbered list of deepening opportunities. For each candidate:
 - **Problem** — why the current architecture is causing friction
 - **Solution** — plain English description of what would change
 - **Benefits** — explained in terms of locality and leverage, and also in how tests would improve
+- **Recommendation strength** — `Strong`, `Worth exploring`, or `Speculative`
+
+End with a **Top recommendation**: which candidate to tackle first and why. If the user wants a visual report, write a self-contained HTML file to the OS temp directory and open it.
 
 **Use the domain glossary's vocabulary (path from `docs/agents/domain.md`) for the domain, and [LANGUAGE.md](LANGUAGE.md) vocabulary for the architecture.** If the glossary defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
 

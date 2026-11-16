@@ -11,7 +11,7 @@ Read the repo's agent environment (set up by `/init-agent-environment`) before w
 
 - **`docs/agents/issue-tracker.md`** — tells you which tracker to use and how to publish the PRD as an issue. Follow the conventions in this file when creating the issue.
 - **`docs/agents/triage-labels.md`** — the label strings for the canonical triage roles. Apply the `ready-for-agent` label after publishing — use the string from this file, don't hardcode the role name.
-- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Use the domain glossary throughout the PRD; respect ADRs in the area the PRD touches.
+- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Use the domain glossary throughout the PRD; respect ADRs in the area the PRD touches.
 
 If these files don't exist, stop and ask the user to run `/init-agent-environment` first — this skill cannot function without knowing the issue tracker.
 
@@ -19,11 +19,9 @@ If these files don't exist, stop and ask the user to run `/init-agent-environmen
 
 1. Explore the repo to understand the current state of the codebase, if you haven't already.
 
-2. Sketch out the major modules you will need to build or modify to complete the implementation. Actively look for opportunities to extract deep modules that can be tested in isolation.
+2. Sketch out the seams at which you will test the feature. Prefer existing seams to new ones, and use the highest seam possible. If a new seam is needed, propose it at the highest point you can. Fewer seams across the codebase is better — the ideal is one.
 
-A deep module (as opposed to a shallow module) is one which encapsulates a lot of functionality in a simple, testable interface which rarely changes.
-
-Check with the user that these modules match their expectations. Check with the user which modules they want tests written for.
+Check with the user that these seams match their expectations.
 
 1. Write the PRD using the template below. **Language:** if the source issue and related specs are entirely in English, write the PRD in English; otherwise, follow the language used in those source materials. Then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
 
