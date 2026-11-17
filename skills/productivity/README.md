@@ -31,3 +31,13 @@
 **触发方式：** 需要你说"grill me""帮我压力测试一下这个方案"或输入 `/grill-me` 才会激活。
 
 **参考：** mattpocock:grill-me + mattpocock:grill-with-docs
+
+## research `[自动]`
+
+把一个研究问题交给后台 agent：查官方文档、源码、规范、第一方 API 等高可信一手来源，把结论写成一份带引用的 Markdown 文件放进仓库。你继续做别的事，它负责阅读和整理。
+
+**什么时候用：** 要调研一个主题、查清 API/文档事实、或把大量阅读工作委托出去时。
+
+**触发方式：** 你说要调研、查资料、核实某个技术事实时，agent 自动激活。
+
+**参考：** mattpocock:research

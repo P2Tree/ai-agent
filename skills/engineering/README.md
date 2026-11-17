@@ -12,6 +12,16 @@
 
 **参考：** mattpocock:tdd + superpowers:test-driven-development
 
+## codebase-design `[自动]`
+
+深模块设计的共享词汇和判断纪律：module / interface / depth / seam / adapter / leverage / locality，删除测试、接口即测试面、一个 adapter 是假 seam。供 `tdd`、`improve-architecture` 等 skill 在设计接口或判断测试位置时调用。
+
+**什么时候用：** 设计或改进模块接口、决定 seam 位置、让代码更可测试或更易被 agent 导航时。
+
+**触发方式：** 你讨论接口设计、重构模块、或测试该放在哪一层时，agent 自动激活。
+
+**参考：** mattpocock:codebase-design
+
 ## diagnose `[自动]`
 
 系统化的调试方法：先建立一个能对该 bug 变红的紧反馈环，再复现、最小化、假设、插桩、修复、清理。不是靠猜，是靠排除法。展示命令和输出前先脱敏；修复前先写回归测试；三次修复失败就回头质疑架构。

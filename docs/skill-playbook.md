@@ -32,6 +32,7 @@
 | tdd | 严守纪律的工程师 | 红-绿-重构，每次一个测试-实现对 |
 | code-review | 资深审查者 | 四阶段审查，不确定的多问少断 |
 | improve-architecture | 架构师 | 扫描架构摩擦，提出加深模块的重构建议 |
+| codebase-design | 架构词汇顾问 | 提供深模块、接口、seam 的共享词汇和判断纪律 |
 | prototype | 预研工程师 | 做 throwaway 验证，答案留下、代码扔掉 |
 | frontend-design | UI 设计师 | 做有个性的前端界面，拒绝千篇一律的 AI 风格 |
 | arch-doc | 架构文档工程师 | 从代码生成或对齐架构设计说明 |
@@ -40,6 +41,8 @@
 | grill-me | 评审委员会 | 逐个问题逼问方案，走完决策树每个分支 |
 | triage | 缺陷分流员 | 对新 issue 分类、标记、分配 |
 | init-agent-environment | 项目接入负责人 | 配置项目环境，建立领域词汇和 ADR 索引 |
+| research | 调研员 | 后台查一手资料，把带引用的结论写成文档 |
+| retro | 流程改进顾问 | 复盘 agent 环境，减少下次的返工和昂贵调用 |
 
 ---
 
@@ -344,6 +347,8 @@ triage → decomposing-issues
 | 代码审查 | code-review(资深审查者) + grill-me(评审委员会) |
 | 方案评审 | grill-me(评审委员会) → prototype(预研工程师) |
 | Issue 管理 | triage(缺陷分流员) → decomposing-issues(项目经理) |
+| 技术调研 | research(调研员) → writing-plans(技术负责人) |
+| 会话复盘 | retro(流程改进顾问) |
 
 ## 贯穿性 Skill
 

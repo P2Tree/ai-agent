@@ -60,6 +60,7 @@ npx skills@latest add p2tree/ai-agent
 | Skill | 说明 |
 |-------|------|
 | [tdd](./skills/engineering/tdd/SKILL.md) | 红绿重构 TDD 循环，在预先确认的 seam 上垂直切片开发 |
+| [codebase-design](./skills/engineering/codebase-design/SKILL.md) | 深模块共享词汇 — interface/depth/seam/adapter/leverage/locality |
 | [diagnose](./skills/engineering/diagnose/SKILL.md) | 调试循环：可对 bug 变红的反馈环 → 复现+最小化 → 假设 → 插桩 → 修复 → 清理 |
 | [code-review](./skills/engineering/code-review/SKILL.md) | 代码审查纪律 — 校准置信度、只读审查、规格作为愿景、接收反馈流程 |
 | [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | 先定范围再扫描架构摩擦，给出带推荐强度的深模块候选 |
@@ -72,6 +73,7 @@ npx skills@latest add p2tree/ai-agent
 | [brainstorming](./skills/productivity/brainstorming/SKILL.md) | 先读上下文的设计对话 — 逐段复述、方案对比、按规模写 design doc、builder check |
 | [prototype](./skills/productivity/prototype/SKILL.md) | 回答特定问题的抛弃式原型，原型保留在 throwaway branch 作为一手证据 |
 | [grill-me](./skills/productivity/grill-me/SKILL.md) | 按 frontier 分轮提问，压力测试你的计划或设计 |
+| [research](./skills/productivity/research/SKILL.md) | 委托后台 agent 阅读，把带引用的结论写成 Markdown |
 
 ### Composition（内容生成）
 
@@ -103,6 +105,7 @@ npx skills@latest add p2tree/ai-agent
 | [writing-prd](./skills/workflow/writing-prd/SKILL.md) | 将对话上下文合成为 PRD，先确定测试 seam |
 | [decomposing-issues](./skills/workflow/decomposing-issues/SKILL.md) | 将 PRD 拆分为垂直切片的独立 issue |
 | [triage](./skills/workflow/triage/SKILL.md) | issue 与外部 PR 分诊 — 冗余检查、验证、agent brief、out-of-scope 知识库 |
+| [retro](./skills/workflow/retro/SKILL.md) | 会话复盘 — 导航、自动检查、编码规范、工具与信息获取 |
 | [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | 初始化 issue tracker、triage 标签、GLOSSARY/ADR 布局与 `.scratch/` 约定 |
 
 ### Misc（杂项）

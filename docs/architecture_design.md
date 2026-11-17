@@ -260,13 +260,14 @@ skill 内容不变，只是注册路径不同。
 
 - **特点**：流程纪律体系——brainstorming、writing-plans、executing-plans、systematic-debugging、checklist 纪律、子 agent 分发模式、验证完成、分支收尾
 - **吸纳部分**：流程纪律框架、checklist 模式、agent 分发与并行执行模式、验证与完成门控
-- **已融合 skill**：brainstorming、tdd、diagnose、code-review、writing-plans、executing-plans、using-git-worktrees、dispatching-agents、finishing-branch、verify-before-done
+- **已融合 skill**：brainstorming、tdd、diagnose、code-review、writing-plans、executing-plans、dispatching-agents、finishing-branch
+- **已合并的约定**：using-git-worktrees 简化为普通分支 + 可选隔离工作区；verification-before-completion 并入 `configs/project/CLAUDE.md` 与执行/收尾 skill 的完成契约
 
 #### mattpocock/skills
 
 - **特点**：工程实践 + 领域语言驱动。grill 对齐、TDD 垂直切片、深模块架构、GLOSSARY.md 共享术语、ADR 决策记录
 - **吸纳部分**：grill 对话模式、TDD 垂直切片方法论、深模块设计理念、领域语言与 GLOSSARY.md 实践、ADR 判断原则
-- **已融合 skill**：grill-me、grill-with-docs、tdd、diagnose、improve-architecture、to-prd、to-issues、triage、prototype、setup-matt-pocock-skills、write-a-skill
+- **已融合 skill**：grill-me、grill-with-docs、tdd、diagnose、improve-architecture、codebase-design、research、retro、to-prd、to-issues、triage、prototype、setup-matt-pocock-skills、write-a-skill
 
 #### andrej-karpathy-skills
 
@@ -300,6 +301,7 @@ skill 内容不变，只是注册路径不同。
 | Skill | 来源与合并说明 | 状态 |
 |-------|--------------|------|
 | tdd | ai-agent + mattpocock/tdd + superpowers:test-driven-development | ✅ 已创建 |
+| codebase-design | mattpocock | ✅ 已创建 |
 | diagnose | ai-agent + mattpocock/diagnose + superpowers:systematic-debugging | ✅ 已创建 |
 | code-review | ai-agent:code-review-discipline + superpowers:requesting-code-review + superpowers:receiving-code-review | ✅ 已创建 |
 | improve-architecture | ai-agent + mattpocock | ✅ 已创建 |
@@ -314,6 +316,7 @@ skill 内容不变，只是注册路径不同。
 | brainstorming | ai-agent + superpowers:brainstorming | ✅ 已创建 |
 | prototype | mattpocock | ✅ 已创建 |
 | grill-me | ai-agent + mattpocock/grill-with-docs | ✅ 已创建 |
+| research | mattpocock | ✅ 已创建 |
 | token-efficiency-master | 公司 | ⏳ 待迁移 |
 | agentic-harness-patterns | 公司 | ⏳ 待迁移 |
 
@@ -335,10 +338,9 @@ skill 内容不变，只是注册路径不同。
 |-------|--------------|------|
 | writing-plans | superpowers:writing-plans | ✅ 已创建 |
 | executing-plans | superpowers:executing-plans | ✅ 已创建 |
-| using-git-worktrees | superpowers:using-git-worktrees | ✅ 已创建 |
 | dispatching-agents | superpowers:dispatching-parallel-agents + superpowers:subagent-driven-development | ✅ 已创建 |
 | finishing-branch | superpowers:finishing-a-development-branch | ✅ 已创建 |
-| verify-before-done | superpowers:verification-before-completion | ✅ 已创建 |
+| retro | mattpocock | ✅ 已创建 |
 | git-commit-mr | 公司，脱敏 | ⏳ 待迁移 |
 | git-guardrails | ai-agent:git-guardrails-claude-code | ✅ 已创建 |
 | bash-to-zsh-converter | ai-agent | ✅ 已创建 |

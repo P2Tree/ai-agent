@@ -49,3 +49,15 @@ If the concept you need isn't in the glossary yet, that's a signal — either yo
 If your output contradicts an existing ADR, surface it explicitly rather than silently overriding:
 
 > _Contradicts ADR-0007 (event-sourced orders) — but worth reopening because…_
+
+## Maintaining the model
+
+Reading the glossary is a one-line habit. This section is for when the model is being **changed**.
+
+- **Challenge conflicts.** If the user's term contradicts `GLOSSARY.md`, say so immediately: "Your glossary defines 'cancellation' as X, but you seem to mean Y. Which is it?"
+- **Sharpen fuzzy language.** When a term is vague or overloaded, propose a precise canonical term: "You're saying 'account': do you mean the Customer or the User? Those are different things."
+- **Stress-test with scenarios.** Invent concrete edge cases that force the boundaries between concepts to be explicit.
+- **Cross-reference with code.** If the user's description disagrees with the implementation, surface the contradiction rather than silently choosing one.
+- **Write terms down immediately.** Update `GLOSSARY.md` as each term is resolved. Use one line per term: `- **Term** — definition.` Keep it a glossary: no implementation details, no specs, no scratch notes.
+- **Offer ADRs sparingly.** Only when all three are true: changing your mind later is expensive (hard to reverse); a future reader would wonder why (surprising without context); there were genuine alternatives and a real trade-off. Format: Title, Status, Context, Decision, Consequences.
+- **Create files lazily.** Create `GLOSSARY.md` or `docs/adr/` only when the first term or decision needs it.
