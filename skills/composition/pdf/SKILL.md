@@ -14,8 +14,11 @@ PDF 文件处理全流程：读取提取、合并拆分、创建生成、加密�
 |------|----------|------|
 | 读取/提取文本 | pdfplumber | `page.extract_text()` |
 | 提取表格 | pdfplumber | `page.extract_tables()` |
+| 提取元数据 | pypdf | `reader.metadata` |
+| 提取图片 | pdfimages | `pdfimages -j input.pdf prefix` |
 | 合并 PDF | pypdf | `writer.add_page(page)` |
-| 拆分 PDF | pypdf | 逐页写出 |
+| 拆分 PDF | pypdf / qpdf | 逐页写出 / `qpdf --pages` |
+| 旋转页面 | pypdf / qpdf | `page.rotate(90)` / `--rotate` |
 | 创建 PDF | reportlab | Canvas / Platypus |
 | 加密/解密 | pypdf / qpdf | `writer.encrypt()` |
 | 水印 | pypdf | `page.merge_page()` |
@@ -52,15 +55,28 @@ with pdfplumber.open("document.pdf") as pdf:
         tables = page.extract_tables()
 ```
 
-命令行提取：`pdftotext -layout input.pdf output.txt`
+表格批量导出为 Excel：逐页 `extract_tables()` → `pd.DataFrame(table[1:], columns=table[0])` → `pd.concat()` → `to_excel()`。
+
+元数据：
+
+```python
+meta = PdfReader("document.pdf").metadata
+print(meta.title, meta.author, meta.subject, meta.creator)
+```
+
+命令行提取：`pdftotext -layout input.pdf output.txt`；指定页范围加 `-f 1 -l 5`。
 
 ### 3. 合并与拆分
 
 合并：遍历源文件，逐页 add_page 到 PdfWriter，写出到新文件。
 
-拆分：逐页创建新 PdfWriter，每页一个文件。
+拆分：逐页创建新 PdfWriter，每页一个文件；或 `qpdf input.pdf --pages . 1-5 -- pages1-5.pdf`。
 
-命令行：`qpdf --empty --pages file1.pdf file2.pdf -- merged.pdf`
+旋转：`page.rotate(90)`（顺时针）后写出；或 `qpdf input.pdf out.pdf --rotate=+90:1`。
+
+提取图片：`pdfimages -j input.pdf output_prefix`，生成 `output_prefix-000.jpg` 等。
+
+命令行合并：`qpdf --empty --pages file1.pdf file2.pdf -- merged.pdf`
 
 ### 4. 创建 PDF
 
@@ -78,7 +94,7 @@ reportlab 两种模式：
 
 水印：读取水印 PDF 页，对每页 `merge_page()` 后写出。
 
-加密：`writer.encrypt(user_pwd, owner_pwd)`。
+加密：`writer.encrypt("user_pwd", "owner_pwd")`——第一个是打开文档所需密码，第二个是权限密码。解密用 qpdf 的 `--decrypt` 参数，并提供打开文档的密码。
 
 OCR：`pdf2image` 转图片 → `pytesseract.image_to_string()`。
 
@@ -100,4 +116,5 @@ OCR：`pdf2image` 转图片 → `pytesseract.image_to_string()`。
 
 - [创建 PDF 详解](references/creating.md) — reportlab 完整代码示例
 - [高级参考](references/advanced.md) — pypdfium2、pdf-lib (JS)、故障排查
-- [表单填写](references/forms.md) — PDF 表单填写流程
+- [表单填写](references/forms.md) — PDF 表单填写流程，脚本位于 `scripts/`
+- `scripts/` 与 `LICENSE.txt` 来自 anthropics/skills（Apache-2.0）

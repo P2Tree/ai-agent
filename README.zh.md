@@ -59,21 +59,19 @@ npx skills@latest add p2tree/ai-agent
 
 | Skill | 说明 |
 |-------|------|
-| [tdd](./skills/engineering/tdd/SKILL.md) | 红绿重构 TDD 循环，垂直切片开发 |
-| [diagnose](./skills/engineering/diagnose/SKILL.md) | 六阶段调试循环：反馈环 → 复现 → 假设 → 插桩 → 修复 → 清理 |
-| [code-review](./skills/engineering/code-review/SKILL.md) | 代码审查纪律 — 校准置信度，审查变更而非作者 |
-| [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | 扫描架构摩擦，提出深模块重构建议 |
-| [frontend-design](./skills/engineering/frontend-design/SKILL.md) | 创建独特的、生产级前端界面 |
+| [tdd](./skills/engineering/tdd/SKILL.md) | 红绿重构 TDD 循环，在预先确认的 seam 上垂直切片开发 |
+| [diagnose](./skills/engineering/diagnose/SKILL.md) | 调试循环：可对 bug 变红的反馈环 → 复现+最小化 → 假设 → 插桩 → 修复 → 清理 |
+| [code-review](./skills/engineering/code-review/SKILL.md) | 代码审查纪律 — 校准置信度、只读审查、规格作为愿景、接收反馈流程 |
+| [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | 先定范围再扫描架构摩擦，给出带推荐强度的深模块候选 |
+| [frontend-design](./skills/engineering/frontend-design/SKILL.md) | 从主题素材出发，创建避开生成式默认套路的独特前端界面 |
 
 ### Productivity（效率提升）
 
 | Skill | 说明 |
 |-------|------|
-| [brainstorming](./skills/productivity/brainstorming/SKILL.md) | 协作式设计门控 — 写代码前先对齐需求 |
-| [zoom-out](./skills/productivity/zoom-out/SKILL.md) | 拉高视角，查看模块关系和调用链 |
-| [prototype](./skills/productivity/prototype/SKILL.md) | 抛弃式原型，验证设计后再决定 |
-| [caveman](./skills/productivity/caveman/SKILL.md) | 超压缩通信模式 — 省 token、弱网络传输快、本地弱模型生成快 |
-| [grill-me](./skills/productivity/grill-me/SKILL.md) | 逐问压力测试你的计划或设计 |
+| [brainstorming](./skills/productivity/brainstorming/SKILL.md) | 先读上下文的设计对话 — 逐段复述、方案对比、按规模写 design doc、builder check |
+| [prototype](./skills/productivity/prototype/SKILL.md) | 回答特定问题的抛弃式原型，原型保留在 throwaway branch 作为一手证据 |
+| [grill-me](./skills/productivity/grill-me/SKILL.md) | 按 frontier 分轮提问，压力测试你的计划或设计 |
 
 ### Composition（内容生成）
 
@@ -82,10 +80,11 @@ npx skills@latest add p2tree/ai-agent
 | [coauthoring](./skills/composition/coauthoring/SKILL.md) | 人机协作撰写文章、博客、随笔等 prose 类内容 |
 | [work-report](./skills/composition/work-report/SKILL.md) | 适应中国本土企业的工作汇报（日报、年终总结到晋升述职全场景覆盖） |
 | [arch-doc](./skills/composition/arch-doc/SKILL.md) | 架构设计说明书 — 从代码生成、更新或对齐架构文档 |
-| [pdf](./skills/composition/pdf/SKILL.md) | PDF 文件处理 — 读取、提取、合并、拆分、旋转、水印、加密、OCR、表单填写 |
-| [docx](./skills/composition/docx/SKILL.md) | Word 文档处理 — 创建、读取、编辑、格式化 .docx 文件 |
-| [pptx](./skills/composition/pptx/SKILL.md) | PPT 演示文稿处理 — 创建、读取、编辑、拆分、合并 .pptx 文件 |
-| [xlsx](./skills/composition/xlsx/SKILL.md) | 电子表格处理 — 读取、创建、编辑、分析 .xlsx/.xlsm/.csv/.tsv 文件 |
+| [pdf](./skills/composition/pdf/SKILL.md) | PDF 处理 — 读取、提取文本/表格/图片/元数据、合并、拆分、旋转、水印、加密、OCR、表单 |
+| [docx](./skills/composition/docx/SKILL.md) | Word 处理 — 创建、读取、编辑、修订追踪、注释、视觉验证 |
+| [pptx](./skills/composition/pptx/SKILL.md) | PPT 处理 — structured deck、模板编辑、三级 QA |
+| [xlsx](./skills/composition/xlsx/SKILL.md) | 电子表格 — 公式、重算、openpyxl gotchas、财务模型 |
+| [humanizer](./skills/composition/humanizer/SKILL.md) | 去除 AI 写作痕迹 — 31 种模式、保真约束与改写边界 |
 
 ### Career （职业发展）
 
@@ -98,21 +97,21 @@ npx skills@latest add p2tree/ai-agent
 
 | Skill | 说明 |
 |-------|------|
-| [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 将 spec 拆解为 bite-sized 实施计划 |
-| [executing-plans](./skills/workflow/executing-plans/SKILL.md) | 逐步执行计划，带验证门控 |
-| [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 完成开发分支：验证 → 选择操作 → 清理 |
-| [writing-prd](./skills/workflow/writing-prd/SKILL.md) | 将对话上下文合成为 PRD |
+| [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 任务规模界定、Global Constraints、Review Focus、Interfaces 与执行交接 |
+| [executing-plans](./skills/workflow/executing-plans/SKILL.md) | ledger 记录进度，ruling 处理歧义，完成契约与最终审查 |
+| [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 验证 → 检测环境 → 选择合并/PR/保留 → 按来源清理 |
+| [writing-prd](./skills/workflow/writing-prd/SKILL.md) | 将对话上下文合成为 PRD，先确定测试 seam |
 | [decomposing-issues](./skills/workflow/decomposing-issues/SKILL.md) | 将 PRD 拆分为垂直切片的独立 issue |
-| [triage](./skills/workflow/triage/SKILL.md) | 状态机驱动的 issue 分诊 |
-| [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | 初始化 agent 工作环境 — issue tracker、标签、领域文档 |
+| [triage](./skills/workflow/triage/SKILL.md) | issue 与外部 PR 分诊 — 冗余检查、验证、agent brief、out-of-scope 知识库 |
+| [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | 初始化 issue tracker、triage 标签、GLOSSARY/ADR 布局与 `.scratch/` 约定 |
 
 ### Misc（杂项）
 
 | Skill | 说明 |
 |-------|------|
 | [manage-skills](./skills/misc/manage-skills/SKILL.md) | 浏览、安装、审计、管理任何来源的 skill |
-| [find-skills](./skills/misc/find-skills/SKILL.md) | 从开源 skill 生态发现并安装 skill |
-| [create-skill](./skills/misc/create-skill/SKILL.md) | 创建、改进、评估 skill |
+| [find-skills](./skills/misc/find-skills/SKILL.md) | 从开源生态发现、验证、安装和更新 skill |
+| [create-skill](./skills/misc/create-skill/SKILL.md) | 用 writing-for-agents 原则创建、改进、评估 skill |
 
 ## 自动创建的路径
 
@@ -120,16 +119,17 @@ npx skills@latest add p2tree/ai-agent
 
 ```
 <目标仓库>/
-├── CONTEXT.md                              # 领域术语表
+├── GLOSSARY.md                             # 领域术语表
+├── .scratch/                               # 本地 markdown issue tracker
+│   └── <feature-slug>/
+│       ├── spec.md
+│       └── issues/
+│           └── <NN>-<slug>.md              # NN 为零填充的顺序编号
 ├── docs/
 │   ├── specs/                              # 设计规格
 │   │   └── YYYY-MM-DD-<design_name>.md
 │   ├── plans/                              # 实施计划
 │   │   └── YYYY-MM-DD-<feature_name>.md
-│   ├── prd/                                # 产品需求文档
-│   │   └── <prd_topic_name>.md
-│   ├── issues/                             # Issue 文件
-│   │   └── <NN>-<issue_description>.md     # NN 为零填充的顺序编号
 │   ├── adr/                                # 架构决策记录
 │   │   └── <arch_design_topic_name>.md
 │   └── agents/                             # Agent 运行配置
@@ -140,12 +140,11 @@ npx skills@latest add p2tree/ai-agent
 
 | 路径  | 用途 |
 |------------|------|
-| `CONTEXT.md` |  领域词汇表，保持 skill 输出与项目术语一致 |
+| `GLOSSARY.md` | 领域词汇表，保持 skill 输出与项目术语一致 |
+| `.scratch/` | 本地 markdown issue tracker：每个功能一个目录，含 spec 与编号 issue 文件 |
 | `docs/specs/` | 经验证的设计规格，实现前的产物 |
 | `docs/plans/` | 逐步实施计划 |
-| `docs/prd/` |  产品需求文档 |
-| `docs/issues/` | 单个 issue 文件；wontfix 拒绝记录加 `-wontfix` 后缀 |
-| `docs/adr/` |  架构决策记录 |
+| `docs/adr/` | 架构决策记录 |
 | `docs/agents/` | Agent 环境配置，所有工作流 skill 消费 |
 
 **注意：** `docs/agents/` 是 agent 运行配置，不是设计文档。
@@ -227,6 +226,8 @@ ai-agent/
 - [andrej karpathy skills](https://github.com/forrestchang/andrej-karpathy-skills)
 - [mattpocock skills](https://github.com/mattpocock/skills)
 - [vercel-labs skills](https://github.com/vercel-labs/skills)
+- [op7418 Humanizer-zh](https://github.com/op7418/Humanizer-zh)
+- [wshobson agents](https://github.com/wshobson/agents)
 
 ## 许可证
 

@@ -34,7 +34,7 @@ wb.save('modified.xlsx')
 ### Step 1: 解包
 
 ```bash
-python scripts/office/unpack.py spreadsheet.xlsx unpacked/
+python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacked')" spreadsheet.xlsx
 ```
 
 ### Step 2: 编辑 XML
@@ -49,17 +49,16 @@ XLSX 的 XML 结构位于 `unpacked/xl/` 下：
 
 在 sheet XML 中定位内容，用 Edit 工具直接替换。
 
-### Step 3: 清理
+**改了公式后必须删掉该单元格的 `<v>`（缓存值）**，否则旧值会被保留，`not_computed` 会把它列为问题而不是报错。
+
+### Step 3: 打包与重算
 
 ```bash
-python scripts/clean.py unpacked/
+(cd unpacked && rm -f ../output.xlsx && zip -XrD ../output.xlsx .)
+python scripts/recalc.py output.xlsx
 ```
 
-### Step 4: 打包
-
-```bash
-python scripts/office/pack.py unpacked/ output.xlsx --original spreadsheet.xlsx
-```
+`-X` 去掉额外属性，`-r` 递归，`-D` 不写目录条目。重算返回 `errors_found` 时不得交付。
 
 ## pandas 快速编辑
 

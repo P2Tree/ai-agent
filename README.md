@@ -59,21 +59,19 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 
 | Skill | Description |
 |-------|-------------|
-| [tdd](./skills/engineering/tdd/SKILL.md) | Red-green-refactor TDD loop with vertical slicing |
-| [diagnose](./skills/engineering/diagnose/SKILL.md) | Six-stage debugging cycle: feedback loop → reproduce → hypothesize → instrument → fix → clean |
-| [code-review](./skills/engineering/code-review/SKILL.md) | Code review discipline — calibrate confidence, review changes not authors |
-| [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | Scan for architectural friction, suggest deep-module refactoring |
-| [frontend-design](./skills/engineering/frontend-design/SKILL.md) | Create distinctive, production-grade frontends |
+| [tdd](./skills/engineering/tdd/SKILL.md) | Red-green-refactor TDD loop with pre-agreed seams and vertical slicing |
+| [diagnose](./skills/engineering/diagnose/SKILL.md) | Debugging cycle: red-capable feedback loop → reproduce + minimise → hypothesize → instrument → fix → clean |
+| [code-review](./skills/engineering/code-review/SKILL.md) | Code review discipline — calibrated confidence, read-only review, spec-as-vision, receiving feedback |
+| [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | Scope-first scan for architectural friction, ranked deep-module candidates |
+| [frontend-design](./skills/engineering/frontend-design/SKILL.md) | Subject-grounded, distinctive frontend design that avoids generated-page defaults |
 
 ### Productivity
 
 | Skill | Description |
 |-------|-------------|
-| [brainstorming](./skills/productivity/brainstorming/SKILL.md) | Collaborative design gating — align on requirements before coding |
-| [zoom-out](./skills/productivity/zoom-out/SKILL.md) | Zoom out to see module relationships and call chains |
-| [prototype](./skills/productivity/prototype/SKILL.md) | Disposable prototypes to validate designs before committing |
-| [caveman](./skills/productivity/caveman/SKILL.md) | Ultra-compressed communication — fewer tokens, faster on slow networks and weak local models |
-| [grill-me](./skills/productivity/grill-me/SKILL.md) | Relentless Q&A to pressure-test your plan or design |
+| [brainstorming](./skills/productivity/brainstorming/SKILL.md) | Context-first design dialogue — playback, approaches, scaled design doc, builder check |
+| [prototype](./skills/productivity/prototype/SKILL.md) | Throwaway prototypes that answer a question, kept on a throwaway branch as primary source |
+| [grill-me](./skills/productivity/grill-me/SKILL.md) | Frontier-based rounds of questions to pressure-test your plan or design |
 
 ### Composition
 
@@ -82,11 +80,11 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [coauthoring](./skills/composition/coauthoring/SKILL.md) | Iterative human-AI co-authoring for prose content (blogs, articles, essays) |
 | [work-report](./skills/composition/work-report/SKILL.md) | Structured work reports for Chinese corporate conventions (daily through promotion) |
 | [arch-doc](./skills/composition/arch-doc/SKILL.md) | Systematic architecture design documentation — create, update, or align arch docs from code |
-| [pdf](./skills/composition/pdf/SKILL.md) | PDF file processing — read, extract, merge, split, rotate, watermark, encrypt, OCR, form filling |
-| [docx](./skills/composition/docx/SKILL.md) | Word document processing — create, read, edit, format .docx files |
-| [pptx](./skills/composition/pptx/SKILL.md) | PowerPoint presentation processing — create, read, edit, split, merge .pptx files |
-| [xlsx](./skills/composition/xlsx/SKILL.md) | Spreadsheet processing — read, create, edit, analyze .xlsx/.xlsm/.csv/.tsv files |
-| [humanizer](./skills/composition/humanizer/SKILL.md) | Remove AI writing patterns from text — detect and fix 24 machine-like phrasing patterns for more natural, human-sounding content |
+| [pdf](./skills/composition/pdf/SKILL.md) | PDF processing — read, extract text/tables/images/metadata, merge, split, rotate, watermark, encrypt, OCR, forms |
+| [docx](./skills/composition/docx/SKILL.md) | Word processing — create, read, edit, tracked changes, comments, visual verification |
+| [pptx](./skills/composition/pptx/SKILL.md) | PowerPoint processing — structured decks, templates, editing, three-stage QA |
+| [xlsx](./skills/composition/xlsx/SKILL.md) | Spreadsheets — formulas, recalculation, openpyxl gotchas, financial models |
+| [humanizer](./skills/composition/humanizer/SKILL.md) | Remove AI writing patterns with fidelity constraints — 31 patterns, examples, and preserve boundaries |
 
 ### Career
 
@@ -99,21 +97,21 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 
 | Skill | Description |
 |-------|-------------|
-| [writing-plans](./skills/workflow/writing-plans/SKILL.md) | Break specs into bite-sized implementation plans |
-| [executing-plans](./skills/workflow/executing-plans/SKILL.md) | Step-by-step plan execution with verification gates |
-| [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | Complete a dev branch: verify → choose action → clean up |
-| [writing-prd](./skills/workflow/writing-prd/SKILL.md) | Synthesize conversation context into a PRD |
+| [writing-plans](./skills/workflow/writing-plans/SKILL.md) | Right-sized tasks with Global Constraints, Review Focus, Interfaces, and execution handoff |
+| [executing-plans](./skills/workflow/executing-plans/SKILL.md) | Ledger-backed execution with rulings, completion contracts, and a final review pass |
+| [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | Verify → detect environment → choose merge/PR/keep → provenance-based cleanup |
+| [writing-prd](./skills/workflow/writing-prd/SKILL.md) | Synthesize conversation context into a PRD, choosing test seams first |
 | [decomposing-issues](./skills/workflow/decomposing-issues/SKILL.md) | Split PRDs into vertically-sliced, independently grabbable issues |
-| [triage](./skills/workflow/triage/SKILL.md) | State-machine issue triage with label and status workflows |
-| [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | Bootstrap agent workspace — issue tracker, labels, domain docs |
+| [triage](./skills/workflow/triage/SKILL.md) | Issue and external-PR triage — redundancy checks, verification, briefs, out-of-scope KB |
+| [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | Bootstrap issue tracker, triage labels, GLOSSARY/ADR layout, and `.scratch/` conventions |
 
 ### Misc
 
 | Skill | Description |
 |-------|-------------|
 | [manage-skills](./skills/misc/manage-skills/SKILL.md) | Browse, install, audit, and manage skills from any source |
-| [find-skills](./skills/misc/find-skills/SKILL.md) | Discover and install skills from the open ecosystem |
-| [create-skill](./skills/misc/create-skill/SKILL.md) | Create, improve, and evaluate skills |
+| [find-skills](./skills/misc/find-skills/SKILL.md) | Discover, verify, install, and update skills from the open ecosystem |
+| [create-skill](./skills/misc/create-skill/SKILL.md) | Create, improve, and evaluate skills with writing-for-agents principles |
 
 ## Auto-generated Paths
 
@@ -121,16 +119,17 @@ Skills write documents into the target repo following a unified convention. The 
 
 ```
 <target-repo>/
-├── CONTEXT.md                              # Domain glossary
+├── GLOSSARY.md                             # Domain glossary
+├── .scratch/                               # Local-markdown issue tracker
+│   └── <feature-slug>/
+│       ├── spec.md
+│       └── issues/
+│           └── <NN>-<slug>.md              # NN = zero-padded sequential ID
 ├── docs/
 │   ├── specs/                              # Design specs
 │   │   └── YYYY-MM-DD-<design_name>.md
 │   ├── plans/                              # Implementation plans
 │   │   └── YYYY-MM-DD-<feature_name>.md
-│   ├── prd/                                # Product requirement docs
-│   │   └── <prd_topic_name>.md
-│   ├── issues/                             # Issue files
-│   │   └── <NN>-<issue_description>.md     # NN = zero-padded sequential ID
 │   ├── adr/                                # Architecture decision records
 │   │   └── <arch_design_topic_name>.md
 │   └── agents/                             # Agent runtime config
@@ -141,11 +140,10 @@ Skills write documents into the target repo following a unified convention. The 
 
 | Path | Purpose |
 |------------------|---------|
-| `CONTEXT.md` | Domain vocabulary — keeps skill output consistent with project terminology |
+| `GLOSSARY.md` | Domain vocabulary — keeps skill output consistent with project terminology |
+| `.scratch/` | Local-markdown issue tracker: one feature directory with a spec and numbered issue files |
 | `docs/specs/` | Validated design specs before implementation |
 | `docs/plans/` | Step-by-step implementation plans |
-| `docs/prd/` |  Product requirement documents |
-| `docs/issues/` | Individual issue files; wontfix rejections get a `-wontfix` suffix |
 | `docs/adr/` | Architecture decision records |
 | `docs/agents/` | Agent environment configuration consumed by all workflow skills |
 
@@ -227,6 +225,8 @@ See [Skill Writing Guide](./docs/skill-writing-guide.md) for detailed authoring 
 - [andrej karpathy skills](https://github.com/forrestchang/andrej-karpathy-skills)
 - [mattpocock skills](https://github.com/mattpocock/skills)
 - [vercel-labs skills](https://github.com/vercel-labs/skills)
+- [op7418 Humanizer-zh](https://github.com/op7418/Humanizer-zh)
+- [wshobson agents](https://github.com/wshobson/agents)
 
 ## License
 

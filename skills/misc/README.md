@@ -12,7 +12,7 @@
 
 ## find-skills `[自动]`
 
-当本地 skill 无法覆盖用户需求时，搜索开源 skill 生态寻找匹配。通过 `npx skills find` 查询社区注册表，验证质量后推荐给用户，由用户决定是否安装。始终优先推荐本地已有的 skill。
+当本地 skill 无法覆盖用户需求时，搜索开源 skill 生态寻找匹配。先看 skills.sh 排行榜，再用 `npx skills find`（支持 `--owner`）查询，验证质量后推荐并给出安装命令（`npx skills add ... -g -y`）。也支持 `npx skills update` 和 `npx skills init`。始终优先推荐本地已有的 skill。
 
 **什么时候用：** 用户问"怎么做 X"、"有没有能做 X 的 skill"、或当前 skill 无法很好地解决问题时。
 
@@ -22,7 +22,7 @@
 
 ## create-skill `[自动]`
 
-从零创建 skill、改进现有 skill、给 skill 打分评估，全生命周期都管。包含草稿生成、子 agent 测试、打分、与基准对比、描述优化等环节。
+从零创建 skill、改进现有 skill、给 skill 打分评估，全生命周期都管。包含草稿生成、子 agent 测试、打分、与基准对比、描述优化，以及 writing-for-agents 的写作原则（context pointer、信息层级、完成判据、leading word、修剪）和 model- vs user-invoked 机制。
 
 **什么时候用：** 要新建或改进 skill 时。
 

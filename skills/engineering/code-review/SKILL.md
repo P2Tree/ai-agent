@@ -66,6 +66,18 @@ Four-stage review. Details in [review-process](references/review-process.md).
 3. **Line-by-line** — Logic & correctness, security, performance, maintainability.
 4. **Summary & verdict** — Synthesize findings, highlight strengths, give explicit decision: Approve / Comment / Request Changes.
 
+### Reviewing against the spec
+
+The spec is a vision document, not a contract. Spec silence does not mean permission: judge uncovered behavior by what a reasonable user would expect, and set severity by its impact. List every behavior you deliberately chose not to judge under **Declined to judge**, with the reason, so the implementer decides rather than having it silently dropped.
+
+### Read-only review
+
+Do not modify the working tree, index, or HEAD. If you need another version, create a temporary `git worktree` outside the repo. Reviewers do not spawn their own subagents.
+
+### Leave to tools
+
+Formatting, import order, lint, and simple spelling are for the toolchain, not for human review.
+
 ---
 
 ## Feedback Rules
@@ -81,6 +93,17 @@ Details in [feedback-patterns](references/feedback-patterns.md).
 
 - **Modified sandwich:** Context + Specific Issue + Helpful Solution (not praise-criticism-praise).
 - **Disagreements:** Seek to understand → Acknowledge → Provide data → Escalate → Know when to let go.
+
+### Receiving review feedback
+
+READ → UNDERSTAND → VERIFY → EVALUATE → RESPOND → IMPLEMENT.
+
+- No performative agreement ("You're right", "Good point"). Respond with the action taken or the evidence.
+- If any item is unclear, clarify **all** of it before changing code.
+- For external reviewers, verify the claim against the codebase; push back with a technical reason when warranted.
+- Run the YAGNI check before implementing "professional" suggestions.
+- Implement in order: blocking → simple → complex; test each fix.
+- On GitHub, reply inside the review thread, not as a top-level comment.
 
 ---
 
@@ -109,3 +132,5 @@ Before finalizing a code review:
 - [ ] Are findings labeled with severity tags (🔴🟡🟢💡📚🎉)?
 - [ ] Does the review include positive observations, not just problems?
 - [ ] Is the verdict explicit (Approve / Comment / Request Changes)?
+- [ ] Is every deliberately unjudged behavior listed under "Declined to judge"?
+- [ ] Did the review stay read-only (no workspace/index/HEAD changes)?

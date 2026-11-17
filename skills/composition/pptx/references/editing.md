@@ -1,76 +1,30 @@
-# 编辑详解
+# 编辑现有演示文稿详解
 
-编辑现有 .pptx 文件的流程：解包→改 XML→清理→打包。
+## Editing existing decks and templates
 
-## Step 1: 分析模板
-
-```bash
-# 视觉概览
-python scripts/thumbnail.py presentation.pptx
-
-# 文本提取
-python -m markitdown presentation.pptx
-
-# 解包
-python scripts/office/unpack.py presentation.pptx unpacked/
-```
-
-## Step 2: 编辑幻灯片
-
-PPTX 的 XML 结构位于 `unpacked/ppt/` 下：
-
-- `ppt/slides/slide1.xml`, `slide2.xml` ... — 幻灯片内容
-- `ppt/slideLayouts/` — 布局定义
-- `ppt/slideMasters/` — 母版
-- `ppt/media/` — 媒体文件
-- `ppt/_rels/` — 关系文件
-
-### 添加幻灯片
+Pick layouts first: `python scripts/thumbnail.py template.pptx template-thumbs` writes a labeled grid of every slide and prints the file(s) it created — `template-thumbs.jpg`, split into `template-thumbs-N.jpg` past 12 slides. **Always pass that second argument, named after the deck.** It defaults to `thumbnails`, so two decks thumbnailed in one directory silently overwrite each other's grids — the first deck's are simply gone (template analysis only — visual QA needs the full-resolution renders from [Converting to Images](#converting-to-images); it only accepts `.pptx`, so copy a `.potx` to a `.pptx` name first). Use it with `slide_text.py` to map each content section onto a template slide, and vary the layouts — don't put every section on the same title-and-bullets slide.
 
 ```bash
-python scripts/add_slide.py unpacked/ --layout "Title and Content" --position 3
+python3 -c "import sys,zipfile; zipfile.ZipFile(sys.argv[1]).extractall('unpacked')" deck.pptx
+python scripts/add_slide.py unpacked/ slide2.xml --after slide2.xml   # duplicate a slide (or slideLayoutN.xml); prints the new slide's path
+# reorder / delete slides = edit <p:sldIdLst> in ppt/presentation.xml
+python scripts/clean.py unpacked/                                     # after deletions: removes orphaned slides, media, rels
+# edit slide content in ppt/slides/slideN.xml
+(cd unpacked && rm -f ../out.pptx && zip -XrD ../out.pptx .)          # zip from INSIDE the dir; rm first or deleted parts survive
+python scripts/office/validate.py out.pptx --original deck.pptx
 ```
 
-从现有幻灯片复制：
-```bash
-python scripts/add_slide.py unpacked/ --copy 2 --position 3
-```
+- **Do all structural work — add, delete, reorder — before editing any slide's content.** `add_slide.py` copies a slide file verbatim, so duplicating after you edit clones the edited content; and `clean.py` deletes any slide missing from `<p:sldIdLst>`, including one you just wrote.
+- **Never copy a slide file by hand** — `add_slide.py` does every registration a new slide needs and reports what it made (`Created ppt/slides/slide17.xml from slide2.xml`). It also works directly on a file: `add_slide.py deck.pptx slide2.xml -o out.pptx` — **pass `-o`, or it rewrites the input deck in place.** A duplicated slide still *references* its source's chart/SmartArt/embedded-object parts rather than cloning them, so editing one slide's chart changes the other's.
+- **If you use `python-pptx`**, three things it won't do: duplicate a slide (its only entry point is `add_slide(layout)`), preserve formatting through `text_frame.text = "..."` (that collapses the paragraph to a single unstyled run — assign `run.text` instead), or read the SVG/EMF most template art uses (`add_picture` raises `UnidentifiedImageError`).
+- Legacy `.ppt` must be converted first: `python scripts/office/soffice.py --headless --convert-to pptx file.ppt`. `.potx` templates unpack and pack identically — keep the `.potx` extension on the output.
+- To reuse a template icon or image, duplicate a slide or layout that already contains it.
 
-### 修改文本
+When filling in a template:
 
-在 slide XML 中定位文本，用 Edit 工具直接替换。
+- If you script an XML transform, parse with `defusedxml.minidom` — round-tripping OOXML through `xml.etree.ElementTree` rewrites namespace prefixes and corrupts the deck.
+- **Template slots ≠ source items.** If the template shows 4 team members and you have 3, delete the 4th member's entire group (image + text boxes), not just its text — then check for orphaned visuals in QA.
+- One `<a:p>` per list item — never concatenate items into a single paragraph. Copy the sibling `<a:pPr>` to preserve spacing, and put `b="1"` on the `<a:rPr>` of titles, section headers, and inline labels (`Status:`, `Owner:`).
+- Let bullets inherit from the layout; only add `<a:buChar>`, `<a:buAutoNum>` (numbered), or `<a:buNone>` to override — never a literal `•` in the text.
+- Text with leading or trailing spaces needs `xml:space="preserve"` on its `<a:t>`.
 
-### 修改图片
-
-1. 替换 `ppt/media/` 中的图片文件（保持文件名不变）
-2. 如需新增图片，添加到 `ppt/media/` 并更新关系文件
-
-## Step 3: 清理
-
-```bash
-python scripts/clean.py unpacked/
-```
-
-移除孤立幻灯片、未引用媒体、废弃关系。
-
-## Step 4: 打包
-
-```bash
-python scripts/office/pack.py unpacked/ output.pptx --original presentation.pptx
-```
-
-## QA
-
-见 SKILL.md 中的 QA 验证流程。必须转换图片后检查。
-
-## 转换为图片
-
-```bash
-python scripts/office/soffice.py --headless --convert-to pdf output.pptx
-pdftoppm -jpeg -r 150 output.pdf slide
-```
-
-重渲特定幻灯片：
-```bash
-pdftoppm -jpeg -r 150 -f N -l N output.pdf slide-fixed
-```

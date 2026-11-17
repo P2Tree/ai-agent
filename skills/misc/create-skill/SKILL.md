@@ -11,6 +11,12 @@ A skill for creating new skills and iteratively improving them.
 
 After the skill is done, offer to run the description optimizer for better triggering accuracy.
 
+## Communicating with the user
+
+Users range from experienced developers to people opening a terminal for the first time. Read context cues and match their vocabulary. "Evaluation" and "benchmark" are usually safe; use "JSON" and "assertion" only when the user shows they know those terms, otherwise explain briefly.
+
+For the writing reference behind any document an agent consumes — context pointers, the two loads, information hierarchy, completion criteria, leading words, pruning — see [writing for agents](references/writing-for-agents.md). For skill-specific mechanics (model- vs user-invoked, splitting, routers), see [skill mechanics](references/skill-mechanics.md).
+
 ## Creating a skill
 
 ### Capture Intent
@@ -29,6 +35,14 @@ Proactively ask about edge cases, I/O formats, example files, success criteria, 
 ### Write the SKILL.md
 
 Fill in: **name**, **description** (when to trigger + what it does; make it a bit "pushy" — e.g., "Use this skill whenever the user mentions dashboards, data visualization, or wants to display company data, even if they don't explicitly ask for a 'dashboard.'"), **compatibility** (optional), and the skill body.
+
+Writing decisions that matter most:
+
+- **Description as a context pointer.** Its wording, not its target, decides when the skill fires. Front-load the leading word, give one trigger per genuinely distinct branch, and cut identity the body already carries.
+- **Information hierarchy.** Keep steps in-file; push reference that only some branches need behind a pointer. Inline what every branch needs.
+- **Completion criteria.** Every step needs a checkable, exhaustive "done" condition. Sharpen the bound before hiding later steps.
+- **Leading words and positive phrasing.** Anchor behaviour with a compact pretrained concept; state the target behaviour instead of prohibitions.
+- **Prune.** One source of truth; don't cache what the environment already answers; delete no-op sentences whole.
 
 For the skill writing guide (anatomy, progressive disclosure, writing patterns, style), see [Detailed Workflow](references/detailed-workflow.md#skill-writing-guide).
 
@@ -110,6 +124,8 @@ Full details: [Detailed Workflow](references/detailed-workflow.md#platform-speci
 - `agents/grader.md` / `agents/comparator.md` / `agents/analyzer.md` — Subagent instructions
 - `references/schemas.md` — JSON schemas (evals, grading, benchmark, etc.)
 - `references/detailed-workflow.md` — Expanded instructions for each stage
+- `references/writing-for-agents.md` — Writing documents agents consume
+- `references/skill-mechanics.md` — Invocation choice, splitting, router skills
 
 ### Package and Present (only if `present_files` tool available)
 

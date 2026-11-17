@@ -5,47 +5,41 @@ description: Write comprehensive implementation plans with bite-sized tasks. Use
 
 # Writing Plans
 
-Write implementation plans assuming the engineer has zero context and questionable taste. Document everything: which files to touch, code, testing, how to verify. Bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
+Write for an engineer who has not seen this codebase or this spec. Assume they write idiomatic code once they know the exact interface and the exact test, and make a reasonable choice wherever the plan leaves one open. What they cannot know is what you decided: which files, which names and signatures, which values from the spec, which tests prove each task. Document those. Bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
 
 ## Pre-flight: read agent environment
 
-Read the repo's agent environment (set up by `/init-agent-environment`) to write plans that are consistent with the project's domain and architecture:
+Read the repo's agent environment (set up by `/init-agent-environment`) so the plan matches the project's domain and architecture:
 
-- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Read `CONTEXT.md` so you use the project's own domain terminology in task names, variable names, and commit messages. Read relevant ADRs so your plan doesn't propose something that contradicts an established architectural decision — if it must contradict, flag it explicitly in the plan (e.g. "_Contradicts ADR-0003 — justified because…_").
-- **`docs/agents/issue-tracker.md`** — tells you how the project tracks work. If the plan's tasks should be published as issues, use the conventions in this file.
-- **`docs/agents/triage-labels.md`** — if publishing tasks as issues, apply the correct triage label strings from this file.
+- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Use the glossary's terminology in task names, variable names, and commit messages. Read relevant ADRs so the plan doesn't contradict a settled decision — if it must, flag it explicitly ("_Contradicts ADR-0003 — justified because…_").
+- **`docs/agents/issue-tracker.md`** — if tasks should be published as issues, follow its conventions.
+- **`docs/agents/triage-labels.md`** — if publishing tasks as issues, use its label strings.
 
 If these files don't exist, proceed silently — don't block plan writing on missing config.
 
-**Source spec:** `docs/specs/YYYY-MM-DD-<spec_name>.md` (if produced by brainstorming)
-**Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
+**Source spec:** `docs/specs/YYYY-MM-DD-<spec_name>.md` (if produced by brainstorming) · **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
 
-**Language:** if the source spec/PRD is entirely in English, write the plan in English; otherwise, follow the language used in the source materials.
+**Language:** if the source spec/PRD is entirely in English, write the plan in English; otherwise, follow the source materials.
 
 ## Scope Check
 
-If the spec covers multiple independent subsystems, suggest breaking into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
+If the spec covers multiple independent subsystems, suggest breaking it into separate plans — one per subsystem. Each plan should produce working, testable software on its own.
 
 ## File Structure
 
-Before defining tasks, map out which files will be created or modified and what each one is responsible for.
+Before defining tasks, map out which files will be created or modified and what each is responsible for. This is where decomposition decisions get locked in.
 
-- Each file should have one clear responsibility
-- Prefer smaller, focused files over large ones
-- Files that change together should live together
-- In existing codebases, follow established patterns
+- Each file has one clear responsibility; prefer smaller, focused files.
+- Files that change together live together. Split by responsibility, not technical layer.
+- In existing codebases, follow established patterns. Don't unilaterally restructure, but a split of an unwieldy file you are already touching is reasonable.
 
-This structure informs the task decomposition.
+## Task Right-Sizing
 
-## Bite-Sized Task Granularity
+A task is the smallest unit that carries its own test cycle and is worth a fresh reviewer's gate. Fold setup, configuration, scaffolding, and documentation into the task whose deliverable needs them. Split only where a reviewer could meaningfully reject one task while approving its neighbor. Each task ends with an independently testable deliverable.
 
-Each step is one action:
+## Step Granularity
 
-- "Write the failing test" — step
-- "Run it to make sure it fails" — step
-- "Write minimal code to pass" — step
-- "Run the tests" — step
-- "Commit" — step
+Each step is one action with a checkable result: write the failing test; run it and watch it fail; write minimal code; run it and watch it pass; commit.
 
 ## Plan Document Header
 
@@ -61,6 +55,20 @@ Every plan MUST start with this header:
 **Architecture:** [2-3 sentences]
 **Tech Stack:** [Key technologies]
 
+## Global Constraints
+
+[The spec's project-wide requirements — version floors, dependency limits,
+naming and copy rules, platform requirements — one line each, exact values
+copied verbatim from the spec. Every task implicitly inherits this section.]
+
+## Review Focus
+
+[The five input classes or failure modes the spec implies but no task's tests
+exercise that are most likely to bite a user — one line each, naming the input
+or condition and the behavior a reasonable person expects, most likely first.
+The spec's silence on an input is not permission for that input to break the
+program. For each line, add the test that pins it to the task owning the code.]
+
 ---
 ```
 
@@ -74,6 +82,10 @@ Every plan MUST start with this header:
 - Modify: `exact/path/to/existing.py:123-145`
 - Test: `tests/exact/path/to/test.py`
 
+**Interfaces:**
+- Consumes: [what this task uses from earlier tasks — exact signatures]
+- Produces: [what later tasks rely on — exact names, parameter and return types]
+
 - [ ] **Step 1: Write the failing test**
 
 ```python
@@ -85,11 +97,16 @@ def test_specific_behavior():
 - [ ] **Step 2: Run test to verify it fails**
 
 Run: `pytest tests/path/test.py::test_name -v`
-Expected: FAIL
+Expected: FAIL with "function not defined"
 
-- [ ] **Step 3: Write minimal implementation**
+- [ ] **Step 3: Implement `function(input: InputType) -> ResultType` in `exact/path/to/file.py`**
+
+One line on the approach when the signature and test leave a choice; a code block only for an algorithm they do not determine.
 
 - [ ] **Step 4: Run test to verify it passes**
+
+Run: `pytest tests/path/test.py::test_name -v`
+Expected: PASS
 
 - [ ] **Step 5: Commit**
 
@@ -99,29 +116,35 @@ git commit -m "feat: add specific feature"
 ```
 ````
 
-## No Placeholders
+## What a Step Contains
 
-Every step must contain the actual content an engineer needs. These are plan failures:
+A step is done when the implementer can write exactly one reasonable thing from it. That is the whole requirement: unambiguous, not complete.
 
-- "TBD", "TODO", "implement later", "fill in details"
-- "Add appropriate error handling" / "add validation" / "handle edge cases"
-- "Write tests for the above" (without actual test code)
-- "Similar to Task N" (repeat the code)
-- Steps that describe what to do without showing how
-- References to types or functions not defined in any task
+- **A test step:** the test's name and assertions, as code, with the spec's exact values.
+- **A code step:** the exact signature (name, parameters, return type), the file, and the values the spec pins. The implementer writes the body. A body appears only for an algorithm the signature and tests do not determine, or for exact copy the spec fixes.
+- **A verification step:** the command and the output that means it passed.
+- **A reference to another task:** use that task's Interfaces block; don't repeat its code.
+
+A plan is the set of decisions the implementer cannot make alone. A plan longer than the code it describes has written the code instead. Lines that decide nothing — "TBD", "handle edge cases", "add appropriate validation", "write tests for the above", a type or function no task defines — are the opposite failure.
 
 ## Self-Review
 
-After writing the complete plan, check:
+After writing the plan, check it against the spec yourself — do not dispatch a subagent.
 
-1. **Spec coverage:** Can you point to a task for each requirement?
-2. **Placeholder scan:** Any red flags from the "No Placeholders" section?
-3. **Type consistency:** Do types and method signatures match across tasks?
-4. **ADR consistency:** Does any task contradict an existing ADR? If so, is the contradiction flagged?
-5. **Domain vocabulary:** Do task names and commit messages use terms from the domain glossary (path from `docs/agents/domain.md`)?
+1. **Spec coverage:** can you point to a task for each requirement?
+2. **Step scan:** can the implementer write exactly one reasonable thing from each step, and no more? A line that decides nothing is a gap; a body the signature and tests determine is a transcript.
+3. **Type consistency:** do types, signatures, and property names in later tasks match earlier definitions?
+4. **Review Focus:** does each listed input class or failure mode have a test in the owning task? An empty section means you checked and found none.
+5. **Proportion:** is the plan several times longer than the spec? If code blocks dominate, replace bodies with signatures, test names and assertions.
+6. **ADR consistency / domain vocabulary:** does any task contradict an ADR without a flag? Do names use glossary terms?
 
 Fix issues inline. If a spec requirement has no task, add it.
 
-## Next Steps
+## Execution Handoff
 
-- **executing-plans** — execute the plan task by task with verification gates (supports parallel and sequential execution modes)
+After saving and self-reviewing, link the plan for the user and ask them to review it. If they already supplied an execution method, confirm the plan captures what they want and wait for review before implementing. Otherwise, ask which approach to use before implementation:
+
+- **Subagent-driven** — a fresh subagent implements each task and a fresh reviewer checks it before the next, then a whole-branch review. Most thorough; costs a fresh context per task and review.
+- **Inline** — you implement every task in this session, then one fresh reviewer checks the whole branch. Cheapest and fastest, but no independent review until the end.
+
+Recommend one with a one-sentence reason from the plan: how much tasks depend on each other's interfaces, how many there are, and what a shipped mistake would cost. Then use **executing-plans** in the chosen mode.

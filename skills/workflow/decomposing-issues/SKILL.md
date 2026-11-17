@@ -13,7 +13,7 @@ Read the repo's agent environment (set up by `/init-agent-environment`) before c
 
 - **`docs/agents/issue-tracker.md`** — tells you which tracker to use and how to create/read issues (GitHub `gh`, GitLab `glab`, local markdown, etc.). All issue operations must follow the conventions in this file.
 - **`docs/agents/triage-labels.md`** — the label strings for the five canonical triage roles. Apply the correct `ready-for-agent` or `ready-for-human` label when publishing — don't hardcode the role names.
-- **`docs/agents/domain.md`** — tells you where `CONTEXT.md` and `docs/adr/` live. Use the domain glossary in issue titles and descriptions; respect ADRs in the area the issues touch.
+- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Use the domain glossary in issue titles and descriptions; respect ADRs in the area the issues touch.
 
 If these files don't exist, stop and ask the user to run `/init-agent-environment` first — this skill cannot function without knowing the issue tracker.
 
@@ -62,6 +62,9 @@ Iterate until the user approves the breakdown.
 For each approved slice, publish a new issue to the issue tracker. **Language:** if the source plan/spec/PRD is entirely in English, write the issues in English; otherwise, follow the language used in the source materials. Use the issue body template below. These issues are considered ready for AFK agents, so publish them with the correct triage label unless instructed otherwise.
 
 Publish issues in dependency order (blockers first) so you can reference real issue identifiers in the "Blocked by" field.
+
+- **GitHub/GitLab**: use native blocking links when available (see `issue-tracker.md`); otherwise put `Blocked by: #<n>` at the top of the issue body.
+- **Local markdown**: one file per issue at `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01`. Record dependencies as a `Blocked by: NN, NN` line near the top.
 
 <issue-template>
 ## Parent

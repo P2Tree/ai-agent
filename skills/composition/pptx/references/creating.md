@@ -1,155 +1,40 @@
-# 创建详解
+# pptxgenjs 创建详解
 
-pptxgenjs (Node.js) 从零创建 PPT 演示文稿。
+## Creating with pptxgenjs — gotchas
 
-## 安装
+`pptxgenjs` is preinstalled — do not run `npm install` first; write the script and `require('pptxgenjs')` directly. Only if that require fails: `npm install pptxgenjs`. The model knows the API; these are the footguns:
 
-```bash
-npm install -g pptxgenjs
-```
+- **Set `pres.layout` before adding slides.** The default canvas is `LAYOUT_16x9` = **10" × 5.625"**, not 13.3" wide. Coordinates past the edge are written, not clamped — the shape just isn't on the slide. (`LAYOUT_WIDE` is 13.3" × 7.5".)
+- **Hex colors: never `#`, never 8 digits.** `color: "FF0000"`. Both `"#FF0000"` and alpha baked into the hex (`"00000020"`) **corrupt the file**. For translucency: `transparency: 0-100` on fills and images, `opacity: 0.0-1.0` on shadows — each is silently ignored on the other.
+- **pptxgenjs mutates option objects in place** (converts values to EMU on first use). Never share one `shadow`/options object across two `add*` calls — build a fresh object each time.
+- **Shadow `offset` must be ≥ 0** — a negative offset corrupts the file. To cast a shadow upward, use `angle: 270` with a positive offset.
+- **`letterSpacing` is silently ignored** — the real option is `charSpacing`.
+- **Lists:** `bullet: true` on each item, never a literal `•` (renders double bullets). Set `breakLine: true` on every array item except the last. Space bulleted paragraphs with `paraSpaceAfter`, not `lineSpacing` (huge gaps).
+- **One `new pptxgen()` per output file** — never reuse an instance.
+- **`rectRadius` only works on `ROUNDED_RECTANGLE`**, not `RECTANGLE`.
+- **Gradient fills aren't supported** — use a gradient image as the background instead.
+- **Every `addText` call without a `placeholder` needs `isTextBox: true`** — without it the shape lacks `txBox="1"`, so screen readers announce the text as a "graphic" instead of a text box. No visual change.
+- **Text boxes have built-in internal padding** — set `margin: 0` whenever text must align with a shape, line, or icon at the same x.
+- **Speaker notes go in `slide.addNotes("...")`** (plain text, once per slide), never in a text box on the slide.
+- **Keep charts native.** Use `addChart()` for everything PowerPoint can chart (pass an array of `{type, data, options}` for combos). For PowerPoint-native features the library doesn't expose (trendlines, error bars), compute the extra series yourself or post-process the generated OOXML — do not fall back to a rendered image. Only chart types PowerPoint has no native form for (Sankey, network, chord) go in as images.
+- **Default charts render bare** — no title, no data labels, dated palette. Set `showTitle` + `title`, `showValue: true` + `dataLabelPosition`, `chartColors: [...]` from your palette, and quiet the frame (`catAxisLabelColor`/`valAxisLabelColor`, `valGridLine: { color, size }`, `catGridLine: { style: "none" }`, `showLegend: false` for a single series).
+- **On a stacked bar or column chart, `dataLabelPosition` must be `ctr`, `inEnd`, or `inBase`.** `outEnd` **corrupts the file**.
+- **A combo series using `secondaryValAxis`/`secondaryCatAxis` needs both `valAxes` and `catAxes` on the chart options, two entries each.** Without them pptxgenjs writes axis *ids* it never declares, and PowerPoint **discards that chart** and reports the file as corrupt. Supplying only `valAxes` is not enough.
+- **After `writeFile()`, run `python scripts/office/validate.py deck.pptx`.** It reports many of the chart and slide-XML faults PowerPoint refuses or repairs, the two above among them, and names the fix for each. Fix them in your generator, not by hand-editing the packed XML.
+- **Never reorder the children of `<p:presentation>`.** pptxgenjs writes `<p:notesMasterIdLst>` right after `<p:sldIdLst>` and points both masters at one theme part. PowerPoint reads that happily — move the element and the same deck becomes unopenable.
+- **Icons:** render `react-icons` to SVG (`ReactDOMServer.renderToStaticMarkup`), rasterize with `sharp` at ≥256px, and insert via `addImage({ data: "image/png;base64," + buf.toString("base64") })` — the `image/png;base64,` prefix is required (`react-icons`, `react`, `react-dom`, and `sharp` are preinstalled — `npm install react-icons react react-dom sharp` only if a require fails).
+- **`defineSlideMaster()` creates a slide *layout*, not a master** — one `slideLayoutN.xml` per call, under a single master you cannot change. Call them layouts when talking to the user.
+- **`pres.company` and a `defineSlideMaster()` `title` are written into the XML unescaped** — an `&` in either (`"Harrow & Sons"`) leaves `docProps/app.xml` or the layout unparseable, and `validate.py` fails. Write `&amp;` there, and in the matching `masterName`. `title`, `subject`, `author`, section titles, `objectName`, notes and slide text are escaped for you.
 
-## 基本结构
+### Structured decks
 
-```javascript
-const pptxgen = require("pptxgenjs");
-const pres = new pptxgen();
+A deck built on a theme, layouts, placeholders and sections can be restyled in one place and edited in PowerPoint without fighting it. Build every new deck this way unless the user asks for a quick throwaway.
 
-// 设置默认布局
-pres.layout = "LAYOUT_WIDE"; // 13.33" x 7.5" (16:9)
+1. **Theme first:** `const THEME = { name, headFontFace, bodyFontFace, colors: { dk1, lt1, dk2, lt2, accent1 … accent6, hlink, folHlink } }`, colors in hex. `pres.theme` takes the two fonts and nothing else. Name no font after that — titles get the heading font, other text the body font — except on chart text, which is hard-coded Arial: give its `*FontFace` options `"+mn-lt"` (theme body font; `"+mj-lt"` is the heading font).
+2. **`const C = pres.SchemeColor` for every color** — `C.text1`/`C.text2` are `dk1`/`dk2`, `C.background1`/`C.background2` are `lt1`/`lt2`. These take hex only, read from `THEME`: `valGridLine.color`, `catGridLine.color`, `shadow.color`, and on a one-series bar chart `invertedColors` or more than one `chartColors`. A scheme color there is written as `<a:srgbClr val="bg2"/>` without complaint, and being hex, these will not follow a later change of theme.
+3. **Sections:** `pres.addSection({ title })` just before that section's first slide, then `sectionTitle` on every `addSlide`. A slide without one — or, when sections are all declared up front, a table's auto-paged continuation slides — lands in a stray "Default-N" section.
+4. **One layout per slide frame** (`defineSlideMaster()`): title, section divider, title only, chart + commentary, table; dark and light variants if the design alternates. Text regions are named placeholders carrying position, size, weight and `color` — chart, image and table placeholders need a `color` too, or prompt text and arrays of runs come out hard-coded `000000`. Footer text, logo and `slideNumber` go on the layout, never on a slide.
+5. **Fill by name:** `addSlide({ masterName, sectionTitle })`, then `addText("…", { placeholder: "title" })` with no position, size or color — the placeholder's own options win, and anything it doesn't set (italic, `align`, `fontFace`) still applies; style one run with `[{ text, options }]`. A misspelt `placeholder` or `masterName` fails silently (a stray text box at 0,0; the blank layout). Only `title`, `body` and `chart` placeholders fill by name alone: `addImage({ placeholder })` takes the placeholder's x and y but not its size (a 1" × 1" picture) — pass `w`/`h` too. `addTable({ placeholder })` takes its x and y only — always pass `w`; when it auto-pages it ignores the placeholder and runs off the slide, so also pass `x`, `y` and `autoPageSlideStartY` (same as `y`, or continuation pages are laid out from the top margin), give the layout a `margin` whose bottom clears the footer, and fill the continuation slides' titles through `slide.newAutoPagedSlides`.
+6. **A layout is the frame, not the "layout" Design Ideas means.** Cards, icons, stat callouts and images are still composed slide by slide on top of it, in scheme colors, each with an `objectName` — every Design Idea applies, and most content slides sit on the title-only layout.
+7. **Write, then apply the theme:** `await pres.writeFile({ fileName: "deck.pptx" })`, then `await applyTheme("deck.pptx", THEME)`. pptxgenjs cannot write theme colors: until this runs, scheme colors resolve to Office's stock palette. It throws, changing nothing, on a scheme color in a hex-only option — fix what it names and rebuild.
 
-const slide = pres.addSlide();
-slide.addText("Hello World", { x: 1, y: 1, fontSize: 36, bold: true });
-
-pres.writeFile({ fileName: "output.pptx" });
-```
-
-## 常用布局尺寸
-
-| 布局 | 尺寸 | 常量 |
-|------|------|------|
-| 宽屏 16:9 | 13.33" × 7.5" | `LAYOUT_WIDE` |
-| 标准 4:3 | 10" × 7.5" | `LAYOUT_4x3` |
-| 自定义 | 任意 | `pres.defineLayout({ name, width, height })` |
-
-## 文本
-
-```javascript
-// 简单文本
-slide.addText("Title", { x: 0.5, y: 0.3, fontSize: 36, bold: true, color: "1E2761" });
-
-// 多段文本
-slide.addText([
-  { text: "Heading", options: { fontSize: 24, bold: true } },
-  { text: "Body text here", options: { fontSize: 14, breakType: "paragraph" } }
-], { x: 0.5, y: 1.5, w: 5, h: 3 });
-
-// 项目符号
-slide.addText([
-  { text: "Item 1", options: { bullet: true } },
-  { text: "Item 2", options: { bullet: true } },
-], { x: 0.5, y: 1.5, w: 5, h: 3 });
-```
-
-## 形状
-
-```javascript
-// 矩形
-slide.addShape(pres.ShapeType.rect, { x: 0.5, y: 1, w: 3, h: 2, fill: { color: "1E2761" } });
-
-// 圆形
-slide.addShape(pres.ShapeType.ellipse, { x: 1, y: 1, w: 2, h: 2, fill: { color: "CADCFC" } });
-
-// 线条
-slide.addShape(pres.ShapeType.line, { x: 0.5, y: 3, w: 9, h: 0, line: { color: "CCCCCC", width: 1 } });
-```
-
-## 图片
-
-```javascript
-slide.addImage({ path: "image.png", x: 5, y: 1, w: 4, h: 3 });
-
-// 从 URL
-slide.addImage({ path: "https://example.com/img.png", x: 5, y: 1, w: 4, h: 3 });
-
-// Base64
-slide.addImage({ data: "image/png;base64,...", x: 5, y: 1, w: 4, h: 3 });
-```
-
-## 表格
-
-```javascript
-const rows = [
-  [{ text: "Header 1", options: { bold: true, fill: { color: "1E2761" }, color: "FFFFFF" } }, { text: "Header 2", options: { bold: true, fill: { color: "1E2761" }, color: "FFFFFF" } }],
-  ["Cell 1", "Cell 2"],
-  ["Cell 3", "Cell 4"],
-];
-
-slide.addTable(rows, {
-  x: 0.5, y: 1, w: 9,
-  border: { type: "solid", pt: 1, color: "CCCCCC" },
-  colW: [4.5, 4.5],
-  rowH: [0.5, 0.4, 0.4],
-  margin: [5, 10, 5, 10],
-});
-```
-
-## 图表
-
-```javascript
-const chartData = [
-  { name: "Q1", labels: ["A", "B", "C"], values: [10, 20, 30] },
-  { name: "Q2", labels: ["A", "B", "C"], values: [15, 25, 35] },
-];
-
-slide.addChart(pres.ChartType.bar, chartData, {
-  x: 1, y: 1, w: 8, h: 5,
-  showValue: true,
-  chartColors: ["1E2761", "CADCFC"],
-});
-```
-
-## 幻灯片母版与布局
-
-```javascript
-// 定义母版
-pres.defineSlideMaster({
-  title: "CUSTOM_MASTER",
-  background: { fill: "1E2761" },
-  objects: [
-    { text: { text: "Company Name", options: { x: 0.5, y: 7, fontSize: 10, color: "FFFFFF" } } },
-  ],
-});
-
-// 使用母版
-const slide = pres.addSlide({ masterName: "CUSTOM_MASTER" });
-```
-
-## 动画
-
-```javascript
-// 进入动画
-slide.addText("Animated", { x: 1, y: 1 });
-// 注意：pptxgenjs 对动画支持有限，复杂动画需编辑 XML
-```
-
-## 大数字展示
-
-```javascript
-// 用大字号数字 + 小字号标签
-slide.addText([
-  { text: "95%", options: { fontSize: 60, bold: true, color: "1E2761" } },
-  { text: "\nUptime", options: { fontSize: 14, color: "666666" } }
-], { x: 1, y: 2, w: 3, h: 3, align: "center", valign: "middle" });
-```
-
-## 常见错误
-
-| 错误 | 正确做法 |
-|------|----------|
-| 尺寸单位混淆 | pptxgenjs 用英寸，不是 DXA |
-| 标题下划线 | 不要用，这是 AI 生成的标志；用空白或背景色 |
-| 所有幻灯片同布局 | 变换列、卡片、标注布局 |
-| 居中正文 | 正文左对齐，仅标题居中 |
-| 低对比度 | 文字和图标都要高对比度 |
-| 文本框太窄 | 留足宽度避免过多换行 |
-| 忘记 text box padding | 对齐形状时设 `margin: 0` 或偏移补偿 |

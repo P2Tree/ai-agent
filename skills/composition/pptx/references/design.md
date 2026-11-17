@@ -1,96 +1,100 @@
 # 设计指导
 
-创建 PPT 演示文稿时的设计决策参考。
+## Deck content and flow
 
-## 配色
+- **One message per slide.** A deck goes theme by theme, message by message.
+- **A common structure is the pyramid:** the main message up front, an executive summary that previews the sections, the sections themselves, then a conclusion, usually with next steps that act on the findings.
+- **Match the structure to the size of the deck.** A short deck might not need an introduction and a conclusion; a long deck might need dividers between topics.
+- **Build toward what the deck is for:** a decision, consensus, a celebration, resolving a disagreement, or opening a discussion.
+- **Build for how it will be used.** A live deck gets narration and possibly discussion; a pre-read has to carry the whole narrative itself. An executive audience in a live meeting needs few words and highly visual slides. Detailed, word-heavy slides are sometimes right for subject-matter experts or for a deck read offline. Analytical reports lean on charts and tables.
+- **Size a live deck to the talk:** about 1.5 to 2 minutes per slide, with time left for questions if there will be any.
 
-选取与主题匹配的调色板，不要默认蓝色。
+## Design Ideas
 
-### 调色板参考
+**Don't create boring slides.** Plain bullets on a white background won't impress anyone. Consider ideas from this list for each slide.
 
-| 主题 | 主色 | 辅色 | 强调色 |
-|------|------|------|--------|
-| 午夜商务 | `1E2761` | `CADCFC` | `FFFFFF` |
-| 森林苔藓 | `2C5F2D` | `97BC62` | `F5F5F5` |
-| 珊瑚活力 | `F96167` | `F9E795` | `2F3C7E` |
-| 暖赤陶 | `B85042` | `E7E8D1` | `A7BEAE` |
-| 海洋渐变 | `065A82` | `1C7293` | `21295C` |
-| 碳灰极简 | `36454F` | `F2F2F2` | `212121` |
-| 青绿信任 | `028090` | `00A896` | `02C39A` |
-| 浆果奶油 | `6D2E46` | `A26769` | `ECE2D0` |
-| 鼠尾草 | `84B59F` | `69A297` | `50808E` |
-| 樱桃大胆 | `990011` | `FCF6F5` | `2F3C7E` |
+### Before Starting
 
-### 配色原则
+- **Pick a bold, content-informed color palette**: The palette should feel designed for THIS topic. If swapping your colors into a completely different presentation would still "work," you haven't made specific enough choices.
+- **Dominance over equality**: One color should dominate (60-70% visual weight), with 1-2 supporting tones and one sharp accent. Never give all colors equal weight.
+- **Dark/light contrast**: Dark backgrounds for title + conclusion slides, light for content ("sandwich" structure). Or commit to dark throughout for a premium feel.
+- **Commit to a visual motif**: Pick ONE distinctive element and repeat it — rounded image frames, icons in colored circles. Carry it across every slide. **Do not use a color bar or accent stripe as your motif** (see Avoid list).
 
-- 一色主导（60-70% 视觉权重），1-2 辅助色，1 强调色
-- 不要所有色等权
-- 深色标题+结论页，浅色内容页（"三明治"结构）
-- 或全程深色营造高端感
+### Color Palettes
 
-## 视觉主题
+Choose colors that match your topic — don't default to generic blue. Use these palettes as inspiration:
 
-选一个重复性元素贯穿全部幻灯片：圆角图片框、彩色圆圈图标、粗单边框线。
+| Theme | Primary | Secondary | Accent |
+|-------|---------|-----------|--------|
+| **Midnight Executive** | `1E2761` (navy) | `CADCFC` (ice blue) | `FFFFFF` (white) |
+| **Forest & Moss** | `2C5F2D` (forest) | `97BC62` (moss) | `F5F5F5` (cream) |
+| **Coral Energy** | `F96167` (coral) | `F9E795` (gold) | `2F3C7E` (navy) |
+| **Warm Terracotta** | `B85042` (terracotta) | `E7E8D1` (sand) | `A7BEAE` (sage) |
+| **Ocean Gradient** | `065A82` (deep blue) | `1C7293` (teal) | `21295C` (midnight) |
+| **Charcoal Minimal** | `36454F` (charcoal) | `F2F2F2` (off-white) | `212121` (black) |
+| **Teal Trust** | `028090` (teal) | `00A896` (seafoam) | `02C39A` (mint) |
+| **Berry & Cream** | `6D2E46` (berry) | `A26769` (dusty rose) | `ECE2D0` (cream) |
+| **Sage Calm** | `84B59F` (sage) | `69A297` (eucalyptus) | `50808E` (slate) |
+| **Cherry Bold** | `990011` (cherry) | `FCF6F5` (off-white) | `2F3C7E` (navy) |
 
-## 布局
+### For Each Slide
 
-**每张幻灯片必须有视觉元素** — 图片、图表、图标或形状。纯文本幻灯片不会被记住。
+**Every slide needs a visual element** — image, chart, icon, or shape. Text-only slides are forgettable.
 
-### 布局选项
+**Layout options:**
+- Two-column (text left, illustration on right)
+- Icon + text rows (icon in colored circle, bold header, description below)
+- 2x2 or 2x3 grid (image on one side, grid of content blocks on other)
+- Half-bleed image (full left or right side) with content overlay
 
-- 双栏（左文字，右图示）
-- 图标+文字行（彩色圆圈图标、粗标题、描述在下）
-- 2×2 或 2×3 网格
-- 半出血图片（左或右侧全幅）+ 内容叠加
+**Data display:**
+- Large stat callouts (big numbers 60-72pt with small labels below)
+- Comparison columns (before/after, pros/cons, side-by-side options)
+- Timeline or process flow (numbered steps, arrows)
 
-### 数据展示
+**Visual polish:**
+- Icons in small colored circles next to section headers
+- Italic accent text for key stats or taglines
 
-- 大数字标注（60-72pt 数字 + 小标签）
-- 对比栏（前后、优缺、并排选项）
-- 时间线或流程（编号步骤、箭头）
+### Typography
 
-### 视觉润色
+**Font names you write into the .pptx are rendered by the user's PowerPoint, not by this environment.** Your visual QA renders via LibreOffice, which substitutes fonts it doesn't have — and for some fonts the substitute has different widths, so your QA preview can show text overflow (or fit) that the real deck won't have. To keep your QA trustworthy:
 
-- 章节标题旁的彩色圆圈小图标
-- 关键数据或标语用斜体强调文字
+- **Safe fonts** (render true-to-width in QA *and* ship with Office): **Arial, Calibri, Cambria, Times New Roman, Courier New, Bookman Old Style, Century Schoolbook**. Use these for body text and anything where fit matters.
+- **Headers with personality at zero QA risk**: pair a safe-list serif header (Cambria, Bookman Old Style, Century Schoolbook) with a safe-list sans body (Calibri or Arial). You get visual contrast without giving up reliable overflow checks.
+- **If the user asks for a font outside the safe list** (e.g. Georgia or Trebuchet MS): use it where the user asked, but size those containers with extra slack (~10%) and don't trust QA text-fit on those elements — the preview of that font is approximate. If the user hasn't specified, prefer safe-list fonts for body text.
+- **QA-unreliable fonts** (substitute has different widths — overflow checks can be wrong): Georgia, Trebuchet MS, Impact, Arial Black, Garamond, Consolas, Palatino Linotype. Calibri Light substitution varies by environment; treat as QA-unreliable. Fine for titles/accents with slack; don't trust QA text-fit on these.
+- **Never default to Aptos** — Office's post-2023 default has no metric-compatible substitute here *and* is missing from older Office installs, so it's unreliable on both ends.
 
-## 字体
+| Element | Size |
+|---------|------|
+| Slide title | 36-44pt bold |
+| Section header | 20-24pt bold |
+| Body text | 14-16pt |
+| Captions | 10-12pt muted |
 
-选择有性格的标题字体 + 清晰的正文字体。
+### Spacing
 
-| 标题字体 | 正文字体 |
-|----------|----------|
-| Georgia | Calibri |
-| Arial Black | Arial |
-| Calibri | Calibri Light |
-| Cambria | Calibri |
-| Trebuchet MS | Calibri |
-| Impact | Arial |
-| Palatino | Garamond |
-| Consolas | Calibri |
+- 0.5" minimum margins
+- 0.3-0.5" between content blocks
+- Leave breathing room—don't fill every inch
 
-| 元素 | 字号 |
-|------|------|
-| 幻灯片标题 | 36-44pt bold |
-| 章节标题 | 20-24pt bold |
-| 正文 | 14-16pt |
-| 说明文字 | 10-12pt muted |
+### Avoid (Common Mistakes)
 
-## 间距
+- **Don't repeat the same layout** — vary columns, cards, and callouts across slides
+- **Don't end a slide title with a period**
+- **Don't let titles drift between slides of the same type** — content slides with the title at the top put it at the same position, font, size, and alignment on every slide; a different slide type (a section divider with the title mid-slide) can place it differently
+- **Don't change how chart labels look from chart to chart** — axis and data labels use the same color, font, and size on every chart in the deck; vary one only where a chart needs it (a second axis, a highlighted series, a label sitting on a dark bar)
+- **Don't center body text** — left-align paragraphs and lists; center only titles
+- **Don't skimp on size contrast** — titles need 36pt+ to stand out from 14-16pt body
+- **Don't default to blue** — pick colors that reflect the specific topic
+- **Don't mix spacing randomly** — choose 0.3" or 0.5" gaps and use consistently
+- **Don't style one slide and leave the rest plain** — commit fully or keep it simple throughout
+- **Don't create text-only slides** — add images, icons, charts, or visual elements; avoid plain title + bullets
+- **Don't forget text box padding** — when aligning lines or shapes with text edges, set `margin: 0` on the text box or offset the shape to account for padding
+- **Don't use low-contrast elements** — icons AND text need strong contrast against the background; avoid light text on light backgrounds or dark text on dark backgrounds
+- **NEVER use accent lines under titles** — these are a hallmark of AI-generated slides; use whitespace or background color instead
+- **NEVER add decorative color bars or accent stripes** — this includes: header/footer bars spanning the slide width, vertical sidebar stripes down one edge of the slide, thin accent stripes along one edge of a card or content block, and "single-side borders" on rectangles. These read as AI-generated filler. If you want to set a card apart, use a subtle background tint, a drop shadow, or an icon — not an edge stripe.
+- **Don't default to cream/beige backgrounds** — when no background is specified, use white (`FFFFFF`) or the user's brand palette; avoid warm-neutral defaults like `F5F5DC`, `FAF0E6`, `FAEBD7`, `FFF8E1`
+- **Don't ship text that overflows its shape** — if text doesn't fit, reduce font size, split across slides, or enlarge the container; never leave content cut off or spilling past bounds. **Don't shrink below the sizes in the Typography table** (body text 14pt, captions 10pt) in a deck you create — once you reach that floor, cut words, enlarge the container, or split the slide instead; when editing an existing deck or template, match its sizes
 
-- 最小边距 0.5"
-- 内容块间距 0.3-0.5"
-- 留白——不要填满每一寸
-
-## 避坑
-
-- 不要每张同布局 — 变换列、卡片、标注
-- 正文不要居中 — 左对齐，仅标题居中
-- 标题和正文字号对比要大 — 标题 36pt+ vs 正文 14-16pt
-- 不要默认蓝色 — 选与主题相关的色
-- 间距要一致 — 选 0.3" 或 0.5"，全篇统一
-- 不要只修一张其余随便 — 全做或全简
-- 不要纯文本幻灯片 — 加图片、图标、图表
-- 文本框对齐形状时注意 padding — 设 `margin: 0` 或偏移补偿
-- 文字和图标都要高对比度
-- **不要在标题下加装饰线** — 这是 AI 生成幻灯片的标志；用空白或背景色代替
