@@ -63,7 +63,7 @@ Show counts and a one-line summary per item. Let the maintainer pick.
    - **Prior rejection:** read `.out-of-scope/*.md` and surface any similar request.
 2. **Recommend.** State category and state with reasoning, plus a brief codebase summary relevant to the request (including whether it already exists). Wait for direction.
 3. **Verify the claim.** For a bug, reproduce it from the reporter's steps. For a PR, check out the diff and run the relevant tests or commands. Report: confirmed (with code path), failed, or insufficient detail (a strong `needs-info` signal).
-4. **Grill if needed.** Use **grill-me** to flesh out the request a round of questions at a time. As decisions land, update `GLOSSARY.md` and ADRs inline.
+4. **Grill if needed.** Use **grill-me** to flesh out the request a round of questions at a time. As decisions land, update `GLOSSARY.md` and ADRs inline, following the maintenance rules in `docs/agents/domain.md`.
 5. **Apply the outcome:**
    - `ready-for-agent` → post an agent brief ([guide](references/agent-brief.md)).
    - `ready-for-human` → same structure, but note why it can't be delegated.

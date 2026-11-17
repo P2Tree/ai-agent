@@ -7,7 +7,7 @@ description: Execute a written implementation plan step-by-step with review chec
 
 Three modes: **inline** (one context), **subagent-driven** (fresh implementer + reviewer per task), and **parallel** (independent domains concurrently).
 
-**Continuous execution:** execute every task without pausing to ask "should I continue?". **Rulings, not stalls:** decide conflicts and ambiguities yourself, record them as `Ruling: <decision> — <why> — <cost if wrong>`, and keep going. Only four things stop you: an irreversible/destructive operation, a security-sensitive action, a side effect outside the worktree that norms require asking about, and a plan so broken that every path is a guess.
+**Continuous execution:** execute every task without pausing to ask "should I continue?". **Rulings, not stalls:** decide conflicts and ambiguities yourself, record them as `Ruling: <decision> — <why> — <cost if wrong>`, and keep going. Only four things stop you: an irreversible/destructive operation, a security-sensitive action, a side effect outside the current branch/project that norms require asking about, and a plan so broken that every path is a guess.
 
 ## Choose Execution Mode
 
@@ -19,7 +19,7 @@ Present the modes with a recommendation; the user decides:
 
 ## Shared Setup
 
-1. **Isolate the work.** Use a worktree/branch. Never implement on main/master without explicit consent.
+1. **Work on a feature branch.** If the user already works in an isolated worktree, stay there; don't create one unless asked. Never implement on main/master without explicit consent.
 2. **Create a ledger**, not just todos. Conversation memory does not survive compaction; the ledger and `git log` do. Each plan owns `<repo>/.superpowers/sdd/<plan>/progress.md`; first line: `# SDD ledger — plan: <path>`.
 3. **Read the plan and its spec.** The spec is the binding authority; the plan is its argument. Note Global Constraints. If no spec is reachable, note that in the ledger — rulings are provisional.
 4. **Pre-flight interface scan.** For every task consuming an earlier task's output, add a ledger row: producer, consumer, what was found. Record a ruling for each conflict. If tasks share nothing, write `Pre-flight: no shared interfaces`.
@@ -37,8 +37,8 @@ For each task:
 3. If code is wrong, use **diagnose**; never patch the symptom. If the plan is wrong, rule on the smallest change satisfying the spec and ledger it.
 4. Commit as the plan says. `BASE` is the review range, never `HEAD~1`.
 5. **Completion contract** (all must be true before marking complete):
-   - every named test exists and ran, and you read the output;
-   - the task's final test run passed;
+   - every named test exists and ran in this session, and you read the output;
+   - the task's final test run passed — the command you just ran, not an earlier run or "should pass";
    - every `Expected:` was compared against real output;
    - every deviation has a `Ruling:` line.
 6. Append `Task <N>: complete (commits <base7>..<head7>, tests: <cmd> → <result>)` and mark the todo complete. A failing run records nothing.

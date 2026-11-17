@@ -37,4 +37,4 @@ Finding *facts* is your job, never the user's. When a frontier question needs a 
 
 The session is done when the frontier is empty: every branch of the design tree visited, nothing silently assumed. Do not act on the plan until the user confirms you have reached a shared understanding.
 
-If a decision settles a domain term or an architectural choice, record it: update `GLOSSARY.md` (create it lazily) or offer an ADR when the choice is hard to reverse, confusing out of context, and represents a real trade-off.
+If a decision settles a domain term or an architectural choice, record it: update `GLOSSARY.md` (create it lazily) or offer an ADR when the choice is hard to reverse, confusing out of context, and represents a real trade-off. See the maintenance rules in `docs/agents/domain.md`.

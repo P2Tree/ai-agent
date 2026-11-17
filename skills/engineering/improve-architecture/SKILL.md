@@ -7,24 +7,9 @@ description: Find deepening opportunities in a codebase, informed by the domain 
 
 Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
 
-## Glossary
+## Design vocabulary
 
-Use these terms exactly in every suggestion. Consistent language is the point — don't drift into "component," "service," "API," or "boundary." Full definitions in [LANGUAGE.md](LANGUAGE.md).
-
-- **Module** — anything with an interface and an implementation (function, class, package, slice).
-- **Interface** — everything a caller must know to use the module: types, invariants, error modes, ordering, config. Not just the type signature.
-- **Implementation** — the code inside.
-- **Depth** — leverage at the interface: a lot of behaviour behind a small interface. **Deep** = high leverage. **Shallow** = interface nearly as complex as the implementation.
-- **Seam** — where an interface lives; a place behaviour can be altered without editing in place. (Use this, not "boundary.")
-- **Adapter** — a concrete thing satisfying an interface at a seam.
-- **Leverage** — what callers get from depth.
-- **Locality** — what maintainers get from depth: change, bugs, knowledge concentrated in one place.
-
-Key principles (see [LANGUAGE.md](LANGUAGE.md) for the full list):
-
-- **Deletion test**: imagine deleting the module. If complexity vanishes, it was a pass-through. If complexity reappears across N callers, it was earning its keep.
-- **The interface is the test surface.**
-- **One adapter = hypothetical seam. Two adapters = real seam.**
+Use the **codebase-design** skill for the shared module/interface/depth/seam/adapter/leverage/locality vocabulary and its principles: the deletion test, "the interface is the test surface", and "one adapter = hypothetical seam, two = real". Use those terms exactly in every suggestion; don't drift into "component," "service," "API," or "boundary."
 
 This skill is _informed_ by the project's domain model. The domain language gives names to good seams; ADRs record decisions the skill should not re-litigate.
 
@@ -71,7 +56,7 @@ Present a numbered list of deepening opportunities. For each candidate:
 
 End with a **Top recommendation**: which candidate to tackle first and why. If the user wants a visual report, write a self-contained HTML file to the OS temp directory and open it.
 
-**Use the domain glossary's vocabulary (path from `docs/agents/domain.md`) for the domain, and [LANGUAGE.md](LANGUAGE.md) vocabulary for the architecture.** If the glossary defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
+**Use the domain glossary's vocabulary (path from `docs/agents/domain.md`) for the domain, and the codebase-design vocabulary for the architecture.** If the glossary defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
 
 **ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly (e.g. _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
 
@@ -81,12 +66,12 @@ Do NOT propose interfaces yet. Ask the user: "Which of these would you like to e
 
 Once the user picks a candidate, drop into a grilling conversation. Walk the design tree with them — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.
 
-Side effects happen inline as decisions crystallize:
+Side effects happen inline as decisions crystallize, following the maintenance rules in `docs/agents/domain.md`:
 
-- **Naming a deepened module after a concept not in the domain glossary?** Add the term to the glossary file (path from `docs/agents/domain.md`) — use a one-line definition in a `## Glossary` section (term: definition). Create the file lazily if it doesn't exist.
+- **Naming a deepened module after a concept not in the domain glossary?** Add the term to the glossary file, one line per term. Create the file lazily if needed.
 - **Sharpening a fuzzy term during the conversation?** Update the glossary file right there.
-- **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones. Write the ADR to the ADR directory (path from `docs/agents/domain.md`) as `<arch_design_topic_name>.md` with: Title, Status (Rejected), Context, Decision, Consequences.
-- **Want to explore alternative interfaces for the deepened module?** See [INTERFACE-DESIGN.md](INTERFACE-DESIGN.md).
+- **User rejects the candidate with a load-bearing reason?** Offer an ADR when the decision is hard to reverse, surprising without context, and a real trade-off. Frame it as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Skip ephemeral reasons ("not worth it right now") and self-evident ones.
+- **Want to explore alternative interfaces for the deepened module?** Use the codebase-design skill's design-it-twice pattern.
 
 ## Next Steps
 

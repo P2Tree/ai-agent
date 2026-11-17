@@ -60,6 +60,7 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | Skill | Description |
 |-------|-------------|
 | [tdd](./skills/engineering/tdd/SKILL.md) | Red-green-refactor TDD loop with pre-agreed seams and vertical slicing |
+| [codebase-design](./skills/engineering/codebase-design/SKILL.md) | Shared deep-module vocabulary — interface, depth, seam, adapter, leverage, locality |
 | [diagnose](./skills/engineering/diagnose/SKILL.md) | Debugging cycle: red-capable feedback loop → reproduce + minimise → hypothesize → instrument → fix → clean |
 | [code-review](./skills/engineering/code-review/SKILL.md) | Code review discipline — calibrated confidence, read-only review, spec-as-vision, receiving feedback |
 | [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | Scope-first scan for architectural friction, ranked deep-module candidates |
@@ -72,6 +73,7 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [brainstorming](./skills/productivity/brainstorming/SKILL.md) | Context-first design dialogue — playback, approaches, scaled design doc, builder check |
 | [prototype](./skills/productivity/prototype/SKILL.md) | Throwaway prototypes that answer a question, kept on a throwaway branch as primary source |
 | [grill-me](./skills/productivity/grill-me/SKILL.md) | Frontier-based rounds of questions to pressure-test your plan or design |
+| [research](./skills/productivity/research/SKILL.md) | Delegate reading to a background agent; capture cited findings in a Markdown file |
 
 ### Composition
 
@@ -103,6 +105,7 @@ Copy these templates to your project root (`CLAUDE.md`) or home directory (`~/.c
 | [writing-prd](./skills/workflow/writing-prd/SKILL.md) | Synthesize conversation context into a PRD, choosing test seams first |
 | [decomposing-issues](./skills/workflow/decomposing-issues/SKILL.md) | Split PRDs into vertically-sliced, independently grabbable issues |
 | [triage](./skills/workflow/triage/SKILL.md) | Issue and external-PR triage — redundancy checks, verification, briefs, out-of-scope KB |
+| [retro](./skills/workflow/retro/SKILL.md) | Session retrospective on the agent's environment — navigation, checks, standards, tooling |
 | [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | Bootstrap issue tracker, triage labels, GLOSSARY/ADR layout, and `.scratch/` conventions |
 
 ### Misc

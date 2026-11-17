@@ -2,6 +2,7 @@
   "name": "ai-agent",
   "skills": [
     "./skills/engineering/tdd",
+    "./skills/engineering/codebase-design",
     "./skills/engineering/diagnose",
     "./skills/engineering/code-review",
     "./skills/engineering/improve-architecture",
@@ -9,6 +10,7 @@
     "./skills/productivity/brainstorming",
     "./skills/productivity/prototype",
     "./skills/productivity/grill-me",
+    "./skills/productivity/research",
     "./skills/composition/coauthoring",
     "./skills/composition/work-report",
     "./skills/composition/arch-doc",
@@ -25,6 +27,7 @@
     "./skills/workflow/writing-prd",
     "./skills/workflow/decomposing-issues",
     "./skills/workflow/triage",
+    "./skills/workflow/retro",
     "./skills/workflow/init-agent-environment",
     "./skills/misc/create-skill",
     "./skills/misc/manage-skills",

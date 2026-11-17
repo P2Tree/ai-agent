@@ -18,7 +18,7 @@ If these files don't exist, proceed without issue-tracker integration.
 
 ## Step 1: Verify Tests
 
-Run the project's full test suite. If tests fail, report the failures and stop — the menu comes only after a green suite.
+Run the project's full test suite. If tests fail, report the failures and stop — the menu comes only after a green suite. A green suite means the command you just ran, not an earlier run or "should pass".
 
 ## Step 2: Detect Environment
 
@@ -35,6 +35,8 @@ WORKTREE_PATH=$(git rev-parse --show-toplevel)
 | `GIT_DIR == GIT_COMMON` (normal repo) | Standard 3 options | No worktree |
 | `GIT_DIR != GIT_COMMON`, named branch | Standard 3 options | Provenance-based |
 | `GIT_DIR != GIT_COMMON`, detached HEAD | Reduced 2 options (no merge) | Leave in place |
+
+In a normal repo, skip every worktree-specific step.
 
 ## Step 3: Determine Base Branch
 
@@ -138,8 +140,7 @@ Runs for Option 1 and confirmed discards. Options 2 and 3 preserve the worktree.
 
 ## Red Flags
 
-- Proceeding with failing tests, or assuming earlier green tests still hold.
-- Offering discard in the menu, or treating "get rid of it" as confirmation.
+- Proceeding with failing tests (earlier green runs don't count), or offering discard in the menu ("get rid of it" is not confirmation).
 - Assuming the base is main without confirming.
 - Deleting a worktree outside `.worktrees/`/`worktrees/`, or `--force` after a refused removal.
 - Force-pushing without an explicit request, or cleaning up a worktree while its PR is still being iterated on.

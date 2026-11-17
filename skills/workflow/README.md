@@ -62,6 +62,16 @@
 
 **参考：** mattpocock:triage
 
+## retro `[手动]`
+
+对一次编码会话做复盘，但复盘对象是 **agent 的工作环境**，不是这次的产品代码。按严重程度列出改进项：导航指针、自动检查（lint/typecheck/test/CI）、编码规范、AGENTS.md/CLAUDE.md 体量、工具调用经济性、无效指令、信息获取渠道。
+
+**什么时候用：** 一次会话结束后，想减少下次的重复摸索、返工或昂贵调用时。
+
+**触发方式：** 需要你明确说要复盘（如 `/retro`）才会激活。
+
+**参考：** mattpocock:retro
+
 ## init-agent-environment `[手动]`
 
 新仓库第一次用 agent 时的初始化：配置 issue tracker（GitHub/GitLab/本地 `.scratch/`）、按需设置 triage 标签、搭好 `GLOSSARY.md` 与 ADR 的目录结构。未安装 triage 时跳过标签部分。

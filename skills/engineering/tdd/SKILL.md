@@ -23,7 +23,7 @@ A **seam** is the public boundary you test at: the interface where you observe b
 
 Ask: "What's the public interface, and which seams should we test?" Give each proposed seam a one-line note on what it catches and what it misses.
 
-When the interface shape itself is in question, consult [interface-design.md](interface-design.md) and [deep-modules.md](deep-modules.md) for the module/interface/depth/seam vocabulary. These are references, not a process to run.
+When the interface shape itself is in question, use the **codebase-design** skill for the module/interface/depth/seam vocabulary. It is a reference to consult, not a process to run.
 
 ## Anti-Pattern: Horizontal Slices
 
