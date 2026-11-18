@@ -6,6 +6,19 @@ disable-model-invocation: true
 
 The user has asked for a **retrospective**. You are suggesting improvements to the coding agent's **environment** to improve future runs.
 
+## When to Run
+
+Run after a session where one or more of these happened:
+
+- the same class of mistake repeated (for example, lint or typecheck caught it late);
+- the agent repeatedly hunted for files or reread the same code;
+- tool calls or elapsed time were unusually expensive;
+- review caught something an automated check could have caught;
+- `CLAUDE.md` / `AGENTS.md` has grown and its instructions feel ignored;
+- the task stalled because information or access was missing.
+
+Do not run it after every session. Use it after a painful session, or periodically (for example, monthly).
+
 ## Steps
 
 1. Use the writing principles in the `create-skill` skill's `references/writing-for-agents.md` when available.
@@ -23,6 +36,18 @@ The user has asked for a **retrospective**. You are suggesting improvements to t
 - **Information access**: look for opportunities to increase the agent's access to information. Teeing dev server logs, readonly access to third-party services. _Use when_ a crucial piece of information was not available to the agent.
 
 4. Present these candidates to the user, in order of severity.
+
+## Turning Findings into Changes
+
+Classify each accepted finding and land it:
+
+1. **Automatable** → add or wire a lint/typecheck/test/CI/pre-commit check.
+2. **Navigation** → add a pointer from `CLAUDE.md`/`AGENTS.md` to the right doc or module.
+3. **Judgement call** → add to the reviewer checklist or `CODING_STANDARDS.md`.
+4. **No-op** → delete the instruction from `CLAUDE.md`/`AGENTS.md`.
+5. **Information access** → add logs, read-only access, or a better tool.
+
+Implement the highest-severity items first, then re-run retro after a few sessions to see whether the changes helped.
 
 ## Reference
 
@@ -42,3 +67,8 @@ You have access to several files in the repo:
 - `CODING_STANDARDS.md`: this file is read during review, not implementation. Add **navigation pointers** to docs folders if the standards file gets more than 1,000 lines long.
 - Docs: use docs as references files, pointed to by other files. Look for existing docs before writing new ones.
 - Skills: use skills for docs (since their description goes into the agent's context window), or for user-invoked commands. Follow the advice in the `writing-for-agents` skill.
+
+## Next
+
+- Update `CLAUDE.md`/`AGENTS.md`, add an automated check, or write a coding standard based on the accepted findings.
+- Re-run **retro** after a few sessions to see whether the changes helped.

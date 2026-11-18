@@ -7,15 +7,11 @@ description: Break a plan, spec, or PRD into independently-grabbable issues on t
 
 Break a plan into independently-grabbable issues using vertical slices (tracer bullets).
 
-## Pre-flight: read agent environment
+## Pre-flight
 
-Read the repo's agent environment (set up by `/init-agent-environment`) before creating issues:
-
-- **`docs/agents/issue-tracker.md`** — tells you which tracker to use and how to create/read issues (GitHub `gh`, GitLab `glab`, local markdown, etc.). All issue operations must follow the conventions in this file.
-- **`docs/agents/triage-labels.md`** — the label strings for the five canonical triage roles. Apply the correct `ready-for-agent` or `ready-for-human` label when publishing — don't hardcode the role names.
-- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Use the domain glossary in issue titles and descriptions; respect ADRs in the area the issues touch.
-
-If these files don't exist, stop and ask the user to run `/init-agent-environment` first — this skill cannot function without knowing the issue tracker.
+- Detect the tracker from `git remote -v`: GitHub (`gh`) or GitLab (`glab`). If neither, ask where to publish the issues.
+- Read `GLOSSARY.md` / `docs/adr/` if they exist; use the project's terms and respect settled decisions.
+- Apply a `ready-for-agent` / `ready-for-human` label only if the tracker already has one; otherwise ask before creating it.
 
 ## Process
 
@@ -36,7 +32,8 @@ Slices may be 'HITL' or 'AFK'. HITL slices require human interaction, such as an
 <vertical-slice-rules>
 - Each slice delivers a narrow but COMPLETE path through every layer (schema, API, UI, tests)
 - A completed slice is demoable or verifiable on its own
-- Prefer many thin slices over few thick ones
+- Prefer thin slices when each is independently valuable; a small spec may legitimately produce **one** issue
+- Do not split a small change just to produce multiple tickets
 </vertical-slice-rules>
 
 ### 4. Quiz the user
@@ -63,8 +60,8 @@ For each approved slice, publish a new issue to the issue tracker. **Language:**
 
 Publish issues in dependency order (blockers first) so you can reference real issue identifiers in the "Blocked by" field.
 
-- **GitHub/GitLab**: use native blocking links when available (see `issue-tracker.md`); otherwise put `Blocked by: #<n>` at the top of the issue body.
-- **Local markdown**: one file per issue at `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01`. Record dependencies as a `Blocked by: NN, NN` line near the top.
+- **GitHub/GitLab**: use native blocking links when available; otherwise put `Blocked by: #<n>` at the top of the issue body.
+- Only GitHub/GitLab trackers are supported. If neither is detected, ask the user before falling back to any other mechanism.
 
 <issue-template>
 ## Parent
@@ -95,5 +92,5 @@ Do NOT close or modify any parent issue.
 
 ## Next Steps
 
-- **writing-plans** — for each issue, create a detailed bite-sized implementation plan before coding
-- **executing-plans** — once plans are written, execute them task by task with verification gates
+- **writing-plans** — for parallel/multi-person work, one plan per issue; for a single agent working sequentially, one plan for the whole spec with tasks mapped to issue IDs.
+- **executing-plans** — once plans are written, execute them with verification gates.

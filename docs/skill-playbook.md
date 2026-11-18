@@ -1,331 +1,319 @@
 # Skill 编队手册
 
-> 不同工作场景下，如何将 skill 编组成队、协同作战。
+> 不同工作场景下，如何把 skill 编组成队、协同作战。
 
 ## 使用说明
 
-本指南按工作场景组织，每个场景给出：
-- **流程** — skill 的调用顺序和触发时机
-- **角色映射** — 每个 skill 在真实团队中扮演什么角色
-- **配合机制** — skill 之间如何衔接、数据如何流转
-- **变体** — 根据情况调整流程的提示
+- `→` 表示顺序执行，`+` 表示可按需穿插或并行。
+- **默认主流程**覆盖大多数 feature 开发；其他场景是在主流程上插入或替换某几步。
+- 每个 skill 条目都写清「什么时候用」和「什么时候不用」，避免为了走流程而走流程。
+- **作者与审查者必须分离**：写代码的 agent 不审查自己的代码；spec/plan 的审查也尽量用 fresh agent 或独立会话。
 
-流程中的箭头 `→` 表示顺序执行，`+` 表示可并行或可按需穿插。
+## 0. 核心原则
 
-## 0. 初始化仓库
+### AI 加速的瀑布式
 
-对于任何未运行过本系列 skills 的新仓库，无论是全新的仓库，还是已经在开发的仓库，都建议先执行一次 **init-agent-environment** 来初始化环境。
+AI 把「写代码」的成本压低了，瓶颈转移到**想清楚、做决策、审查**。瀑布式开发值得拿回来的不是更多文档，而是**阶段门禁**：
 
-它会自动读取现有代码和配置（若存在），分析其中的主要流程和关键字，然后与你进行几个问题的讨论，最后生成一些参考资料和路径（领域词汇表、ADR 索引、issue tracker 配置等）。后续的 writing-plans、improve-architecture、decomposing-issues 等 skill 会参考这些文件来工作。
+1. 问题/方向清楚之前，不写 spec；
+2. spec 批准之前，不写 plan；
+3. plan 批准之前，不动代码；
+4. 审查通过之前，不提交收尾。
 
-## 你的软件开发团队成员
+每个门禁只要求**承载决策的最小文档**。不为不可能的场景写文档，不为没人读的流程生产 artifact。
 
-| Skill | 扮演角色 | 一句话描述 |
-|-------|---------|-----------|
-| brainstorming | 需求分析师 | 引导澄清模糊想法，追问直到可设计 |
-| writing-prd | 产品经理 | 将讨论结论综合为需求说明书 |
-| writing-plans | 技术负责人 | 制定可执行的实施计划，拆到每步可验证 |
-| decomposing-issues | 项目经理 | 将计划拆为可认领的任务卡片，排好依赖 |
-| executing-plans | 工程师 | 按计划逐任务开发，带 review checkpoint |
-| finishing-branch | 发布工程师 | 验证测试、选择合并策略、清理分支 |
-| diagnose | 调试专家 | 系统化定位根因：复现→假设→插桩→修复 |
-| tdd | 严守纪律的工程师 | 红-绿-重构，每次一个测试-实现对 |
-| code-review | 资深审查者 | 四阶段审查，不确定的多问少断 |
-| improve-architecture | 架构师 | 扫描架构摩擦，提出加深模块的重构建议 |
-| codebase-design | 架构词汇顾问 | 提供深模块、接口、seam 的共享词汇和判断纪律 |
-| prototype | 预研工程师 | 做 throwaway 验证，答案留下、代码扔掉 |
-| frontend-design | UI 设计师 | 做有个性的前端界面，拒绝千篇一律的 AI 风格 |
-| arch-doc | 架构文档工程师 | 从代码生成或对齐架构设计说明 |
-| coauthoring | 写作搭档 | 协作撰写文章，保留用户声音而非代笔 |
-| work-report | 行政助理 | 按模板生成结构化工作报告 |
-| grill-me | 评审委员会 | 逐个问题逼问方案，走完决策树每个分支 |
-| triage | 缺陷分流员 | 对新 issue 分类、标记、分配 |
-| init-agent-environment | 项目接入负责人 | 配置项目环境，建立领域词汇和 ADR 索引 |
-| research | 调研员 | 后台查一手资料，把带引用的结论写成文档 |
-| retro | 流程改进顾问 | 复盘 agent 环境，减少下次的返工和昂贵调用 |
+### 文档生命周期
+
+| 类型 | 例子 | 定位 |
+|------|------|------|
+| 历史决策记录 | `docs/specs/*`、`docs/plans/*` | 写清 `Status` 和 `Date`；只作历史参考，不是实时真相 |
+| Living docs | README、CLAUDE.md/AGENTS.md、架构文档、用户指南 | 持续更新；每次开发结束检查是否受影响 |
+| 可选领域文档 | `GLOSSARY.md`、`docs/adr/*` | 懒创建；只在术语冲突或重要决策出现时维护 |
+
+### 单 agent 负责任务，人负责跨任务并行
+
+同一任务通常由一个 agent 串行负责；不同任务可以由你并行开多个会话。`executing-plans` 的 subagent 模式用于任务内部需要 fresh context 或逐任务 review 的情况，不是默认编排方式。
+
+### 可选，不等于无用
+
+`GLOSSARY.md`、ADR、`writing-prd`、`decomposing-issues`、`improve-architecture`、`prototype` 都有明确价值，但只在对应条件出现时使用。条件不成立时跳过，不算欠债。
 
 ---
 
-## 1. 需求不明确的想法落地
-
-从模糊的想法到可执行的实现计划。
+## 1. 默认主流程（90% 的 feature 开发）
 
 ```
-brainstorming → writing-prd → decomposing-issues → writing-plans → executing-plans → code-review → finishing-branch
+issue intake（GitHub/GitLab）
+  → triage（可选：整理队列）
+  → brainstorming（探索：意图、方案、约束）
+  → grill-me（压测决策和边界）
+  → brainstorming（写 spec）
+  → writing-prd（可选：需要正式需求文档时）
+  → decomposing-issues（可选：跨会话/多人/并行时）
+  → writing-plans（写实施计划）
+  → grill-me（可选：复杂 plan 再压测一次，fresh agent）
+  → executing-plans（单 agent 串行实现）
+  → code-review（fresh agent 审查）
+  → finish-work（测试、commit、PR、更新 issue）
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 探索 | **brainstorming** | 需求分析师 | 逐个问题澄清意图，提出 2-3 个方案及权衡 | `docs/specs/` 下的设计文档 |
-| 定义 | **writing-prd** | 产品经理 | 将讨论结论综合为 PRD，不经再采访 | PRD 发布到 issue tracker |
-| 分发 | **decomposing-issues** | 项目经理 | 将 PRD 拆为 tracer-bullet 垂直切片，发布到 issue tracker | 带依赖关系的 issue 列表 |
-| 计划 | **writing-plans** | 技术负责人 | 对每个 issue 制定 bite-sized 实施步骤，每步可验证 | `docs/plans/` 下的实施计划 |
-| 执行 | **executing-plans** | 工程师 | 逐任务执行，每个任务完成有 review checkpoint | 代码提交 |
-| 审查 | **code-review** | 资深审查者 | 审查代码正确性、是否满足 PRD 要求 | Review 结论 |
-| 收尾 | **finishing-branch** | 发布工程师 | 验证测试通过，选择合并/PR/保留 | 分支合并 |
+| 阶段 | Skill | 做什么 | 产出 |
+|------|-------|--------|------|
+| 收集 | **triage**（可选） | 整理 GitHub/GitLab issue，分类、验证、写 agent brief | 可执行的 issue |
+| 探索 | **brainstorming** | 理解意图、提 2–3 个方案、确认约束；此时不写 spec | 方向与取舍 |
+| 压测 | **grill-me** | 按 frontier 分轮质询，挖边界、依赖、失败模式 | 已解决的决策 |
+| 记录 | **brainstorming** | 把已定决策写成 spec，标 `Status`/`Date` | `docs/specs/` 下的 spec |
+| 对齐 | **writing-prd**（可选） | 有第二读者/正式交接时，把需求整理成 PRD 并发布 | PRD |
+| 拆分 | **decomposing-issues**（可选） | 跨会话/多人时，把 spec/PRD 拆成带依赖的 issue | tracker 中的 ticket |
+| 计划 | **writing-plans** | 确认测试 seam，把工作写成红-绿任务、验证命令和提交边界 | `docs/plans/` 下的 plan |
+| 再压测 | **grill-me**（可选） | 复杂 plan 用 fresh agent 再质询一次 | 修正后的 plan |
+| 实现 | **executing-plans** | 单 agent 串行执行，先看测试失败再实现，ledger 记录进度 | 代码提交 |
+| 审查 | **code-review** | fresh agent 只读审查 diff、spec、约束 | Review 结论 |
+| 收尾 | **finish-work** | 跑测试、写摘要、commit、可选 PR、更新 issue | 已提交的变更 + PR/issue 更新 |
 
 **配合要点：**
-- brainstorming 有硬门禁：设计不批准，不进 writing-prd
-- brainstorming 的终端状态就是调用 writing-plans，但如果需要先出 PRD 给团队评审，先走 writing-prd
-- decomposing-issues 先将 PRD 拆成可认领的垂直切片 issue，writing-plans 再对具体 issue 制定实施步骤——先定"做什么"，再定"怎么做"
-- writing-plans 的产出是 executing-plans 的输入，计划文件头部明确标注了 `Use executing-plans to implement`
-- executing-plans 有三种模式：inline（单人小计划）、subagent-driven（中等计划）、parallel（独立子系统的多任务）
+
+- spec 必须在 `grill-me` 的 frontier 清空之后再写；如果写的过程中冒出新的开放问题，停下来继续 grill，不要自己编答案。
+- 涉及接口或 seam 时，在写 plan 的 Interfaces 块之前调用 `codebase-design`；`writing-plans` 和 `executing-plans` 都有对应的自检门禁。
+- `writing-plans` 负责把 tdd 的精华落到计划里：预先确认 seam、红-绿顺序、测试质量规则（测行为、禁止同义反复、垂直切片）、重构留给 review。
+- `executing-plans` 负责执行时强制这些规则：先看测试失败、再实现、再看测试通过；最后跑完整测试套件。
+- `code-review` 必须由一个没有参与实现的 fresh agent 执行；实现者自查不算审查。
+- `finish-work` 先建 PR 再更新 issue，这样 issue 评论可以带 PR 链接。
 
 **变体：**
-- 想法已经清晰，不需要头脑风暴：直接从 writing-prd 开始
-- 个人项目不需要 PRD 和 issue 拆分：brainstorming → writing-plans → executing-plans
-- 需要先验证技术可行性：在 brainstorming 后插入 **prototype**（预研工程师介入）
+
+- 只想讨论，不想产出 spec：`brainstorming（探索）` 后停止，或直接用 `grill-me`。
+- 想法已经比较成形：可以从 `grill-me` 开始，再进入 `brainstorming（写 spec）`。
+- 小改动：`brainstorming` 可以直接给出短设计，跳过 `writing-prd` 和 `decomposing-issues`。
+- 需要正式需求文档：在 spec 之前插入 `writing-prd`；如果 PRD 已包含实现决策，技术 spec 只保留测试和接口细节。
+- 需要跨会话追踪：在 spec 之后插入 `decomposing-issues`；单 agent 串行时不需要。
+- 计划很长或任务独立：`executing-plans` 考虑 subagent-driven；否则 inline 即可。
 
 ---
 
-## 2. 明确问题或 Bug 的排查
-
-从已知问题到根因定位和修复。
+## 2. Bug 排查
 
 ```
-diagnose → tdd（修复时）→ code-review → finishing-branch
+triage（可选）
+  → diagnose
+  → code-review（fresh agent）
+  → finish-work
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 定位 | **diagnose** | 调试专家 | 建立反馈环→复现→假设→插桩→修复→回归测试→清理 | 根因假设、插桩代码 |
-| 修复 | **tdd** | 严守纪律的工程师 | 红-绿-重构循环写修复代码 | 通过的测试 + 修复代码 |
-| 审查 | **code-review** | 资深审查者 | 审查修复是否正确、是否引入新问题 | Review 结论 |
-| 收尾 | **finishing-branch** | 发布工程师 | 验证并合并 | 分支合并 |
+| 阶段 | Skill | 做什么 | 产出 |
+|------|-------|--------|------|
+| 分流 | **triage**（可选） | 确认 bug、复现步骤、优先级 | 可排查的 issue |
+| 定位 | **diagnose** | 建立能变红的反馈环 → 复现+最小化 → 假设 → 插桩 → 根因 | 根因 + 回归测试 |
+| 审查 | **code-review** | fresh agent 审查修复和测试质量 | Review 结论 |
+| 收尾 | **finish-work** | 测试、commit、PR、更新/关闭 issue | 已提交的修复 |
 
 **配合要点：**
-- diagnose 的 Phase 5 就要求"有正确 seam 时先写测试再修复"，这与 tdd 天然衔接
-- 如果 bug 简单明确，diagnose 可能在 Phase 4 就给出修复，不需要走完整 tdd 流程
-- diagnose 的 Phase 6（Cleanup + post-mortem）可能发现架构改进机会，可衔接到 **improve-architecture**（架构师介入）
+
+- 即使原因看起来明显，也先复现、确认假设；`diagnose` 的价值就在这里。
+- 修复阶段就在 `diagnose` 内完成：先写回归测试、看它失败、再修、再看它通过。不需要再调用独立的 tdd skill。
+- agent 不能直接跑命令时，用 HITL 模式：agent 准备命令和预期输出，你执行并贴回结果。
+- 复杂修复涉及多个新行为/多个 seam 时，转用 `writing-plans` / `executing-plans` 的测试优先流程。
 
 **变体：**
-- 性能回退：同样走 diagnose，Phase 3 假设聚焦在性能层面
-- bug 涉及安全漏洞：在 code-review 阶段重点关注安全审查
-- 复现困难：diagnose Phase 1 重点用 HITL bash 脚本或最小复现代码建立反馈环
+
+- 原因非常明确且只改一行：仍建议走 `diagnose` 的复现+回归测试；如果确实太小，可直接修复 + `code-review`。
+- 性能回退：`diagnose` 的假设聚焦在性能，先建 benchmark 再修。
+- 修复后发现架构缺口：可接 `improve-architecture`，但放在修复之后。
 
 ---
 
-## 3. 新项目代码库熟悉
-
-刚接触一个项目，快速建立心智模型。
+## 3. 重构
 
 ```
-improve-architecture
+improve-architecture（可选：还没有明确目标时）
+  → brainstorming（spec）
+  → writing-plans
+  → executing-plans
+  → code-review
+  → finish-work
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 全景 | **improve-architecture** | 架构师 | 探索模块边界与依赖，识别架构摩擦点（浅模块、耦合、缺少局部性） | 模块地图与架构改进候选列表 |
+| 阶段 | Skill | 做什么 | 产出 |
+|------|-------|--------|------|
+| 发现 | **improve-architecture**（可选） | 扫描代码库，给出带优先级的 deepening 候选 | 重构候选列表 |
+| 定义 | **brainstorming** | 把选中的候选变成 spec，确认边界和测试 seam | spec |
+| 计划 | **writing-plans** | 拆分红-绿任务，保护现有行为 | plan |
+| 执行 | **executing-plans** | 按计划重构；测试先行 | 重构后的代码 |
+| 审查 | **code-review** | 确认行为未变、结构改善 | Review 结论 |
+| 收尾 | **finish-work** | 测试、commit、PR、更新 issue | 已提交的重构 |
 
 **配合要点：**
-- improve-architecture 使用项目领域词汇，这些词汇来自第 0 节初始化建立的 `GLOSSARY.md`
+
+- 如果你已经知道要重构哪里，跳过 `improve-architecture`，直接走 `brainstorming`。
+- `improve-architecture` 适合定期做架构健康检查，或接手不熟悉的代码库时找候选；不是每次重构的必经步骤。
+- 深模块的词汇和 seam 判断用 `codebase-design`；命名候选前先调用它，选中候选后用它的 design-it-twice。
 
 **变体：**
-- 只需要快速了解某个模块：直接读代码，并用领域词汇记录理解
-- 需要了解项目某部分的实现细节：先定位模块，再读代码
-- 接手项目的同时要修 bug：improve-architecture → diagnose
+
+- 小范围重构：直接 `writing-plans` + `executing-plans`。
+- 跨模块接口变更：先用 `prototype` 验证新接口，再写 spec。
+- 重构后文档漂移：用 `arch-doc` 对齐架构文档。
 
 ---
 
-## 4. 完善测试用例与搭建测试环境
-
-为已有代码补充测试覆盖或从零搭建测试基础设施。
+## 4. 原型与技术不确定性
 
 ```
-tdd（新增测试时）+ prototype（环境搭建时）→ code-review
+brainstorming（探索）
+  → prototype（当讨论无法收敛时）
+  → grill-me
+  → brainstorming（spec）
+  → ...
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 设计 | **tdd** | 严守纪律的工程师 | 规划接口变更和待测行为，识别深模块机会 | 测试计划 |
-| 验证环境 | **prototype** | 预研工程师 | 如果测试基础设施不确定，先做个 throwaway 验证 | 技术选型结论 |
-| 实现 | **tdd** | 严守纪律的工程师 | 红-绿-重构循环，每次一个测试-实现对 | 测试 + 代码 |
-| 审查 | **code-review** | 资深审查者 | 审查测试质量：测的是行为还是实现细节 | Review 结论 |
+**什么时候用 prototype：**
 
-**配合要点：**
-- tdd 强调垂直切片（一次一个测试-实现对），不是水平切片（先写完所有测试再写实现）
-- 如果测试环境涉及复杂基础设施（容器、mock 服务、CI pipeline），先用 prototype 验证可行性
-- prototype 的原则是 throwaway——验证完毕后删除，结论记入 commit/ADR/issue
+- 状态机/数据模型在纸上说不清，需要一个可操作的逻辑原型；
+- UI 方向有多个候选，需要看而不是读；
+- 某个库/API 的实际行为不确定；
+- 性能或交互假设需要跑一下才知道。
 
-**变体：**
-- 补充已有代码的测试：tdd，但先确认接口是否可测，必要时先重构
-- 搭建全新测试框架：prototype 验证技术选型 → writing-plans 制定搭建计划 → executing-plans 执行
-- 测试涉及 UI：prototype 可以快速验证 UI 测试方案
+**什么时候不用：**
+
+- 读代码、查文档、讨论就能回答；
+- 已经有明确实现方向，只是缺工作量；
+- 没有可丢弃的空间，或者原型会被误当成生产代码。
+
+原型是 throwaway：答案记入 issue/commit/ADR，原型本身放 throwaway branch 作为一手证据，主分支只保留验证后的决策。
 
 ---
 
-## 5. 重构现有项目
-
-改善代码结构而不改变行为。
+## 5. 技术调研
 
 ```
-improve-architecture → writing-plans → tdd（每步重构时）→ executing-plans → code-review → finishing-branch
+research
+  → brainstorming / grill-me（把结论转成方案）
+  → writing-plans
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 诊断 | **improve-architecture** | 架构师 | 扫描架构摩擦，识别"加深模块"机会 | 改进候选列表 |
-| 计划 | **writing-plans** | 技术负责人 | 将重构拆为 bite-sized 步骤，每步可验证 | 实施计划 |
-| 保护 | **tdd** | 严守纪律的工程师 | 重构前先写测试保护现有行为，然后用红-绿-重构循环 | 测试网 |
-| 执行 | **executing-plans** | 工程师 | 逐任务执行重构 | 重构后的代码 |
-| 审查 | **code-review** | 资深审查者 | 确认行为未变、结构改善 | Review 结论 |
-| 收尾 | **finishing-branch** | 发布工程师 | 验证并合并 | 分支合并 |
+**什么时候用：** 结论需要留存/引用；阅读量大，适合交给后台 agent；需要并行调研。
+**什么时候不用：** 一次搜索或读一个文件就能回答；事实已经在仓库/对话里；问题其实是产品决策而不是事实调查。
 
-**配合要点：**
-- improve-architecture 的输出（改进候选列表）是 writing-plans 的输入
-- tdd 在重构中的角色是"安全网"——先写测试确认行为，再重构，再确认测试通过
-- 重构时 tdd 的 refactor 阶段是核心动作，不是写新功能
-- code-review 重点审查：行为是否改变、重构是否达到预期效果
-
-**变体：**
-- 小范围重构：不需要 improve-architecture，直接 tdd 保护 + 手动重构
-- 重构涉及跨模块接口变更：先 prototype（预研工程师）验证新接口设计
-- 重构后需要更新文档：**arch-doc**（架构文档工程师）对齐架构说明
+`research` 的产物是一份带引用的 Markdown，优先放仓库已有 notes 目录；没有就用 `docs/research/YYYY-MM-DD-<topic>.md`。不要把它当 spec，决策仍要经过 `grill-me` 和 `brainstorming`。
 
 ---
 
-## 6. 新项目预研
-
-探索技术方案，评估可行性。
+## 6. 前端开发
 
 ```
-brainstorming → prototype → writing-prd（如果可行）→ arch-doc
+brainstorming（探索：产品、受众、目标）
+  → frontend-design（设计计划 + 对照 brief 自审）
+  → ui-ux-pro-max（可选：设计系统 / UX 规则 / 技术栈建议）
+  → impeccable（可选：critique / audit / polish）
+  → prototype（可选：视觉方向对比）
+  → grill-me（UX、a11y、交互边界）
+  → brainstorming（spec）
+  → writing-plans
+  → executing-plans
+  → code-review（Web UI checklist；可选 web-design-guidelines）
+  → finish-work
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 探索 | **brainstorming** | 需求分析师 | 澄清预研目标，提出候选方案 | 方案对比 |
-| 验证 | **prototype** | 预研工程师 | 对候选方案做 throwaway 原型验证 | 可行性结论 |
-| 定义 | **writing-prd** | 产品经理 | 如果验证通过，将结论整理为 PRD | PRD |
-| 文档 | **arch-doc** | 架构文档工程师 | 生成架构设计文档 | 架构说明 |
+**三个设计 skill 的分工：**
+
+| Skill | 定位 | 什么时候用 |
+|-------|------|-----------|
+| `frontend-design`（内置） | 艺术指导 | 日常设计计划、主题立意、避免生成式默认套路 |
+| `ui-ux-pro-max`（推荐上游） | 设计知识库 | 需要 80 种风格、产品配色、字体配对、UX 规则、技术栈建议时 |
+| `impeccable`（推荐上游） | 设计导演 / 审查打磨 | 需要 critique、audit、polish、redesign 或 AI-slop 检测时 |
 
 **配合要点：**
-- prototype 核心原则：throwaway from day one。答案记入 commit/ADR/issue 后删除原型
-- prototype 根据问题类型选分支：逻辑/状态模型走终端交互原型，UI 走多方案切换原型
-- 预研阶段不需要 executing-plans，因为还没有到实施阶段
 
-**变体：**
-- 预研只为了否决方案：prototype 验证不可行即可，不需要 writing-prd
-- 预研结果需要给团队汇报：**coauthoring**（写作搭档）写技术分析文章，或 **pptx** 做演示
-- 多个方案并行验证：每个方案一个 prototype，对比后决策
+- `frontend-design` 先定方向和设计计划；`ui-ux-pro-max` 只提供知识和约束，不覆盖 brief 的具体选择。
+- 不要默认三个一起上：日常用 `frontend-design`；需要设计系统用 `ui-ux-pro-max`；需要高阶审查/打磨用 `impeccable`。
+- 视觉方向不确定时，用 `prototype` 做多个变体；方向确定后写进 spec。
+- `code-review` 对 Web UI 变更执行本地 [Web UI checklist](../skills/engineering/code-review/references/web-ui-review.md)；如果安装了 `web-design-guidelines`，再跑它作为最新规则增强。
+- 前端测试聚焦交互逻辑和状态管理，不测 CSS 细节。
 
 ---
 
-## 7. 编写技术文档
+## 7. 文档产出
 
-产出各类技术文档。
+| 文档类型 | Skill | 什么时候用 |
+|----------|-------|-----------|
+| 架构设计说明 | **arch-doc** | 第一版，或需要系统性对齐文档与代码时 |
+| 技术文章/博客 | **coauthoring** | 需要保留作者声音的 prose |
+| 工作报告 | **work-report** | 日报/周报/月报/年度/述职 |
+| PRD | **writing-prd** | 有第二读者、需要正式需求文档时 |
+| 实施计划 | **writing-plans** | 多步开发之前 |
+| PDF/Office 文档 | 上游 `pdf` / `docx` / `pptx` / `xlsx` | 从 `anthropics/skills` 安装；不内置，见 `docs/external-skills.md` |
 
-```
-arch-doc（架构文档）| coauthoring（技术文章）| work-report（工作报告）| writing-prd（需求文档）| writing-plans（实施计划）
-```
-
-| 文档类型 | Skill | 角色 | 适用场景 |
-|---------|-------|------|---------|
-| 架构设计说明 | **arch-doc** | 架构文档工程师 | 新项目架构设计、现有架构对齐、架构变更更新 |
-| 技术博客/文章 | **coauthoring** | 写作搭档 | 技术分享、方案阐述、经验总结 |
-| 工作报告 | **work-report** | 行政助理 | 日报/周报/月报/季度报告/年度总结/转正/晋升 |
-| PRD | **writing-prd** | 产品经理 | 产品需求文档 |
-| 实施计划 | **writing-plans** | 技术负责人 | 详细的实施步骤文档 |
-
-**配合要点：**
-- arch-doc 有两种模式：新建模式（从代码生成文档）和对齐模式（现有文档与代码对照，最小改动更新）
-- coauthoring 强调保留用户的声音和观点，AI 是协作者不是代笔者
-- work-report 按报告类型自动选择模板和粒度，面向领导的报告偏宏观，面向团队的可偏技术
-
-**变体：**
-- 架构文档需要导出为 Word：arch-doc 生成后，**docx** 处理
-- 技术文章需要配图：coauthoring + **pptx** 做示意图
-- 周报需要数据支撑：**xlsx** 处理数据后填入 work-report 模板
+**arch-doc 的边界：** 第一版用它保证章节完整；后续小改可以直接让 agent 更新文档。文档明显漂移、架构大改、或需要定期审计时，再用它的对齐模式。
 
 ---
 
-## 8. 前端开发
-
-构建有个性的前端界面。
+## 8. Issue 管理
 
 ```
-brainstorming → prototype（视觉方向探索）→ frontend-design + tdd → code-review → finishing-branch
+triage
+  → decomposing-issues（可选：需要拆成多个可认领任务时）
+  → 对应开发流程
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 探索 | **brainstorming** | 需求分析师 | 澄清交互目标、用户场景、视觉偏好 | 设计文档 |
-| 方向 | **prototype** | 预研工程师 | 生成多个视觉方向的原型，用 URL 参数切换对比 | 选定的视觉方向 |
-| 实现 | **frontend-design** | UI 设计师 | 按选定方向实现生产级界面：大胆字体、有冲击力配色、意料之外的布局 | 前端代码 |
-| 保障 | **tdd** | 严守纪律的工程师 | 为交互逻辑和状态管理写测试 | 测试代码 |
-| 审查 | **code-review** | 资深审查者 | 审查代码质量、可访问性、响应式适配 | Review 结论 |
-| 收尾 | **finishing-branch** | 发布工程师 | 验证并合并 | 分支合并 |
-
-**配合要点：**
-- frontend-design 的核心原则是"有个性，不要千篇一律的 AI 风格"——强调大胆视觉方向，拒绝 Inter/Roboto 字体、紫色渐变、可预测布局
-- prototype 在前端开发中特别关键：快速生成 2-3 个视觉方向变体供对比选择，避免实现到一半才发现方向不对
-- brainstorming 和 prototype 之间可能需要多轮迭代——选一个方向后觉得不满意，回退重新探索
-- tdd 在前端中聚焦交互逻辑和状态管理，不测 CSS 细节
-
-**变体：**
-- 小改动（改个按钮/调整布局）：直接 frontend-design，不需要 brainstorming 和 prototype
-- 已有设计稿，只需实现：跳过 brainstorming 和 prototype，直接 frontend-design
-- 纯后端工程师不熟悉前端：prototype 先验证技术可行性（框架选型、组件库），再进入实现
-- 前端 bug：diagnose（调试专家）定位 → frontend-design 修复
+- `triage` 只管理 GitHub/GitLab issue 和 PR，不支持仓库内私有 issue 文件。
+- label 策略：先查 tracker 现有 label，能语义复用就复用；没有则用默认五角色，但在新建 label 前确认。
+- `decomposing-issues` 产出的是工作分解，不是 plan；小工作允许只生成一个 issue。
+- 单 agent 串行开发不需要把 spec 拆成多个 issue；跨会话/多人/并行时才用。
 
 ---
 
-## 9. 代码审查
-
-审查他人的代码变更。
+## 9. 多会话与多人协作
 
 ```
-code-review（+ grill-me 如果需要深入讨论）
+issue（共享队列）
+  → spec / plan（共享决策记录）
+  → 每个会话一个任务
+  → code-review（fresh agent 或独立会话）
+  → finish-work（统一提交/PR/issue 更新）
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 审查 | **code-review** | 资深审查者 | 四阶段审查：上下文→高层→逐行→总结 | Review 结论 |
-| 深入 | **grill-me** | 评审委员会 | 如果发现设计问题，与作者深入讨论 | 共识 |
-
-**配合要点：**
-- code-review 是主 skill，grill-me 是可选的后续——当审查发现需要深入讨论的设计决策时
-- 如果审查发现架构问题 → 后续可接 **improve-architecture**（架构师介入）
-- 如果审查发现 bug → 后续可接 **diagnose**（调试专家介入）
+- 同一任务仍由单 agent 负责；并行发生在任务之间。
+- spec/plan 是跨会话的共享真相；旧的要标 `Status` 和日期，不能当实时事实。
+- 审查用独立会话或 fresh subagent；作者和审查者不共享上下文。
+- `finish-work` 负责把每个任务的 commit、PR、issue 状态收拢。
 
 ---
 
-## 10. 技术方案评审与压力测试
-
-对已有方案进行质询。
+## 10. 会话复盘
 
 ```
-grill-me → prototype（如果需要验证）
+retro
 ```
 
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 质询 | **grill-me** | 评审委员会 | 逐个问题逼问方案，走完决策树每个分支 | 被检验过的方案 |
-| 验证 | **prototype** | 预研工程师 | 对存疑的技术点做 throwaway 验证 | 验证结论 |
+当一次会话出现重复摸索、返工、昂贵工具调用、审查漏网时，用 `retro` 复盘 **agent 环境**：导航、自动检查、编码规范、CLAUDE.md/AGENTS.md 体量、工具经济性、无效指令、信息获取。不是每次会话都要做；适合在一次不顺利的会话之后，或每月一次。
 
-**配合要点：**
-- grill-me 的问题如果能通过读代码回答，会自动去探索代码而非直接问用户
-- grill-me 不只用于方案评审，也适用于面试准备、架构决策、迁移方案等任何需要"想清楚"的场景
+产出后按类型落地：能自动化的加 lint/typecheck/test/CI；导航问题加 pointer；判断类规范写进 reviewer checklist；无效指令从 CLAUDE.md/AGENTS.md 删除；信息不足就补日志或只读访问。
 
 ---
 
-## 11. Issue 管理与任务分发
+## 团队角色表
 
-管理项目任务流。
-
-```
-triage → decomposing-issues
-```
-
-| 阶段 | Skill | 角色 | 做什么 | 产出 |
-|------|-------|------|--------|------|
-| 分流 | **triage** | 缺陷分流员 | 对 unlabeled issue 分类、分配 | 标记好的 issue |
-| 拆分 | **decomposing-issues** | 项目经理 | 将大 issue 拆为垂直切片 | 带依赖的子 issue |
-
-**配合要点：**
-- triage 是入口——所有新 issue 先分流再处理
-- decomposing-issues 拆分时使用 tracer-bullet（垂直切片）而非水平分层
-- triage 的 `ready-for-agent` 标签的 issue 可以交给其他流程（如 Bug 排查、想法落地）处理
+| Skill | 角色 | 一句话描述 |
+|-------|------|-----------|
+| brainstorming | 需求分析师 | 探索意图、方案和约束，最后记录 spec |
+| grill-me | 评审委员会 | 按 frontier 分轮质询，挖边界和失败模式 |
+| writing-prd | 产品经理 | 有第二读者时，整理正式需求文档 |
+| decomposing-issues | 项目经理 | 把 spec/PRD 拆成带依赖的可认领 issue |
+| writing-plans | 技术负责人 | 写红-绿任务、验证命令和提交边界 |
+| executing-plans | 工程师 | 单 agent 执行计划，遵守 test-first 和完成契约 |
+| code-review | 资深审查者 | fresh agent 只读审查，校准置信度和严重度 |
+| finish-work | 发布工程师 | 测试、摘要、commit、PR、更新 issue |
+| diagnose | 调试专家 | 反馈环 → 复现+最小化 → 假设 → 插桩 → 修复 |
+| improve-architecture | 架构师 | 扫描 deepening 候选（可选、周期性） |
+| codebase-design | 架构词汇顾问 | 提供深模块、接口、seam 的共享词汇 |
+| prototype | 预研工程师 | 用 throwaway 原型回答一个具体问题 |
+| research | 调研员 | 后台查一手资料，写带引用的结论 |
+| frontend-design | UI 设计师 | 主题立意、避免 AI 默认套路的实现规范 |
+| arch-doc | 架构文档工程师 | 第一版架构文档或系统性对齐 |
+| triage | 缺陷分流员 | 管理 GitHub/GitLab issue 和外部 PR |
+| retro | 流程改进顾问 | 复盘 agent 环境，减少下次返工 |
+| coauthoring | 写作搭档 | 协作撰写保留作者声音的 prose |
+| work-report | 行政助理 | 结构化工作报告 |
 
 ---
 
@@ -333,30 +321,58 @@ triage → decomposing-issues
 
 | 工作场景 | 推荐流程 |
 |---------|---------|
-| 仓库初始化（前置） | init-agent-environment(项目接入负责人) |
-| 模糊想法落地 | brainstorming(需求分析师) → writing-prd(产品经理) → decomposing-issues(项目经理) → writing-plans(技术负责人) → executing-plans(工程师) → code-review(资深审查者) → finishing-branch(发布工程师) |
-| Bug 排查 | diagnose(调试专家) → tdd(工程师) → code-review(资深审查者) → finishing-branch(发布工程师) |
-| 新项目熟悉 | improve-architecture(架构师) |
-| 补测试/搭环境 | prototype(预研工程师) + tdd(工程师) → code-review(资深审查者) |
-| 项目重构 | improve-architecture(架构师) → writing-plans(技术负责人) → tdd(工程师) → executing-plans(工程师) → code-review(资深审查者) → finishing-branch(发布工程师) |
-| 新项目预研 | brainstorming(需求分析师) → prototype(预研工程师) → writing-prd(产品经理) → arch-doc(架构文档工程师) |
-| 前端开发 | brainstorming(需求分析师) → prototype(预研工程师) → frontend-design(UI 设计师) + tdd(工程师) → code-review(资深审查者) → finishing-branch(发布工程师) |
-| 架构文档 | arch-doc(架构文档工程师) |
-| 技术文章 | coauthoring(写作搭档) |
-| 工作报告 | work-report(行政助理) |
-| 代码审查 | code-review(资深审查者) + grill-me(评审委员会) |
-| 方案评审 | grill-me(评审委员会) → prototype(预研工程师) |
-| Issue 管理 | triage(缺陷分流员) → decomposing-issues(项目经理) |
-| 技术调研 | research(调研员) → writing-plans(技术负责人) |
-| 会话复盘 | retro(流程改进顾问) |
+| Feature 开发（默认） | brainstorming(探索) → grill-me → brainstorming(spec) → writing-plans → executing-plans → code-review → finish-work |
+| 有第二读者的需求 | 默认流程 + writing-prd（spec 前） |
+| 跨会话/多人拆分 | 默认流程 + decomposing-issues（spec 后） |
+| Bug 排查 | triage(可选) → diagnose → code-review → finish-work |
+| 重构（目标未知） | improve-architecture → brainstorming → writing-plans → executing-plans → code-review → finish-work |
+| 重构（目标已知） | brainstorming → writing-plans → executing-plans → code-review → finish-work |
+| 技术不确定性 | brainstorming(探索) → prototype → grill-me → brainstorming(spec) → … |
+| 技术调研 | research → brainstorming/grill-me → writing-plans |
+| 前端开发 | brainstorming → frontend-design → ui-ux-pro-max(可选) → impeccable(可选) → prototype(可选) → grill-me → spec → writing-plans → executing-plans → code-review（含 Web UI checklist）→ finish-work |
+| 架构文档 | arch-doc（第一版或对齐） |
+| 技术文章 | coauthoring |
+| 工作报告 | work-report |
+| Issue 管理 | triage → decomposing-issues(可选) |
+| 会话复盘 | retro |
 
-## 贯穿性 Skill
+## 条件、可选与已废弃
 
-以下 skill 不属于特定流程，但在任何场景中按需激活：
+**条件使用：**
 
-| Skill | 角色 | 何时用 |
-|-------|------|--------|
-| **frontend-design** | UI 设计师 | 任何需要构建前端界面的场景，确保产出不是千篇一律的 AI 风格 |
-| **grill-me** | 评审委员会 | 任何需要深入讨论或质询的决策点 |
-| **prototype** | 预研工程师 | 任何需要快速验证技术假设的点 |
-| **code-review** | 资深审查者 | 任何产出代码的流程的最终检查点 |
+- `writing-prd`：有第二读者、正式交接、合规/融资等需要需求文档时。
+- `decomposing-issues`：跨会话、多人、并行认领时；单 agent 串行不需要。
+- `improve-architecture`：没有明确重构目标，或需要定期架构健康检查时。
+- `prototype`：讨论/读代码无法回答，需要可操作或可看的证据时。
+- `arch-doc`：第一版或需要系统性对齐时；小改直接更新文档。
+- `retro`：出现重复返工/昂贵调用/流程问题时，不是每次会话都做。
+- `triage`：issue 队列需要整理时；没有 issue 可跳过。
+- `ui-ux-pro-max`：需要设计系统、产品配色/字体/UX 规则或技术栈建议时；不内置。
+- `impeccable`：需要 critique/audit/polish/redesign 时；不内置。
+- `web-design-guidelines`：Web UI 变更的审查增强；不内置，未安装时用本地 checklist。
+
+**已废弃/已合并：**
+
+- `tdd`：测试优先、seam、测试质量规则并入 `writing-plans`、`executing-plans`、`diagnose`、`code-review`。
+- `init-agent-environment`：删除；issue/label 逻辑并入 `triage`，GLOSSARY/ADR 约定并入 `grill-me`。
+- `finishing-branch`：改名为 `finish-work`，并增加 commit、PR、issue 更新。
+- `caveman`、`zoom-out`：上游删除，本地不再维护。
+
+## 每个 skill 的“什么时候不用”
+
+| Skill | 不要用它来… |
+|-------|-------------|
+| brainstorming | 处理已经明确的小改动；或在 grill 之前急着写 spec |
+| grill-me | 替代生成方案（想法空白时先 brainstorming 探索） |
+| writing-prd | 个人项目、没有第二读者时 |
+| decomposing-issues | 单 agent 串行、工作不需要跨会话时 |
+| writing-plans | 一步就能完成的琐碎改动 |
+| executing-plans | 没有计划、或任务小到不需要完成契约时 |
+| code-review | 审查自己写的代码 |
+| finish-work | 替代人工判断 commit 内容；它只负责流程和检查 |
+| diagnose | feature 开发；原因未知的 bug 才用它 |
+| improve-architecture | 已经知道重构目标时；直接走 brainstorming |
+| prototype | 问题可以通过读代码/查文档/讨论回答时 |
+| research | 事实已经在仓库或对话里时 |
+| arch-doc | 日常小文档更新；直接改文档即可 |
+| retro | 每次会话都做；只在出现流程问题时做 |

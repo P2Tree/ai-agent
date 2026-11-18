@@ -5,15 +5,11 @@ description: Turn the current conversation context into a PRD and publish it to 
 
 This skill takes the current conversation context and codebase understanding and produces a PRD. Do NOT interview the user — just synthesize what you already know.
 
-## Pre-flight: read agent environment
+## Pre-flight
 
-Read the repo's agent environment (set up by `/init-agent-environment`) before writing the PRD:
-
-- **`docs/agents/issue-tracker.md`** — tells you which tracker to use and how to publish the PRD as an issue. Follow the conventions in this file when creating the issue.
-- **`docs/agents/triage-labels.md`** — the label strings for the canonical triage roles. Apply the `ready-for-agent` label after publishing — use the string from this file, don't hardcode the role name.
-- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Use the domain glossary throughout the PRD; respect ADRs in the area the PRD touches.
-
-If these files don't exist, stop and ask the user to run `/init-agent-environment` first — this skill cannot function without knowing the issue tracker.
+- Detect the tracker from `git remote -v`: GitHub (`gh`) or GitLab (`glab`). If neither, ask the user where to publish the PRD.
+- Read `GLOSSARY.md` / `docs/adr/` if they exist; use the project's terms and respect settled decisions.
+- After publishing, apply a `ready-for-agent` label only if the tracker already has one; otherwise ask before creating it.
 
 ## Process
 
@@ -23,7 +19,7 @@ If these files don't exist, stop and ask the user to run `/init-agent-environmen
 
 Check with the user that these seams match their expectations.
 
-1. Write the PRD using the template below. **Language:** if the source issue and related specs are entirely in English, write the PRD in English; otherwise, follow the language used in those source materials. Then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
+3. Write the PRD using the template below. Add `**Status:** draft | approved | implemented | superseded` and `**Date:** YYYY-MM-DD`. **Language:** if the source issue and related specs are entirely in English, write the PRD in English; otherwise, follow the language used in those source materials. Then publish it to the project issue tracker.
 
 <prd-template>
 

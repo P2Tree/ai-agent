@@ -7,19 +7,15 @@ description: Write comprehensive implementation plans with bite-sized tasks. Use
 
 Write for an engineer who has not seen this codebase or this spec. Assume they write idiomatic code once they know the exact interface and the exact test, and make a reasonable choice wherever the plan leaves one open. What they cannot know is what you decided: which files, which names and signatures, which values from the spec, which tests prove each task. Document those. Bite-sized tasks. DRY. YAGNI. TDD. Frequent commits.
 
-## Pre-flight: read agent environment
+## Pre-flight
 
-Read the repo's agent environment (set up by `/init-agent-environment`) so the plan matches the project's domain and architecture:
+- Read `GLOSSARY.md` and relevant `docs/adr/` if they exist; use their terms, and flag any task that deliberately contradicts an ADR.
+- Read the source spec, but treat older specs/plans as historical. Only the latest relevant spec is authoritative.
+- If the work was split into issues, record the issue IDs and whether this plan covers one issue or the whole spec.
+- Add `**Status:** draft | approved | implemented | superseded` and `**Date:** YYYY-MM-DD` to the plan header.
+- If the task defines or changes an interface or seam, invoke **codebase-design** before writing the Interfaces block.
 
-- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Use the glossary's terminology in task names, variable names, and commit messages. Read relevant ADRs so the plan doesn't contradict a settled decision — if it must, flag it explicitly ("_Contradicts ADR-0003 — justified because…_").
-- **`docs/agents/issue-tracker.md`** — if tasks should be published as issues, follow its conventions.
-- **`docs/agents/triage-labels.md`** — if publishing tasks as issues, use its label strings.
-
-If these files don't exist, proceed silently — don't block plan writing on missing config.
-
-**Source spec:** `docs/specs/YYYY-MM-DD-<spec_name>.md` (if produced by brainstorming) · **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md`
-
-**Language:** if the source spec/PRD is entirely in English, write the plan in English; otherwise, follow the source materials.
+**Source spec:** `docs/specs/YYYY-MM-DD-<spec_name>.md` (if produced by brainstorming) · **Save plans to:** `docs/plans/YYYY-MM-DD-<feature-name>.md` · **Language:** if the source spec/PRD is entirely in English, write the plan in English; otherwise, follow the source materials.
 
 ## Scope Check
 
@@ -29,8 +25,7 @@ If the spec covers multiple independent subsystems, suggest breaking it into sep
 
 Before defining tasks, map out which files will be created or modified and what each is responsible for. This is where decomposition decisions get locked in.
 
-- Each file has one clear responsibility; prefer smaller, focused files.
-- Files that change together live together. Split by responsibility, not technical layer.
+- Each file has one clear responsibility; prefer smaller, focused files. Files that change together live together; split by responsibility, not technical layer.
 - In existing codebases, follow established patterns. Don't unilaterally restructure, but a split of an unwieldy file you are already touching is reasonable.
 
 ## Task Right-Sizing
@@ -40,6 +35,14 @@ A task is the smallest unit that carries its own test cycle and is worth a fresh
 ## Step Granularity
 
 Each step is one action with a checkable result: write the failing test; run it and watch it fail; write minimal code; run it and watch it pass; commit.
+
+## Test-First Plan
+
+- Test only at **pre-agreed seams**. Before writing tasks, list the seams with what each catches and misses, and confirm them with the user. Fewer, higher seams are better — ideally one.
+- Each task is a **vertical slice**: one test → minimal implementation → repeat. Never write all tests first; that is horizontal slicing.
+- A test step names the test and its assertions, with expected values from the spec, a known-good literal, or a worked example. Never recompute the expected value the way the code does (tautological test).
+- The plan must make the implementer **watch the test fail, then pass**. Expected output must be real output, not "should pass".
+- Refactoring is not part of the red-green loop. Put refactor work in the task's review/cleanup or in **code-review**.
 
 ## Plan Document Header
 
@@ -54,7 +57,6 @@ Every plan MUST start with this header:
 **Goal:** [One sentence]
 **Architecture:** [2-3 sentences]
 **Tech Stack:** [Key technologies]
-
 ## Global Constraints
 
 [The spec's project-wide requirements — version floors, dependency limits,
@@ -68,7 +70,6 @@ exercise that are most likely to bite a user — one line each, naming the input
 or condition and the behavior a reasonable person expects, most likely first.
 The spec's silence on an input is not permission for that input to break the
 program. For each line, add the test that pins it to the task owning the code.]
-
 ---
 ```
 
@@ -81,7 +82,6 @@ program. For each line, add the test that pins it to the task owning the code.]
 - Create: `exact/path/to/file.py`
 - Modify: `exact/path/to/existing.py:123-145`
 - Test: `tests/exact/path/to/test.py`
-
 **Interfaces:**
 - Consumes: [what this task uses from earlier tasks — exact signatures]
 - Produces: [what later tasks rely on — exact names, parameter and return types]
@@ -133,10 +133,9 @@ After writing the plan, check it against the spec yourself — do not dispatch a
 
 1. **Spec coverage:** can you point to a task for each requirement?
 2. **Step scan:** can the implementer write exactly one reasonable thing from each step, and no more? A line that decides nothing is a gap; a body the signature and tests determine is a transcript.
-3. **Type consistency:** do types, signatures, and property names in later tasks match earlier definitions?
+3. **Consistency:** do types, signatures, and property names match across tasks? Does any task contradict an ADR without a flag? Do names use glossary terms? For interface/seam changes, was codebase-design consulted?
 4. **Review Focus:** does each listed input class or failure mode have a test in the owning task? An empty section means you checked and found none.
 5. **Proportion:** is the plan several times longer than the spec? If code blocks dominate, replace bodies with signatures, test names and assertions.
-6. **ADR consistency / domain vocabulary:** does any task contradict an ADR without a flag? Do names use glossary terms?
 
 Fix issues inline. If a spec requirement has no task, add it.
 
@@ -147,4 +146,4 @@ After saving and self-reviewing, link the plan for the user and ask them to revi
 - **Subagent-driven** — a fresh subagent implements each task and a fresh reviewer checks it before the next, then a whole-branch review. Most thorough; costs a fresh context per task and review.
 - **Inline** — you implement every task in this session, then one fresh reviewer checks the whole branch. Cheapest and fastest, but no independent review until the end.
 
-Recommend one with a one-sentence reason from the plan: how much tasks depend on each other's interfaces, how many there are, and what a shipped mistake would cost. Then use **executing-plans** in the chosen mode.
+Recommend one with a one-sentence reason (task independence, task count/context pressure, cost of a shipped mistake), then use **executing-plans**.

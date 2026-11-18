@@ -1,11 +1,21 @@
 ---
 name: codebase-design
-description: Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.
+description: Shared vocabulary and design discipline for deep modules. Use when designing or improving a single module's interface, deciding where a seam goes, making a module or piece of code more testable, deepening a module that is too shallow, producing two or more alternative interfaces (design it twice), or when writing-plans, executing-plans, improve-architecture, diagnose, or code-review needs the deep-module vocabulary. 触发词：接口设计、seam 位置、模块可测试性、模块加深、接口方案对比。
 ---
 
 # Codebase Design
 
 Design **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Use this language and these principles wherever code is being designed or restructured. The aim is leverage for callers, locality for maintainers, and testability for everyone.
+
+This is a **reference**, not a workflow. Do not run it as a separate stage; consult it at the moment an interface or seam decision is made. Do not invoke it for pure implementation tasks with no interface decision.
+
+## When Other Skills Should Call It
+
+- **writing-plans**: before writing an Interfaces block, when the task defines or changes an interface or seam.
+- **executing-plans**: before Task 1, if the plan's Interfaces block is missing or vague.
+- **diagnose**: when no correct regression-test seam exists; use the vocabulary to describe the gap.
+- **improve-architecture**: when naming candidates, and before design-it-twice on the chosen candidate.
+- **code-review**: when the diff changes a public interface or seam; judge depth and seam placement with this vocabulary.
 
 ## Glossary
 

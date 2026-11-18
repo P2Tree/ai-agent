@@ -185,7 +185,7 @@ skill 不再维护时，移入 `deprecated/`，README 和注册表中移除。�
 ```markdown
 ## Engineering
 
-- **[tdd](./skills/engineering/tdd/SKILL.md)** — 红绿重构 TDD 循环，垂直切片开发
+- **[codebase-design](./skills/engineering/codebase-design/SKILL.md)** — 深模块设计的共享词汇
 - **[diagnose](./skills/engineering/diagnose/SKILL.md)** — 六阶段调试循环
 ```
 
@@ -203,11 +203,11 @@ skill 不再维护时，移入 `deprecated/`，README 和注册表中移除。�
 
 软件开发过程中的 skill。
 
-## tdd
+## codebase-design
 
-红绿重构 TDD 循环，垂直切片开发。每次只写一个测试，再写最少代码通过，再重构。禁止水平切片（先写全部测试再写全部代码）。
+深模块设计的共享词汇和判断纪律：module / interface / depth / seam / adapter / leverage / locality。
 
-适用于：需要用 TDD 方式开发功能或修复 bug 时。
+适用于：设计模块接口、决定测试 seam、或进行架构重构时。
 
 ## diagnose
 
@@ -224,7 +224,7 @@ skill 不再维护时，移入 `deprecated/`，README 和注册表中移除。�
 {
   "name": "ai-agent",
   "skills": [
-    "./skills/engineering/tdd",
+    "./skills/engineering/codebase-design",
     "./skills/engineering/diagnose"
   ]
 }
@@ -260,14 +260,15 @@ skill 内容不变，只是注册路径不同。
 
 - **特点**：流程纪律体系——brainstorming、writing-plans、executing-plans、systematic-debugging、checklist 纪律、子 agent 分发模式、验证完成、分支收尾
 - **吸纳部分**：流程纪律框架、checklist 模式、agent 分发与并行执行模式、验证与完成门控
-- **已融合 skill**：brainstorming、tdd、diagnose、code-review、writing-plans、executing-plans、dispatching-agents、finishing-branch
+- **已融合 skill**：brainstorming、diagnose、code-review、writing-plans、executing-plans、dispatching-agents、finish-work
+- **已合并的约定**：tdd 的测试优先/测试质量规则并入 writing-plans、executing-plans、diagnose、code-review
 - **已合并的约定**：using-git-worktrees 简化为普通分支 + 可选隔离工作区；verification-before-completion 并入 `configs/project/CLAUDE.md` 与执行/收尾 skill 的完成契约
 
 #### mattpocock/skills
 
 - **特点**：工程实践 + 领域语言驱动。grill 对齐、TDD 垂直切片、深模块架构、GLOSSARY.md 共享术语、ADR 决策记录
 - **吸纳部分**：grill 对话模式、TDD 垂直切片方法论、深模块设计理念、领域语言与 GLOSSARY.md 实践、ADR 判断原则
-- **已融合 skill**：grill-me、grill-with-docs、tdd、diagnose、improve-architecture、codebase-design、research、retro、to-prd、to-issues、triage、prototype、setup-matt-pocock-skills、write-a-skill
+- **已融合 skill**：grill-me、grill-with-docs、diagnose、improve-architecture、codebase-design、research、retro、to-prd、to-issues、triage、prototype、setup-matt-poc-skills（已废弃）、write-a-skill
 
 #### andrej-karpathy-skills
 
@@ -277,9 +278,10 @@ skill 内容不变，只是注册路径不同。
 
 #### anthropic-agent-skills
 
-- **特点**：文档与内容生成类 skill（pdf、xlsx、pptx、docx）及前端开发辅助
-- **吸纳部分**：文档生成模式、前端设计与测试
-- **已融合 skill**：frontend-design、ppt-generator（含 pptx）、pdf-handler、xlsx-handler、docx-handler、doc-coauthoring
+- **特点**：前端开发辅助与文档协作
+- **吸纳部分**：前端设计与测试、文档共创
+- **已融合 skill**：frontend-design、doc-coauthoring
+- **不再内置**：pdf、docx、pptx、xlsx 改为指引用户从上游安装，见 `docs/external-skills.md`
 
 ### 同步频率
 
@@ -292,24 +294,23 @@ skill 内容不变，只是注册路径不同。
 - 不安装 superpowers 等第三方 skill 插件
 - 同功能的 skill 合并为一个
 - 第三方源的优秀实践吸收改写进我们的 skill，不是原样搬入
-- 用户只需安装本仓库即可使用全部 skill，无需额外插件
+- 核心工作流只需安装本仓库；官方文档类 skill（pdf/docx/pptx/xlsx）需单独安装，见 `docs/external-skills.md`
 
 ## 9. 每个 skill 的桶归属与来源
 
-### engineering/（6 个）
+> 统计只计已创建的正式 skill；待迁移项不计入。完整清单以各桶 README 和 `plugin.json` 为准。
+
+### engineering/（5 个）
 
 | Skill | 来源与合并说明 | 状态 |
 |-------|--------------|------|
-| tdd | ai-agent + mattpocock/tdd + superpowers:test-driven-development | ✅ 已创建 |
 | codebase-design | mattpocock | ✅ 已创建 |
 | diagnose | ai-agent + mattpocock/diagnose + superpowers:systematic-debugging | ✅ 已创建 |
 | code-review | ai-agent:code-review-discipline + superpowers:requesting-code-review + superpowers:receiving-code-review | ✅ 已创建 |
 | improve-architecture | ai-agent + mattpocock | ✅ 已创建 |
 | frontend-design | anthropic-agent-skills | ✅ 已创建 |
-| triage | mattpocock | ✅ 已创建 |
-| init-agent-environment | ai-agent + mattpocock/setup-matt-pocock-skills | ✅ 已创建（workflow 桶） |
 
-### productivity/（3 个）
+### productivity/（4 个已创建）
 
 | Skill | 来源与合并说明 | 状态 |
 |-------|--------------|------|
@@ -320,26 +321,24 @@ skill 内容不变，只是注册路径不同。
 | token-efficiency-master | 公司 | ⏳ 待迁移 |
 | agentic-harness-patterns | 公司 | ⏳ 待迁移 |
 
-### composition/（7 个）
+### composition/（4 个已创建）
 
 | Skill | 来源与合并说明 | 状态 |
 |-------|--------------|------|
-| article-series-writer | ai-agent | ✅ 已创建 |
-| ppt-generator | 公司 + anthropic-agent-skills/pptx | ⏳ 待迁移 |
-| pdf-handler | anthropic-agent-skills | ⏳ 待迁移 |
-| xlsx-handler | anthropic-agent-skills | ⏳ 待迁移 |
-| docx-handler | anthropic-agent-skills | ⏳ 待迁移 |
-| uml-generator | 公司 | ⏳ 待迁移 |
 | coauthoring | anthropic-agent-skills:doc-coauthoring | ✅ 已创建 |
+| work-report | anthropic-agent-skills:internal-comms | ✅ 已创建 |
+| arch-doc | ai-agent | ✅ 已创建 |
+| humanizer | op7418:Humanizer-zh | ✅ 已创建 |
+| pdf / docx / pptx / xlsx | anthropic-agent-skills | 🔗 上游安装 |
 
-### workflow/（20 个）
+### workflow/（7 个已创建）
 
 | Skill | 来源与合并说明 | 状态 |
 |-------|--------------|------|
 | writing-plans | superpowers:writing-plans | ✅ 已创建 |
 | executing-plans | superpowers:executing-plans | ✅ 已创建 |
 | dispatching-agents | superpowers:dispatching-parallel-agents + superpowers:subagent-driven-development | ✅ 已创建 |
-| finishing-branch | superpowers:finishing-a-development-branch | ✅ 已创建 |
+| finish-work | superpowers:finishing-a-development-branch（扩展 commit/PR/issue） | ✅ 已创建 |
 | retro | mattpocock | ✅ 已创建 |
 | git-commit-mr | 公司，脱敏 | ⏳ 待迁移 |
 | git-guardrails | ai-agent:git-guardrails-claude-code | ✅ 已创建 |
