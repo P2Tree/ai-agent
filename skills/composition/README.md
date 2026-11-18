@@ -30,45 +30,11 @@
 
 **触发方式：** 当你提到"编写架构说明文档"、"架构设计说明书"、"补充架构文档"、"对齐架构文档"、"生成架构文档"，或输入 `/arch-doc` 会激活。
 
-## pdf `[自动]`
+## 可选的上游文档 skill
 
-PDF 文件处理全流程：读取提取、合并拆分、旋转、提取图片/元数据、创建生成、加密水印、OCR 扫描件、表单填写。表单脚本随 skill 提供，支持可填写和扫描件两种表单。
+`pdf`、`docx`、`pptx`、`xlsx` 不再随本仓库打包。它们是 [anthropics/skills](https://github.com/anthropics/skills) 的官方 skill，更新频繁且体积较大。
 
-**什么时候用：** 要处理 .pdf 文件，包括读取、提取文本、合并、拆分、加水印、加密、OCR、填写表单时。
-
-**触发方式：** 当你提到 .pdf 文件或需要对 PDF 执行任何操作，或输入 `/pdf` 会激活。
-
-**参考：** anthropics-agent-skills:pdf
-
-## docx `[自动]`
-
-Word 文档处理：创建新文档、读取编辑现有文档、修订追踪和注释。创建用 docx-js (Node.js)，编辑现有文件用解包→合并 run→改 XML→打包→校验。写完后渲染成图片做视觉验证；校验脚本随 skill 提供。
-
-**什么时候用：** 要创建或编辑 Word 文档、.docx 文件，包括报告、备忘录、信函模板等。
-
-**触发方式：** 当你提到 Word 文档、.docx、报告、备忘录、信函模板，或需要对 .docx 做任何操作，或输入 `/docx` 会激活。
-
-**参考：** anthropics-agent-skills:docx
-
-## pptx `[自动]`
-
-PPT 演示文稿处理：读取提取、从模板编辑、从零创建。支持 structured deck（theme/layout/placeholder/section）、设计指导、字体安全清单和三级 QA（内容/文件/视觉）。编辑用解包→改 XML→打包→校验，创建用 PptxGenJS。
-
-**什么时候用：** 要创建或编辑 PPT 演示文稿、slides、deck，或处理 .pptx 文件时。
-
-**触发方式：** 当你提到演示文稿、slides、deck、.pptx，或需要对 PPT 做任何操作，或输入 `/pptx` 会激活。
-
-**参考：** anthropics-agent-skills:pptx
-
-## xlsx `[自动]`
-
-电子表格处理：读取分析、创建、编辑。openpyxl 处理公式和格式，pandas 处理数据分析和批量操作。包含公式兼容性清单、openpyxl gotchas、零错误门槛和财务模型规范。保存后必须用 recalc.py 重算，干净退出不等于干净工作簿。
-
-**什么时候用：** 要创建或编辑电子表格、.xlsx 文件，进行数据分析，或需要财务模型规范时。
-
-**触发方式：** 当你提到电子表格、spreadsheet、.xlsx、.csv，或需要对表格数据做任何操作，或输入 `/xlsx` 会激活。
-
-**参考：** anthropics-agent-skills:xlsx
+需要时按根 README 的「可选上游 skill」或 [docs/external-skills.md](../../docs/external-skills.md) 安装；`manage-skills` 的「安装推荐上游 skill」也会列出这几项。
 
 ## humanizer `[自动]`
 

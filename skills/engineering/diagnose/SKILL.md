@@ -13,15 +13,11 @@ A discipline for hard bugs. Skip phases only when explicitly justified.
 
 You will show commands, outputs, and captured artifacts. **Redact every credential first**: write `<REDACTED>` in its place. Build loops against environment variables so credentials stay in the environment rather than in what you show. Captured artifacts carry auth headers: quote only the lines that carry the signal. If redacted output is not enough to diagnose the bug, say so and ask the user.
 
-## Pre-flight: read agent environment
+## Pre-flight
 
-Before diving into code, read the repo's agent environment (set up by `/init-agent-environment`) to ground your investigation:
-
-- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Read the domain glossary (`GLOSSARY.md`) so you use the project's own terminology in hypotheses and output. Read ADRs in the bug's area — they constrain what the code is *supposed* to do, which helps you reject impossible hypotheses faster.
-- **`docs/agents/issue-tracker.md`** — tells you how to fetch the original bug report (e.g. `gh issue view`, local markdown file). Read the full ticket before forming hypotheses — it often contains reproduction hints, affected versions, or prior investigation notes.
-- **`docs/agents/triage-labels.md`** — if you resolve the bug and need to update the ticket's triage state, use the label strings from this file.
-
-If these files don't exist, proceed silently — don't block the diagnosis on missing config.
+- Read `GLOSSARY.md` and relevant `docs/adr/` if they exist; use the project's terms and let ADRs constrain what the code is *supposed* to do.
+- If a GitHub/GitLab remote exists and the bug has an issue, read it (`gh issue view` / `glab issue view`); it may contain reproduction hints or prior investigation.
+- If the agent cannot run commands in the bug's environment, use the HITL loop: prepare exact commands and expected output, ask the user to run them and paste the output.
 
 ## Phase 1 — Build a feedback loop
 
@@ -123,7 +119,7 @@ Write the regression test **before the fix** — but only if there is a **correc
 
 A correct seam is one where the test exercises the **real bug pattern** as it occurs at the call site. If the only available seam is too shallow (single-caller test when the bug needs multiple callers, unit test that can't replicate the chain that triggered the bug), a regression test there gives false confidence.
 
-**If no correct seam exists, that itself is the finding.** Note it. The codebase architecture is preventing the bug from being locked down. Flag this for the next phase.
+**If no correct seam exists, that itself is the finding.** Note it. Use **codebase-design** vocabulary to describe the gap (shallow interface, missing seam, hidden coupling), then flag it for the next phase.
 
 If a correct seam exists:
 
@@ -132,6 +128,8 @@ If a correct seam exists:
 3. Apply the fix.
 4. Watch it pass.
 5. Re-run the Phase 1 feedback loop against the original (un-minimised) scenario.
+
+**Test quality:** assert behavior through the public interface, not internals. Expected values come from the spec or a known-good literal, never recomputed the way the code computes them (tautological test). If the fix needs multiple new behaviors or seams, switch to the test-first flow in **writing-plans** / **executing-plans**.
 
 ## Phase 6 — Cleanup + post-mortem
 
@@ -145,4 +143,4 @@ Required before declaring done:
 
 **Then ask: what would have prevented this bug?** If the answer involves architectural change (no good test seam, tangled callers, hidden coupling) hand off to the `/improve-architecture` skill with the specifics. Make the recommendation **after** the fix is in, not before — you have more information now than when you started.
 
-**Next:** use **tdd** if the fix needs a full red-green-refactor cycle, **code-review** after the fix, and **improve-architecture** if the post-mortem reveals an architectural gap (no correct seam, hidden coupling, tangled callers).
+**Next:** **code-review** with a fresh agent after the fix; **finish-work** to commit, open a PR, and update the issue; **improve-architecture** if the post-mortem reveals an architectural gap (no correct seam, hidden coupling, tangled callers).

@@ -37,4 +37,9 @@ Finding *facts* is your job, never the user's. When a frontier question needs a 
 
 The session is done when the frontier is empty: every branch of the design tree visited, nothing silently assumed. Do not act on the plan until the user confirms you have reached a shared understanding.
 
-If a decision settles a domain term or an architectural choice, record it: update `GLOSSARY.md` (create it lazily) or offer an ADR when the choice is hard to reverse, confusing out of context, and represents a real trade-off. See the maintenance rules in `docs/agents/domain.md`.
+If a decision settles a domain term or an architectural choice, record it: update `GLOSSARY.md` (create it lazily) or offer an ADR when the choice is hard to reverse, confusing out of context, and represents a real trade-off. Location, formats, and ownership are in [domain-model.md](references/domain-model.md).
+
+## Next
+
+- **brainstorming** — when the frontier is empty and you want to turn the decisions into a spec.
+- **writing-plans** — when a plan already exists and only its complexity needs stress-testing.

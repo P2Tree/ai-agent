@@ -1,12 +1,32 @@
 ---
 name: research
-description: Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent.
+description: Investigate a question against high-trust primary sources and capture the findings as a cited Markdown file. Use when the answer must be durable or cited, when reading is large enough to delegate to a background agent, or when the user asks to research a topic, gather docs or API facts, or delegate reading. Do not use for a quick lookup you can answer in-session, or when the facts already exist in the repo or conversation.
 ---
 
-Spin up a **background agent** to do the research, so you keep working while it reads. Start it with a fresh context window.
+# Research
 
-Its job:
+Spin up a **background agent** with a fresh context window, so you keep working while it reads.
 
-1. Investigate the question against **primary sources** (official docs, source code, specs, first-party APIs), not a secondary write-up of them. Follow every claim back to the source that owns it.
-2. Write the findings to a single Markdown file, citing each claim's source.
-3. Save it where the repo already keeps such notes; match the existing convention, and if there is none, put it somewhere sensible and say where.
+## When to Use
+
+- The answer needs a **durable, cited artifact** (API behavior, standards, competitive research, technology selection).
+- Reading is large enough that it would pollute the main conversation.
+- The work can run in parallel while the main session continues.
+
+## When Not to Use
+
+- One search or one file read answers it.
+- The facts are already in the repo, the conversation, or user-provided material.
+- The question is a product judgment or trade-off, not a fact-finding task.
+
+## Output
+
+1. Investigate **primary sources** (official docs, source code, specs, first-party APIs), not secondary summaries. Follow every claim back to the source that owns it.
+2. Write findings to a single Markdown file, citing each claim's source.
+3. Prefer the repo's existing notes location; if there is none, use `docs/research/YYYY-MM-DD-<topic>.md` and say where you put it.
+4. Mark anything you could not verify as **unverified**; never invent a source.
+
+## Next
+
+- **brainstorming / grill-me** — turn the findings into a design decision.
+- **writing-plans** — when the research already settles the approach.

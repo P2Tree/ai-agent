@@ -7,6 +7,12 @@ description: "You MUST use this before any creative work - creating features, bu
 
 You build what you believe your human partner wants, and that belief is usually thinner than it feels. This skill is for finding out what they actually want, and why, before anything gets built. When you understand the why, you make the hundred decisions they never mention the way they would have made them.
 
+## Two Phases
+
+1. **Explore** — understand intent, options, constraints, and approaches. Do not write the spec yet. Stop here if the user only wants a discussion.
+2. **Grill** — hand the chosen direction to **grill-me** to resolve the decision frontier and edge cases.
+3. **Spec** — write the design doc/spec only after the frontier is empty. The spec is a record of decisions already made, not a place to discover them.
+
 ## First: What Do You Actually Know?
 
 Before replying, ask: what do I know about what they want, and why?
@@ -69,7 +75,9 @@ If it grows mid-task, stop, say so, and step up a size. If it is really several 
 
 Write a plain document a talented builder in the domain could plan from without going back to the user. Cover: intent and why; goals, non-goals, anti-goals; constraints; approaches and which was picked; the parts of the how they decided; what is left to the builder.
 
-Save to `docs/specs/YYYY-MM-DD-<spec_name>.md` (user preference overrides) and commit. **Language:** if the conversation is entirely English, write in English; otherwise follow the conversation.
+Save to `docs/specs/YYYY-MM-DD-<spec_name>.md` (user preference overrides) and commit. Add `**Status:** draft | approved | implemented | superseded` and `**Date:** YYYY-MM-DD`; old specs are historical records, not living truth. **Language:** if the conversation is entirely English, write in English; otherwise follow the conversation.
+
+Only write the spec after **grill-me** has cleared the decision frontier. If a new question appears while writing, stop and grill it rather than inventing an answer.
 
 **Builder check** (for a project): after writing the design, dispatch a fresh subagent with [builder-check-prompt.md](builder-check-prompt.md). Sort its questions into: answered already (put the answer in the document), minor (settle yourself and mark it as your call), and theirs (only the user can answer, and it changes what gets built). Bring the "theirs" pile in one message, most important first, update the document, then hand it over with a short list of your calls. Without subagent support, read it as that builder yourself.
 
@@ -81,11 +89,12 @@ Nothing gets built until the user approves the design doc: the short one for a s
 Two exceptions: if they opted out of the questions, this skill is done and the gate goes with it; a spike they approved may be built, stays labeled throwaway, and keeping what it produced is a new request through the gate.
 </HARD-GATE>
 
-After approval, choose the next skill:
+## Next
 
-- **writing-prd** — the design needs a PRD for team review or a formal handoff.
-- **prototype** — a technical assumption needs validation before committing.
-- **writing-plans** — the design is clear and approved, ready for implementation steps.
+- **grill-me** — decisions still have open branches or edge cases; do this before writing the spec.
+- **prototype** — a technical or UX assumption needs validation before committing.
+- **writing-prd** — a second reader/stakeholder needs a formal requirements document.
+- **writing-plans** — the spec is approved and ready for implementation steps.
 
 ## Red Flags
 

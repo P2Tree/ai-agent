@@ -33,6 +33,8 @@ See [logic prototype guide](references/logic-prototype.md) and [UI prototype gui
 
 ## Next Steps
 
+- **grill-me** — if the prototype raised new decisions.
+- **brainstorming** — turn the answer into a spec.
 - **writing-prd** — if the prototype confirms feasibility and the result needs a formal PRD
 - **writing-plans** — if the design is validated and ready for an implementation plan
 - **frontend-design** — if the prototype was a UI direction exploration and a visual direction was chosen

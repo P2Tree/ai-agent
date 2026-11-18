@@ -5,6 +5,10 @@ description: Principles for writing accurate, high-signal code reviews — espec
 
 # Code Review
 
+## Author/Reviewer Separation
+
+If you wrote the code, do not review it yourself. Use a fresh agent that did not write it and give it only the diff, the task brief/spec, and the project constraints — not the implementer's rationale. Same context means the same blind spots.
+
 ## Core Principle: Confident Only Where Evidence Exists
 
 A review's value is proportional to epistemic honesty. Overstating confidence in unfamiliar territory generates noise, erodes trust, and forces the author to spend time disproving non-issues while real issues get diluted.
@@ -63,7 +67,7 @@ Four-stage review. Details in [review-process](references/review-process.md).
 
 1. **Context** — Read PR description, understand intent, check CI. If the PR is too large to review effectively, say so.
 2. **High-level** — Architecture & design, file organization, test strategy.
-3. **Line-by-line** — Logic & correctness, security, performance, maintainability.
+3. **Line-by-line** — Logic & correctness, security, performance, maintainability. For tests: do they assert behavior rather than mocks or tautologies? Do they cover the task's edge cases? If the diff changes a public interface or seam, use **codebase-design** vocabulary to judge depth and seam placement. For web UI changes, run the [Web UI review](references/web-ui-review.md) and, if installed, `web-design-guidelines`.
 4. **Summary & verdict** — Synthesize findings, highlight strengths, give explicit decision: Approve / Comment / Request Changes.
 
 ### Reviewing against the spec
@@ -125,7 +129,7 @@ Before finalizing a code review:
 - [ ] Are domain-specific claims framed as questions where confidence is low?
 - [ ] Are diff-level behavioral changes explicitly identified (old vs. new)?
 - [ ] Are severity levels calibrated — no low-confidence guesses at "critical"?
-- [ ] Have docs/architecture files been checked for signature/type drift?
+- [ ] Have living docs (README, CLAUDE.md/AGENTS.md, architecture, user guide) been checked for drift?
 - [ ] Do fallback paths in multi-layer logic preserve their intended semantics?
 - [ ] Is redundant work across call chains flagged where present?
 - [ ] Did you follow the four-stage review process?
@@ -134,3 +138,9 @@ Before finalizing a code review:
 - [ ] Is the verdict explicit (Approve / Comment / Request Changes)?
 - [ ] Is every deliberately unjudged behavior listed under "Declined to judge"?
 - [ ] Did the review stay read-only (no workspace/index/HEAD changes)?
+- [ ] Did the reviewer avoid sharing the implementer's context?
+
+## Next Steps
+
+- **finish-work** — when the review passes, commit, create a PR, and update the issue.
+- **diagnose** — when a finding needs deeper investigation rather than a direct fix.

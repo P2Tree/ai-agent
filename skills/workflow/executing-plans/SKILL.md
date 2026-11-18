@@ -11,10 +11,10 @@ Three modes: **inline** (one context), **subagent-driven** (fresh implementer + 
 
 ## Choose Execution Mode
 
-Present the modes with a recommendation; the user decides:
+Present the modes with a recommendation; the user decides. State the inputs behind the recommendation: task independence, task count/context pressure, and whether per-task review is needed.
 
-1. **Inline** — one context, one final review. Cheapest; best for small plans or a mid-tier session model.
-2. **Subagent-Driven** — fresh implementer and reviewer per task. Most thorough; best for independent tasks needing review gates.
+1. **Inline** — one context, one final review. Best for coupled tasks, a plan that fits in context, and a mid-tier session model.
+2. **Subagent-Driven** — fresh implementer and reviewer per task. Best for independent tasks, long plans that may hit context limits, and per-task review gates.
 3. **Parallel** — one agent per independent domain. Best for 3+ unrelated failures with no shared state.
 
 ## Shared Setup
@@ -23,10 +23,19 @@ Present the modes with a recommendation; the user decides:
 2. **Create a ledger**, not just todos. Conversation memory does not survive compaction; the ledger and `git log` do. Each plan owns `<repo>/.superpowers/sdd/<plan>/progress.md`; first line: `# SDD ledger — plan: <path>`.
 3. **Read the plan and its spec.** The spec is the binding authority; the plan is its argument. Note Global Constraints. If no spec is reachable, note that in the ledger — rulings are provisional.
 4. **Pre-flight interface scan.** For every task consuming an earlier task's output, add a ledger row: producer, consumer, what was found. Record a ruling for each conflict. If tasks share nothing, write `Pre-flight: no shared interfaces`.
-5. **Load TDD rules** before Task 1. Every test step is written first, watched to fail, then made to pass.
-6. **Check for an existing ledger** and resume at the first task without a `Task <N>: complete` line. Trust the ledger and `git log` over recollection.
+5. **Check for an existing ledger** and resume at the first task without a `Task <N>: complete` line. Trust the ledger and `git log` over recollection.
+6. **Check the plan's interfaces.** Before Task 1, if the Interfaces block is missing or vague, invoke **codebase-design** and amend the plan before coding.
 
 Details: [execution details](references/execution-details.md).
+
+## Test-First Execution
+
+- Test only at **pre-agreed seams**. If the plan doesn't list them, list and confirm them before Task 1.
+- For each task: write the failing test, run it and watch it fail, write the minimum implementation, run it and watch it pass.
+- Never write all tests first; that is horizontal slicing.
+- Expected values come from the spec, a known-good literal, or a worked example — never recomputed the way the code computes them (tautological test).
+- After the task, run the full project suite and report pre-existing failures by name.
+- Refactoring belongs to **code-review**, not the red-green loop.
 
 ## Mode 1: Inline Execution
 
@@ -40,7 +49,8 @@ For each task:
    - every named test exists and ran in this session, and you read the output;
    - the task's final test run passed — the command you just ran, not an earlier run or "should pass";
    - every `Expected:` was compared against real output;
-   - every deviation has a `Ruling:` line.
+   - every deviation has a `Ruling:` line;
+   - affected living docs (README, CLAUDE.md/AGENTS.md, architecture doc, user guide) are updated or explicitly flagged.
 6. Append `Task <N>: complete (commits <base7>..<head7>, tests: <cmd> → <result>)` and mark the todo complete. A failing run records nothing.
 
 ## Mode 2: Subagent-Driven Development
@@ -84,7 +94,8 @@ After all tasks, review the whole branch from a file-based package (commit list,
 3. **Critical/Important → one fix pass.** Each fix starts with a failing test, then passes, then the whole suite is green.
 4. **Minor → ledger only** under `Deferred minors`. Do not fix minors in the same pass.
 5. Reviewer "Declined to judge" items become your rulings, recorded in the ledger.
-6. Delete this plan's workspace when clean, then use **finishing-branch**.
+6. Check living docs for drift; update or flag outdated README, CLAUDE.md/AGENTS.md, architecture, or user-guide content.
+7. Delete this plan's workspace when clean, then use **finish-work**.
 
 ## Red Flags
 
@@ -98,4 +109,5 @@ After all tasks, review the whole branch from a file-based package (commit list,
 
 ## Next Steps
 
-- **finishing-branch** — verify tests, present merge/PR/cleanup options.
+- **code-review** — dispatch a fresh agent that did not write the code.
+- **finish-work** — verify tests, commit, create a PR, and update the issue.

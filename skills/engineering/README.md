@@ -2,21 +2,11 @@
 
 软件开发相关的 skill。
 
-## tdd `[自动]`
-
-经典的 TDD 循环。写一个测试，写最少代码让它通过。一次只切一个垂直切片，不做"先把所有测试写完再写代码"的水平切片。测试只能写在预先与用户确认的 seam 上；禁止同义反复测试；重构属于 code review 阶段，不在红绿循环内。
-
-**什么时候用：** 想用 TDD 方式开发功能或修 bug 时。
-
-**触发方式：** 明确说要 TDD、test-first、或红绿重构，agent 时激活。
-
-**参考：** mattpocock:tdd + superpowers:test-driven-development
-
 ## codebase-design `[自动]`
 
-深模块设计的共享词汇和判断纪律：module / interface / depth / seam / adapter / leverage / locality，删除测试、接口即测试面、一个 adapter 是假 seam。供 `tdd`、`improve-architecture` 等 skill 在设计接口或判断测试位置时调用。
+深模块设计的共享词汇和判断纪律：module / interface / depth / seam / adapter / leverage / locality，删除测试、接口即测试面、一个 adapter 是假 seam。它是**共享 reference，不是独立流程**，供 `writing-plans`、`executing-plans`、`improve-architecture`、`diagnose`、`code-review` 在接口或 seam 决策点调用；单个模块用它，整个代码库扫描用 `improve-architecture`。
 
-**什么时候用：** 设计或改进模块接口、决定 seam 位置、让代码更可测试或更易被 agent 导航时。
+**什么时候用：** 设计或改进单个模块接口、决定 seam 位置、让模块更可测试、加深过浅的模块、或比较多个接口方案时。
 
 **触发方式：** 你讨论接口设计、重构模块、或测试该放在哪一层时，agent 自动激活。
 
@@ -30,7 +20,7 @@
 
 **触发方式：** 你报告 bug、说"有问题""挂了""报错""性能回退"时，agent 自动识别并激活。
 
-**参考：** mattpocock/diagnose + superpowers:systematic-debugging
+**参考：** mattpocock/diagnose + superpowers:systematic-debugging + mattpocock:tdd + superpowers:test-driven-development（测试质量部分）
 
 ## code-review `[自动]`
 
@@ -62,3 +52,5 @@
 
 **参考：** anthropic-agent-skills:frontend-design
 
+
+> `tdd` 已废弃，其测试优先、seam 和测试质量规则已并入 `writing-plans`、`executing-plans`、`diagnose` 和 `code-review`。历史版本见 `skills/deprecated/tdd/`。

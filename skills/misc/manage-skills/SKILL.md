@@ -10,16 +10,7 @@ Browse, audit, and manage installed agent skills — works with any source, not 
 
 ## Bucket Definitions
 
-Classify skills by reading their `description` from SKILL.md frontmatter:
-
-| Bucket | Scope |
-|--------|-------|
-| engineering | 软件开发 (software development) |
-| productivity | 效率提升 (efficiency, non-coding) |
-| composition | 内容生成 (content generation) |
-| workflow | 工作流 (git, plans, issues, deployment) |
-| misc | 杂项 (other) |
-| custom | 自定义 (user-created, doesn't fit above) |
+Classify by the `description` in SKILL.md frontmatter: engineering (软件开发), productivity (效率提升), composition (内容生成), workflow (工作流), misc (杂项), custom (自定义).
 
 ## Process
 
@@ -30,7 +21,7 @@ Use AskUserQuestion to present options and get the user's choice:
 - **question**: "What would you like to do?"
 - **options**:
   1. "Browse installed skills"
-  2. "Install & sync skills"
+  2. "Install skills (incl. recommended upstream)"
   3. "Audit & health check"
   4. "Remove skills"
 - **multiSelect**: false
@@ -39,13 +30,23 @@ Then proceed to the corresponding section based on the user's choice.
 
 ### 2. Browse Installed Skills
 
-Scan skill directories (`~/.claude/skills/`, project-level `.claude/skills/`). For each, read SKILL.md frontmatter (name, description). Classify into buckets using the definitions above.
+Scan skill directories (`~/.claude/skills/`, `~/.agents/skills/`, project-level `.claude/skills/`, `.agents/skills/`). For each, read SKILL.md frontmatter (name, description). Classify into buckets using the definitions above.
 
 Display organized by bucket, mark source (ai-agent / third-party / unknown), show descriptions. Report total count per source.
 
 ### 3. Install & Sync Skills
 
-#### 3a. Install a Skill
+#### 3.0 Choose the source
+
+Ask what to install:
+
+- **ai-agent skills** — curated skills from this repo
+- **Recommended upstream skills** — official skills not bundled here (see [recommended upstream](references/recommended-upstream.md))
+- **Search the ecosystem** — use find-skills to find something else
+
+Then continue to the matching subsection.
+
+#### 3a. Install an ai-agent Skill
 
 User specifies what they want (name, domain, or problem description).
 
@@ -91,11 +92,17 @@ Check which ai-agent skills are uninstalled or outdated. All operations use `npx
 4. **Outdated check**: directly compare local SKILL.md SHA256 vs remote raw.githubusercontent.com SKILL.md — this is the only authoritative method. Do NOT use skill-lock.json hashes for this comparison (lock hashes record install-time state for integrity, not freshness vs remote)
 5. **Offer actions**: install missing (`npx skills add`), update outdated (`npx skills update`), or skip
 
-**Data parsing pitfalls** (from real-world sync runs):
-- `ls` in a symlink-heavy directory emits `⇒` arrows — never pipe it to `comm` or `diff`. Use `for d in */; do echo "${d%/}"; done` to get clean directory names
-- Lock file `skillFolderHash` differs from direct SHA256, leading to false MODIFIED reports on every skill. Skip it for outdated detection. The only reliable comparison is local SKILL.md vs remote raw.githubusercontent.com
+See [sync check details](references/sync-check.md) for data-parsing pitfalls and the exact comparison method.
 
-See [sync check details](references/sync-check.md).
+#### 3c. Install Recommended Upstream Skills
+
+Read [recommended upstream](references/recommended-upstream.md), then:
+
+1. Show the list as a **multi-select** question: "Which recommended upstream skills do you want to install?"
+2. Let the user pick any subset, or cancel.
+3. For each selected skill: if installed, ask update/replace/skip; otherwise follow its installer type — run `npx` commands directly, and for manual installers show the commands, explain packs/runtime requirements, and run only after confirmation.
+4. Verify each install by checking the skill directory or running the browse flow.
+5. Report installed, skipped, and failed items.
 
 ### 4. Audit & Health Check
 
@@ -106,12 +113,7 @@ Scan all skill directories. Detect source per skill:
 - **Symlink target**: Path contains identifiable repo name
 - **No tracking**: Label as "unknown source"
 
-Check for issues:
-- Broken symlinks (target doesn't exist)
-- Moved targets (symlink points to old bucket path)
-- Ghost entries (skill-lock.json entry with no directory)
-- Duplicate scope (same skill in global + project)
-- Orphaned skills (no lock entry, no symlink, no known source)
+Check for broken symlinks, moved targets, ghost lock entries, duplicate global/project scope, and orphaned skills (no lock entry, symlink, or known source).
 
 #### 4b. Health Analysis
 
@@ -137,6 +139,7 @@ Always confirm before removal. Show what will be removed and detected source.
 - All install and update operations use `npx` — no local ai-agent clone needed
 - No agent-specific tool names in this document
 - find-skills is optional — install flow degrades gracefully without it
+- Document skills (`pdf`, `docx`, `pptx`, `xlsx`) are recommended upstream, not bundled
 - Compatible with bash and zsh
 
-See [health analysis details](references/health-analysis.md).
+See [health analysis details](references/health-analysis.md) and [recommended upstream skills](references/recommended-upstream.md).

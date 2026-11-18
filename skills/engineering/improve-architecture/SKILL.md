@@ -1,6 +1,6 @@
 ---
 name: improve-architecture
-description: Find deepening opportunities in a codebase, informed by the domain language and architectural decisions. Use when the user wants to improve architecture, find refactoring opportunities, consolidate tightly-coupled modules, or make a codebase more testable and AI-navigable.
+description: Scan an entire codebase for deepening opportunities, informed by the domain language and architectural decisions. Use when the user wants a codebase-wide architecture review, find refactoring opportunities across modules, consolidate tightly-coupled modules, or make a whole codebase more testable and AI-navigable. For a single module's interface or seam, use codebase-design instead.
 ---
 
 # Improve Codebase Architecture
@@ -9,19 +9,15 @@ Surface architectural friction and propose **deepening opportunities** — refac
 
 ## Design vocabulary
 
-Use the **codebase-design** skill for the shared module/interface/depth/seam/adapter/leverage/locality vocabulary and its principles: the deletion test, "the interface is the test surface", and "one adapter = hypothetical seam, two = real". Use those terms exactly in every suggestion; don't drift into "component," "service," "API," or "boundary."
+Call the **codebase-design** skill before naming candidates; it provides the shared module/interface/depth/seam/adapter/leverage/locality vocabulary and its principles: the deletion test, "the interface is the test surface", and "one adapter = hypothetical seam, two = real". Use those terms exactly in every suggestion; don't drift into "component," "service," "API," or "boundary."
 
 This skill is _informed_ by the project's domain model. The domain language gives names to good seams; ADRs record decisions the skill should not re-litigate.
 
-## Pre-flight: read agent environment
+## Pre-flight
 
-Read the repo's agent environment (set up by `/init-agent-environment`) to ground your exploration in the project's own domain language and architecture decisions:
-
-- **`docs/agents/domain.md`** — tells you where `GLOSSARY.md` and `docs/adr/` live. Read the domain glossary (`GLOSSARY.md`) so you name things the way the project does. Read ADRs in the area you're about to explore — they constrain what the code is *supposed* to do, so you don't re-litigate settled decisions.
-- **`docs/agents/issue-tracker.md`** — tells you how the project tracks work. If a candidate should be recorded as an issue, follow the conventions in this file.
-- **`docs/agents/triage-labels.md`** — if recording a candidate as an issue, apply the correct triage label strings from this file.
-
-If these files don't exist, proceed silently — don't block exploration on missing config.
+- Read `GLOSSARY.md` and relevant `docs/adr/` if they exist; use the project's terms and don't re-litigate settled decisions.
+- If a GitHub/GitLab remote exists and a candidate should be recorded, create an issue with `gh`/`glab`.
+- Use this skill when you don't already know where to refactor. If you have a specific target, go straight to brainstorming/spec/plan.
 
 ## Process
 
@@ -56,7 +52,7 @@ Present a numbered list of deepening opportunities. For each candidate:
 
 End with a **Top recommendation**: which candidate to tackle first and why. If the user wants a visual report, write a self-contained HTML file to the OS temp directory and open it.
 
-**Use the domain glossary's vocabulary (path from `docs/agents/domain.md`) for the domain, and the codebase-design vocabulary for the architecture.** If the glossary defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
+**Use `GLOSSARY.md`'s vocabulary for the domain, and the codebase-design vocabulary for the architecture.** If the glossary defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
 
 **ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly (e.g. _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
 
@@ -66,7 +62,7 @@ Do NOT propose interfaces yet. Ask the user: "Which of these would you like to e
 
 Once the user picks a candidate, drop into a grilling conversation. Walk the design tree with them — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.
 
-Side effects happen inline as decisions crystallize, following the maintenance rules in `docs/agents/domain.md`:
+Side effects happen inline as decisions crystallize: challenge conflicting terms, sharpen fuzzy terms, update `GLOSSARY.md` inline, and offer ADRs only when the decision is hard to reverse, surprising without context, and a real trade-off.
 
 - **Naming a deepened module after a concept not in the domain glossary?** Add the term to the glossary file, one line per term. Create the file lazily if needed.
 - **Sharpening a fuzzy term during the conversation?** Update the glossary file right there.
@@ -75,6 +71,6 @@ Side effects happen inline as decisions crystallize, following the maintenance r
 
 ## Next Steps
 
-- **writing-plans** — turn the approved deepening candidates into a step-by-step implementation plan
-- **tdd** — before refactoring, write tests to protect existing behavior; then use red-green-refactor for each change
-- **arch-doc** — if the architectural changes are significant, update or create architecture documentation to reflect the new structure
+- **brainstorming** / **writing-plans** — turn the approved candidate into a spec and an implementation plan.
+- **executing-plans** — implement the refactor with test-first steps.
+- **arch-doc** — if the architectural changes are significant, update or create architecture documentation.

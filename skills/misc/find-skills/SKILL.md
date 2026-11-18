@@ -124,6 +124,7 @@ npx skills init my-xyz-skill
 ## Notes
 
 - Always recommend local skills over external ones when both cover the same need
+- For PDF/Office document work, prefer the official `anthropics/skills` versions; they are not bundled here
 - The Skills CLI is a community registry — quality varies, so always verify before recommending
 - If the user frequently needs an external skill, consider whether it should be absorbed into the local repo
 

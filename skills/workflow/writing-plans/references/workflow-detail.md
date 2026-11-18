@@ -36,7 +36,7 @@ Task tool (general-purpose):
 ## Full Workflow Chain
 
 ```
-brainstorming → writing-plans → executing-plans → finishing-branch
+brainstorming → writing-plans → executing-plans → finish-work
 ```
 
 1. **Brainstorming** produces a spec

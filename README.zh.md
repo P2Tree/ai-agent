@@ -38,7 +38,7 @@ npx skills@latest add p2tree/ai-agent
 
 ## 从 Skill 到编队
 
-单个 skill 已经很有用，但真正的价值在于组合成工作流。一个模糊想法变成上线功能，靠的是 brainstorming 交给 writing-prd，再流转到 decomposing-issues、writing-plans、executing-plans、code-review、finishing-branch。一个 bug 被修复，靠的是 triage 分流到 diagnose，再交给 tdd 和 code-review。
+单个 skill 已经很有用，但真正的价值在于组合成工作流。一个模糊想法变成上线功能，靠的是 brainstorming 探索、grill-me 压测决策、brainstorming 记录 spec，再由 writing-plans、executing-plans、code-review、finish-work 把代码推进到 reviewed commit 和 PR。一个 bug 由 triage 分流、diagnose 定位、code-review 审查、finish-work 收尾。
 
 每个 skill 都在你的虚拟开发团队中扮演一个角色——产品经理、架构师、调试专家、审查者。[**Skill 编队手册**](./docs/skill-playbook.md) 为 11 个常见工作场景（想法落地、Bug 排查、项目接手、重构、预研、前端开发、文档编写……）绘制了完整的 skill 编队方案：调哪些 skill、什么顺序、之间怎么衔接。
 
@@ -59,8 +59,7 @@ npx skills@latest add p2tree/ai-agent
 
 | Skill | 说明 |
 |-------|------|
-| [tdd](./skills/engineering/tdd/SKILL.md) | 红绿重构 TDD 循环，在预先确认的 seam 上垂直切片开发 |
-| [codebase-design](./skills/engineering/codebase-design/SKILL.md) | 深模块共享词汇 — interface/depth/seam/adapter/leverage/locality |
+| [codebase-design](./skills/engineering/codebase-design/SKILL.md) | 深模块共享 reference — interface/depth/seam/adapter/leverage/locality |
 | [diagnose](./skills/engineering/diagnose/SKILL.md) | 调试循环：可对 bug 变红的反馈环 → 复现+最小化 → 假设 → 插桩 → 修复 → 清理 |
 | [code-review](./skills/engineering/code-review/SKILL.md) | 代码审查纪律 — 校准置信度、只读审查、规格作为愿景、接收反馈流程 |
 | [improve-architecture](./skills/engineering/improve-architecture/SKILL.md) | 先定范围再扫描架构摩擦，给出带推荐强度的深模块候选 |
@@ -82,10 +81,6 @@ npx skills@latest add p2tree/ai-agent
 | [coauthoring](./skills/composition/coauthoring/SKILL.md) | 人机协作撰写文章、博客、随笔等 prose 类内容 |
 | [work-report](./skills/composition/work-report/SKILL.md) | 适应中国本土企业的工作汇报（日报、年终总结到晋升述职全场景覆盖） |
 | [arch-doc](./skills/composition/arch-doc/SKILL.md) | 架构设计说明书 — 从代码生成、更新或对齐架构文档 |
-| [pdf](./skills/composition/pdf/SKILL.md) | PDF 处理 — 读取、提取文本/表格/图片/元数据、合并、拆分、旋转、水印、加密、OCR、表单 |
-| [docx](./skills/composition/docx/SKILL.md) | Word 处理 — 创建、读取、编辑、修订追踪、注释、视觉验证 |
-| [pptx](./skills/composition/pptx/SKILL.md) | PPT 处理 — structured deck、模板编辑、三级 QA |
-| [xlsx](./skills/composition/xlsx/SKILL.md) | 电子表格 — 公式、重算、openpyxl gotchas、财务模型 |
 | [humanizer](./skills/composition/humanizer/SKILL.md) | 去除 AI 写作痕迹 — 31 种模式、保真约束与改写边界 |
 
 ### Career （职业发展）
@@ -101,12 +96,11 @@ npx skills@latest add p2tree/ai-agent
 |-------|------|
 | [writing-plans](./skills/workflow/writing-plans/SKILL.md) | 任务规模界定、Global Constraints、Review Focus、Interfaces 与执行交接 |
 | [executing-plans](./skills/workflow/executing-plans/SKILL.md) | ledger 记录进度，ruling 处理歧义，完成契约与最终审查 |
-| [finishing-branch](./skills/workflow/finishing-branch/SKILL.md) | 验证 → 检测环境 → 选择合并/PR/保留 → 按来源清理 |
+| [finish-work](./skills/workflow/finish-work/SKILL.md) | 验证测试 → 摘要 → 提交 → 可选 PR → 更新 issue |
 | [writing-prd](./skills/workflow/writing-prd/SKILL.md) | 将对话上下文合成为 PRD，先确定测试 seam |
 | [decomposing-issues](./skills/workflow/decomposing-issues/SKILL.md) | 将 PRD 拆分为垂直切片的独立 issue |
 | [triage](./skills/workflow/triage/SKILL.md) | issue 与外部 PR 分诊 — 冗余检查、验证、agent brief、out-of-scope 知识库 |
 | [retro](./skills/workflow/retro/SKILL.md) | 会话复盘 — 导航、自动检查、编码规范、工具与信息获取 |
-| [init-agent-environment](./skills/workflow/init-agent-environment/SKILL.md) | 初始化 issue tracker、triage 标签、GLOSSARY/ADR 布局与 `.scratch/` 约定 |
 
 ### Misc（杂项）
 
@@ -116,50 +110,61 @@ npx skills@latest add p2tree/ai-agent
 | [find-skills](./skills/misc/find-skills/SKILL.md) | 从开源生态发现、验证、安装和更新 skill |
 | [create-skill](./skills/misc/create-skill/SKILL.md) | 用 writing-for-agents 原则创建、改进、评估 skill |
 
+### 可选的上游 skill
+
+以下 skill 不随本仓库打包。需要时从各自的上游来源安装。
+
+| Skill | 能力 | 安装 |
+|-------|------|------|
+| `pdf` | 读取、提取、合并、拆分、旋转、水印、加密、OCR、表单 | `npx skills add anthropics/skills@pdf` |
+| `docx` | 创建、读取、编辑、修订追踪、注释 | `npx skills add anthropics/skills@docx` |
+| `pptx` | 演示文稿、模板、编辑、QA | `npx skills add anthropics/skills@pptx` |
+| `xlsx` | 公式、重算、财务模型 | `npx skills add anthropics/skills@xlsx` |
+
+文档类 skill 来自 [anthropics/skills](https://github.com/anthropics/skills)。
+
+Claude Code 插件路线：`/plugin marketplace add anthropics/skills`，然后安装 `document-skills`。
+
+前端与设计：
+
+| Skill | 能力 | 安装 |
+|-------|------|------|
+| `ui-ux-pro-max` | 设计系统、风格、配色、字体配对、UX 规则、技术栈建议 | 手动 CLI — 见文档 |
+| `impeccable` | critique、audit、polish、redesign、AI-slop 检测 | 手动 CLI — 见文档 |
+| `web-design-guidelines` | Web UI 可访问性与 UX 规范审查 | `npx skills add vercel-labs/agent-skills@web-design-guidelines -g -y` |
+
+详见 [可选上游 skill](./docs/external-skills.md)。`manage-skills` 也提供「安装推荐上游 skill」选项。
+
 ## 自动创建的路径
 
-各 skill 按统一约定将文档写入目标仓库。`init-agent-environment` skill 在初始化新仓库时会引导创建这些路径。
+各 skill 按统一约定将文档写入目标仓库。可选的领域文档和 issue tracker 文件在真正需要时按需创建。
 
 ```
 <目标仓库>/
 ├── GLOSSARY.md                             # 领域术语表
-├── .scratch/                               # 本地 markdown issue tracker
-│   └── <feature-slug>/
-│       ├── spec.md
-│       └── issues/
-│           └── <NN>-<slug>.md              # NN 为零填充的顺序编号
 ├── docs/
 │   ├── specs/                              # 设计规格
 │   │   └── YYYY-MM-DD-<design_name>.md
 │   ├── plans/                              # 实施计划
 │   │   └── YYYY-MM-DD-<feature_name>.md
-│   ├── adr/                                # 架构决策记录
-│   │   └── <arch_design_topic_name>.md
-│   └── agents/                             # Agent 运行配置
-│       ├── issue-tracker.md
-│       ├── triage-labels.md
-│       └── domain.md
+│   └── adr/                                # 架构决策记录
+│       └── <arch_design_topic_name>.md
 ```
 
 | 路径  | 用途 |
 |------------|------|
 | `GLOSSARY.md` | 领域词汇表，保持 skill 输出与项目术语一致 |
-| `.scratch/` | 本地 markdown issue tracker：每个功能一个目录，含 spec 与编号 issue 文件 |
 | `docs/specs/` | 经验证的设计规格，实现前的产物 |
 | `docs/plans/` | 逐步实施计划 |
 | `docs/adr/` | 架构决策记录 |
-| `docs/agents/` | Agent 环境配置，所有工作流 skill 消费 |
-
-**注意：** `docs/agents/` 是 agent 运行配置，不是设计文档。
 
 ## 一次性设置 Skill
 
-大部分 skill 按需触发，但有几个是一次性设置：
+大部分 skill 按需触发，只有一个是一次性设置：
 
 | Skill | 作用范围 | 持久化内容 |
 |-------|---------|-----------|
 | `manage-skills` | 每台机器 | 管理 agent skill 目录中的 skill；换机器需要重装 |
-| `init-agent-environment` | 每个仓库 | CLAUDE.md/AGENTS.md 中的 agent 上下文块 + `docs/agents/` 目录结构；新仓库需要重新运行 |
 
 ## 设计哲学
 
@@ -172,6 +177,26 @@ npx skills@latest add p2tree/ai-agent
 **平台无关内容。** skill 指令不硬编码任何 agent 的工具名或 UI 命令。平台特定映射分离在 `references/platform-mapping.md`。
 
 **发布前质量门控。** 每个 skill 经过三层检查 — 结构完整性（自动化）、内容质量（人工）、实际验证（人工）。未通过则留在 `draft/`。
+
+## 演进检查清单
+
+新增或修改 skill 前，先问：
+
+1. **它承载什么决策？** 说不清就不加。
+2. **它有独立触发条件吗？** 如果和现有 skill 的触发条件重叠，优先合并。
+3. **它是一段规则还是多步流程？** 一两句话能说清的，放进 `CLAUDE.md` 或现有 skill 的 reference，不单独做 skill。
+4. **它需要独立上下文吗？** 审查类需要；规则类不需要。
+5. **它在单 agent、交叉环境、跨会话的现实中可用吗？** 如果只在理想环境可用，写清 HITL 变体或标为条件使用。
+6. **它的产物的生命周期是什么？** 历史记录、living doc，还是临时工作文件？写清更新和过时规则。
+7. **它是否与上游重复？** 上游有相同能力时，先评估合并；不要为了「齐全」引入重复 skill。
+8. **删除它会不会损失决策能力？** 不会，就删；会，就保留但说明边界。
+
+## 维护约定
+
+- 合并/删除上游 skill 时，在 `skills/deprecated/README.md` 写清原因和融入位置。
+- 在融入位置的桶 README 里补 `参考：`，注明来源（例如 `writing-plans` / `executing-plans` 的 `tdd`）。
+- 每次调整默认流程，同步更新 `docs/skill-playbook.md` 和 `docs/system-evolution.md`。
+- 规范变化（如 `GLOSSARY.md`、`finish-work`）要同时更新根 README、桶 README 和注册表。
 
 ## 权衡说明
 
