@@ -197,6 +197,7 @@ Before adding or changing a skill, ask:
 - Add a `参考:` (reference) line to the destination bucket README when content is folded in (for example, `writing-plans` and `executing-plans` reference `tdd`).
 - When the default workflow changes, update `docs/skill-playbook.md` and `docs/system-evolution.md`.
 - When conventions change (e.g. `GLOSSARY.md`, `finish-work`), update the root READMEs, bucket READMEs, and registries together.
+- Run the `update-skills` skill to apply this process; it encodes the decision tests and the merge/deprecate/recommend procedures.
 
 ## Tradeoff Notes
 

@@ -1,6 +1,6 @@
 # Skill 系统演进记录
 
-> 记录这套 skill 系统在迭代中形成的判断和取舍，供后续演进时参考。不是 changelog；changelog 看 git 和 README。
+> 记录这套 skill 系统在迭代中形成的判断和取舍，供后续演进时参考。不是 changelog；changelog 看 git 和 README。实际执行时使用 `update-skills` skill，它内置本文的决策测试和维护流程。
 
 ## 背景：AI 加速的瀑布式开发
 
