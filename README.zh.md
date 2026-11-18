@@ -197,6 +197,7 @@ Claude Code 插件路线：`/plugin marketplace add anthropics/skills`，然后�
 - 在融入位置的桶 README 里补 `参考：`，注明来源（例如 `writing-plans` / `executing-plans` 的 `tdd`）。
 - 每次调整默认流程，同步更新 `docs/skill-playbook.md` 和 `docs/system-evolution.md`。
 - 规范变化（如 `GLOSSARY.md`、`finish-work`）要同时更新根 README、桶 README 和注册表。
+- 用 `update-skills` skill 执行这套流程；它内置决策测试以及合并/废弃/推荐上游的具体做法。
 
 ## 权衡说明
 

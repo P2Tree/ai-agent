@@ -1,146 +1,124 @@
 ---
 name: update-skills
-description: Check third-party upstream skills for changes not yet reflected in the local repo. Use when maintaining skill freshness, auditing drift against upstream sources, or updating skills after upstream releases.
+description: Check third-party upstream skills for changes and decide whether to sync, adapt, merge, deprecate, introduce, or recommend upstream. Use when maintaining skill freshness, auditing drift against upstream sources, or evolving the skill system after upstream releases.
 disable-model-invocation: true
 ---
 
 # Update Skills
 
-Compare local skills against their third-party upstream sources to find drift. Report differences and let the user choose which to update.
+Compare local skills against upstream, then decide what the system should look like. Never copy blindly: an upstream change is an input to a decision, not an instruction.
+
+See [evolution playbook](references/evolution-playbook.md) for the full decision framework, procedures, and examples.
+
+## Maintenance Philosophy
+
+- A skill earns its place only if it carries a **decision**, a distinct capability, or a reusable discipline.
+- Keep the smallest decision-carrying set. Merge one-paragraph rules into existing skills; recommend heavy upstream skills instead of bundling them.
+- Adapt to repo conventions: platform-agnostic, ≤150 lines, `Use when` description, references for depth, no `license` frontmatter.
+- Record every removal/merge in `skills/deprecated/README.md`; add `参考：` to the destination bucket README.
+- Update the whole system, not just `SKILL.md`: root/bucket READMEs, registries, playbook, architecture doc, evolution record.
+- Verify with `validate-skill.sh`, `ci-validate-skills.sh`, link checks, and registry consistency.
+
+## Decision Tests
+
+Before keeping, adding, merging, or removing a skill:
+
+1. What decision does it carry?
+2. Does it have a distinct trigger?
+3. Is it a rule or a multi-step process?
+4. Does it need an independent context?
+5. Does it work in single-agent, cross-environment, multi-session reality?
+6. What is the lifecycle of its artifacts?
+7. Does it duplicate upstream?
+8. Would removing it lose decision capability?
+
+## Classify Before You Copy
+
+| Situation | Action |
+|---|---|
+| Existing skill has upstream content updates | **Sync / adapt** |
+| New upstream skill overlaps an existing local skill | **Merge** into the local skill; move the upstream-only copy to `deprecated/` |
+| New upstream skill has a distinct trigger and capability | **Introduce** via `skills/draft/` |
+| Local skill no longer earns its place | **Deprecate / remove** |
+| Large, fast-changing official skill | **Recommend upstream**, do not bundle |
+| Pure wording/format drift | **Skip** |
 
 ## Process
 
 ### 1. Locate Upstream Sources
 
-Read the `## References` section in `README.md` (or `README.zh.md`) at the repo root. Extract the GitHub repository URLs. These define the upstream sources.
-
-Example from README:
-
-```markdown
-## References
-
-- [anthropics agent skills](https://github.com/anthropics/skills)
-- [superpowers skills](https://github.com/obra/superpowers)
-- [andrej karpathy skills](https://github.com/forrestchang/andrej-karpathy-skills)
-- [mattpocock skills](https://github.com/mattpocock/skills)
-```
-
-Build a source mapping from each reference label (lowercase, normalized) to its repo URL:
-
-```
-source-key → repo-url
-anthropics agent skills → https://github.com/anthropics/skills
-superpowers skills → https://github.com/obra/superpowers
-andrej karpathy skills → https://github.com/forrestchang/andrej-karpathy-skills
-mattpocock skills → https://github.com/mattpocock/skills
-```
+Read the `## References` section in `README.md` and `README.zh.md`; build `source-key → repo-url`. Also include sources named in bucket READMEs even if absent from the root list.
 
 ### 2. Prepare Upstream Repos
 
-For each source referenced by at least one skill:
+Use `/tmp/ai-agent-upstream/<owner-repo>/`. Pull if present, clone if not; use `--depth 1`. Mark a source unavailable on failure and continue.
 
-1. Check if the repo already exists locally at `/tmp/ai-agent-upstream/<repo-name>/` (from a previous run)
-2. If it exists, run `git -C /tmp/ai-agent-upstream/<repo-name> pull` to update
-3. If not, run `git clone <repo-url> /tmp/ai-agent-upstream/<repo-name>/`
-4. If clone or pull fails, mark the source as **unavailable** and skip its skills
+### 3. Build the Local → Upstream Map
 
-### 3. Collect Skills with Upstream References
+Scan bucket READMEs for `参考：` lines. Map `local-skill → source(s) → upstream path`. Include `draft/` skills. Merged sources map to multiple upstreams. If a source is missing or renamed, record it as a finding.
 
-Scan the current repo's bucket READMEs for `参考：` lines. Build a mapping:
+### 4. Compare
 
-```
-local-skill-name → [source-key, source-skill-name, upstream-repo-dir]
-```
+For each pair, read both `SKILL.md` files in full and compare:
 
-For example, from `参考：mattpocock/tdd`:
-- local skill: `tdd`
-- source-key: `mattpocock` (matched from "mattpocock skills")
-- upstream skill name: `tdd`
-- upstream repo dir: `/tmp/ai-agent-upstream/skills/`
+- line counts and heading differences;
+- substantial content changes (new/removed steps, rules, gotchas, verification);
+- references/scripts/License changes;
+- trigger/description changes.
 
-Locate the upstream skill within the repo dir by searching for a `SKILL.md` file matching the skill name. Common patterns: `<repo-dir>/skills/<bucket>/<skill-name>/SKILL.md` or `<repo-dir>/<skill-name>/SKILL.md`.
+Ignore whitespace and pure wording. Classify **MAJOR / MINOR / NONE**. Also note upstream skills not represented locally and local skills whose upstream disappeared.
 
-For merged sources (e.g., `参考：mattpocock/diagnose + superpowers:systematic-debugging`), map to multiple upstreams.
+### 5. Report
 
-Include `draft/` directory skills if they have upstream references.
+Use the compact format in [drift detection](references/drift-detection.md) or inline. Show only MAJOR/MINOR. Include:
 
-### 4. Compare Content
+- drift level and key changes;
+- upstream additions worth considering;
+- merge/removal candidates, with the decision-test reason;
+- unavailable sources.
 
-For each mapped skill pair, compare the upstream `SKILL.md` with the local `SKILL.md`:
+### 6. Confirm and Apply
 
-**A. Structural comparison:**
-- Line count difference
-- Section headings present in upstream but missing locally
-- Section headings present locally but missing in upstream
+Ask which changes to apply: all MAJOR, MAJOR+MINOR, choose individually, or none. Then apply the matching action:
 
-**B. Content diff:**
-- Read both files in full
-- Identify sections with substantial content changes (new paragraphs, rewritten steps, added/removed guidelines)
-- Ignore trivial whitespace or formatting differences
+- **Sync/adapt** — rewrite to repo conventions; update references.
+- **Merge** — move the upstream-only skill to `skills/deprecated/<name>/`; document reason and destination in the deprecated README; add `参考` to the destination bucket README; add explicit call points in the destination skill.
+- **Introduce** — create in `skills/draft/`, validate, move to a bucket.
+- **Deprecate/remove** — move to `deprecated/` (or delete if no content value); document why.
+- **Recommend upstream** — add to `docs/external-skills.md`, `manage-skills/references/recommended-upstream.md`, and the root README; do not add to registries.
 
-**C. References/ subdirectory:**
-- Check if upstream has new reference files not present locally
-- Check if upstream removed reference files that exist locally
+### 7. Update the System
 
-### 5. Report Differences
+Check every affected surface:
 
-For each skill with differences, display:
+- `README.md` / `README.zh.md`
+- destination bucket README
+- `.claude-plugin/plugin.json`
+- `.agents/skills.json`
+- `docs/skill-playbook.md`
+- `docs/architecture_design.md` if the inventory changed
+- `docs/system-evolution.md`
+- `skills/deprecated/README.md` for removals/merges
+- `docs/external-skills.md` for upstream recommendations
 
-```
-=== skill-name (参考：source-name/source-skill-name) ===
-  Local:  skills/bucket/skill-name (X lines)
-  Upstream: /tmp/ai-agent-upstream/<repo>/path/to/skill-name (Y lines)
+### 8. Verify
 
-  Changes in upstream:
-    + Section "New Section" (not in local)
-    ~ Section "Existing Section" — content significantly modified
-    - Section "Removed Section" (not in upstream)
-    + references/new-file.md (not in local)
-
-  Drift level: MAJOR / MINOR / NONE
-```
-
-**Drift level criteria:**
-- **MAJOR**: New sections, removed sections, or substantial rewrites of core workflow steps
-- **MINOR**: Small wording changes, added examples, formatting tweaks
-- **NONE**: Files are identical or only trivially different
-
-Only show skills with MAJOR or MINOR drift. Skip skills with NONE.
-
-### 6. Confirm Updates
-
-After reporting all differences, ask the user which skills to update:
-
-```
-Which skills to update?
-  1. All with MAJOR drift
-  2. All with MAJOR or MINOR drift
-  3. Let me choose individually
-  4. None — just show the report
-```
-
-If the user chooses to update, for each selected skill:
-
-1. Read the upstream SKILL.md in full
-2. Rewrite it to match ai-agent conventions:
-   - Remove platform-specific tool names and paths
-   - Remove `license` frontmatter fields
-   - Ensure frontmatter has `name` + `description` with "Use when" trigger
-   - Keep SKILL.md under 150 lines (overflow to references/)
-   - Maintain platform-agnostic content
-3. Write the updated file
-4. Update references/ if upstream added/changed reference files
-
-### 7. Post-Update Verification
-
-After updates, run `scripts/validate-skill.sh` for each modified skill. Report any failures.
+- `scripts/validate-skill.sh <skill>` for each modified skill
+- `bash scripts/ci-validate-skills.sh all`
+- SKILL.md ≤150 lines; description has `Use when`; no `license` frontmatter
+- No platform-specific tool names; no cross-skill file paths
+- Relative links resolve; registry matches actual formal skills
+- If a description changed, test 3–5 trigger prompts and adjust wording
 
 ## Notes
 
-- The skill does NOT auto-update — user confirmation is required for each change
-- Merged skills (referencing multiple upstreams) are compared against all upstreams
-- If an upstream source is unavailable, report it but don't block the rest
-- Upstream repos are cached in `/tmp/ai-agent-upstream/` between runs
-- Compatible with bash and zsh
+- This skill never auto-updates; user confirmation is required.
+- Merged skills are compared against all upstreams.
+- Upstream repos are cached in `/tmp/ai-agent-upstream/`.
+- Do not push or commit unless the user asks.
+- Compatible with bash and zsh.
 
-See [drift detection details](references/drift-detection.md) for comparison algorithm.
+## References
+
+- [Evolution playbook](references/evolution-playbook.md) — decision tests, merge/introduce/recommend procedures, examples, anti-patterns
+- [Drift detection](references/drift-detection.md) — comparison algorithm
