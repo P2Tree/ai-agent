@@ -7,7 +7,7 @@ description: Principles for writing accurate, high-signal code reviews — espec
 
 ## Author/Reviewer Separation
 
-If you wrote the code, do not review it yourself. Use a fresh agent that did not write it and give it only the diff, the task brief/spec, and the project constraints — not the implementer's rationale. Same context means the same blind spots.
+If you wrote the code, do not review it yourself. Agree on the review mode first: fresh subagent, separate session, or inline (low-risk only, labeled self-review). If using a subagent, follow [subagent review](references/subagent-review.md): it may read surrounding code, findings are not capped, and the user decides on timeout. Same context means the same blind spots.
 
 ## Core Principle: Confident Only Where Evidence Exists
 

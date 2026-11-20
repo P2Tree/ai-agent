@@ -4,7 +4,11 @@ Supporting detail for `executing-plans`. Read the relevant section when the SKIL
 
 ## Ledger
 
-Each plan owns a workspace: `<repo-root>/.superpowers/sdd/<plan-basename>/`.
+Each plan owns a runtime workspace **outside the repository**:
+
+`<cache>/ai-agent/sdd/<repo-basename>/<plan-basename>/`
+
+`<cache>` is `$XDG_CACHE_HOME` or `~/.cache` on Unix, `%LOCALAPPDATA%` on Windows. The ledger is scratch, not project content: never put it in the repo and never commit it.
 
 - First line: `# SDD ledger — plan: <plan file path>`
 - A ledger whose first line names a different plan belongs to that plan: leave it and start your own.
@@ -12,7 +16,15 @@ Each plan owns a workspace: `<repo-root>/.superpowers/sdd/<plan-basename>/`.
   - `Task <N>: complete (commits <base7>..<head7>, tests: <command> → <result>)`
   - `Task <N>: Ruling: <finding> — <decision and why>`
 - After compaction, trust the ledger and `git log` over recollection.
-- `git clean -fdx` destroys the workspace (it is git-ignored scratch); recover from `git log`.
+- If the cache is cleared, recover from `git log`; deleting the workspace after final review is fine.
+- Older runs stored this at `<repo>/.superpowers/sdd/`. That is runtime scratch too: delete it, or add `.superpowers/` to `.gitignore` if it may reappear.
+
+## Waiting on subagents
+
+- If the harness runs subagents asynchronously, do local work while waiting: ledger updates, the next review package, living-docs checks.
+- If the call blocks synchronously, say so instead of pretending to work.
+- Track elapsed time. At the soft threshold (about 5–10 minutes), tell the user how long it has run and ask whether to keep waiting or cancel and fall back. The user may choose to wait indefinitely.
+- Never cancel a subagent on your own. If the user cancels, do the work inline and label it **self-review**, not independent review.
 
 ## Handling implementer reports
 
