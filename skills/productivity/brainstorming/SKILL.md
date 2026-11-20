@@ -79,7 +79,7 @@ Save to `docs/specs/YYYY-MM-DD-<spec_name>.md` (user preference overrides) and c
 
 Only write the spec after **grill-me** has cleared the decision frontier. If a new question appears while writing, stop and grill it rather than inventing an answer.
 
-**Builder check** (for a project): after writing the design, dispatch a fresh subagent with [builder-check-prompt.md](builder-check-prompt.md). Sort its questions into: answered already (put the answer in the document), minor (settle yourself and mark it as your call), and theirs (only the user can answer, and it changes what gets built). Bring the "theirs" pile in one message, most important first, update the document, then hand it over with a short list of your calls. Without subagent support, read it as that builder yourself.
+**Builder check** (project-scale design only): ask first whether to use a fresh subagent or self-review. If approved, give it the design doc path, product context, and suggested focus areas, and let it read the repo as needed. Ask for questions, why each matters, and what answer would change; do not cap the count. Sort the result into: answered already (put the answer in the document), minor (settle yourself and mark it as your call), and theirs (only the user can answer). If it runs long, tell the user and ask whether to keep waiting or cancel and self-review; never cancel on your own. Without a subagent, read it as that builder yourself.
 
 **Self-review** the spec for placeholders, contradictions, ambiguity, and scope using [spec review](references/spec-review.md), fixing inline.
 

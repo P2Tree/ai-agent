@@ -7,6 +7,13 @@ description: Investigate a question against high-trust primary sources and captu
 
 Spin up a **background agent** with a fresh context window, so you keep working while it reads.
 
+## Delegation
+
+- Ask before starting the background agent, unless the user already asked for research.
+- Give it the question, suggested sources/starting points, and the output file path. Let it explore as widely as the question needs.
+- Do not cap findings. Require citations, an **unverified** section, and a note on what it did not check.
+- Track elapsed time. At the soft threshold, tell the user how long it has run and ask whether to keep waiting or cancel and do a quick inline search. Never cancel on your own.
+
 ## When to Use
 
 - The answer needs a **durable, cited artifact** (API behavior, standards, competitive research, technology selection).

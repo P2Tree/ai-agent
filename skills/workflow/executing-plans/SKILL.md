@@ -20,7 +20,7 @@ Present the modes with a recommendation; the user decides. State the inputs behi
 ## Shared Setup
 
 1. **Work on a feature branch.** If the user already works in an isolated worktree, stay there; don't create one unless asked. Never implement on main/master without explicit consent.
-2. **Create a ledger**, not just todos. Conversation memory does not survive compaction; the ledger and `git log` do. Each plan owns `<repo>/.superpowers/sdd/<plan>/progress.md`; first line: `# SDD ledger — plan: <path>`.
+2. **Create a ledger**, not just todos. Conversation memory does not survive compaction; the ledger and `git log` do. Keep it **outside the repository** at `<cache>/ai-agent/sdd/<repo-basename>/<plan>/progress.md`, where `<cache>` is `$XDG_CACHE_HOME` or `~/.cache` on Unix, `%LOCALAPPDATA%` on Windows. First line: `# SDD ledger — plan: <path>`. It is runtime scratch; never commit it.
 3. **Read the plan and its spec.** The spec is the binding authority; the plan is its argument. Note Global Constraints. If no spec is reachable, note that in the ledger — rulings are provisional.
 4. **Pre-flight interface scan.** For every task consuming an earlier task's output, add a ledger row: producer, consumer, what was found. Record a ruling for each conflict. If tasks share nothing, write `Pre-flight: no shared interfaces`.
 5. **Check for an existing ledger** and resume at the first task without a `Task <N>: complete` line. Trust the ledger and `git log` over recollection.
@@ -65,6 +65,14 @@ For each task:
 6. Append `Task <N>: complete (commits <base7>..<head7>, review clean)` or `... <K> parked`, then move on.
 
 Never dispatch multiple implementation subagents in parallel. Reviewers never spawn subagents.
+
+### Subagent Contract
+
+- The mode choice is the consent: if the user chose inline, do not dispatch subagents.
+- Brief: goal, required inputs, suggested files/interfaces, and real constraints. Let the implementer or reviewer read surrounding code; do not artificially limit exploration.
+- Reviewers may read beyond the diff to verify a concrete risk; require checked files, unverified items, and findings with evidence. Do not cap findings.
+- Soft timeout: at the threshold, tell the user how long it has run and ask whether to keep waiting or cancel and fall back. Never cancel on your own.
+- Default to no nested subagents.
 
 ### Model Selection
 

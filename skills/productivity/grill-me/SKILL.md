@@ -31,7 +31,7 @@ Each round of answers reshapes the tree: settled decisions push the frontier out
 
 ## Facts vs decisions
 
-Finding *facts* is your job, never the user's. When a frontier question needs a fact from the environment (filesystem, tools, codebase), dispatch a sub-agent with a fresh context window to find it; don't ask the user for anything you can look up yourself. Don't block on it: only questions downstream of that fact wait; ask the rest of the frontier now. The *decisions* are the user's — put each to them and wait.
+Finding *facts* is your job, never the user's. When a frontier question needs a fact from the environment (filesystem, tools, codebase), dispatch a sub-agent with a fresh context window to find it; don't ask the user for anything you can look up yourself. Give it the question and suggested modules/files, and let it search the repo as needed; don't cap what it reports. Don't block on it: only questions downstream of that fact wait; ask the rest of the frontier now. If it runs long, tell the user how long it has run and ask whether to keep waiting or proceed without it; never cancel on your own. The *decisions* are the user's — put each to them and wait.
 
 ## Finish
 

@@ -2,3 +2,6 @@
 skills/internal/
 configs/internal/
 internal/
+
+# Runtime scratch from skills (ledgers, brainstorm mockups)
+.superpowers/
